@@ -1,6 +1,12 @@
 @backend_HostAddress = http://localhost:5252
 @token = ""
 
+### Inicializar usuarios de prueba (seed)
+POST {{backend_HostAddress}}/api/users/seed
+Content-Type: application/json
+
+{}
+
 ### Prueba automática del endpoint /api/auth/login
 POST {{backend_HostAddress}}/api/auth/login
 Content-Type: application/json

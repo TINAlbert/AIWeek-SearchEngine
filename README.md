@@ -29,7 +29,7 @@ dotnet run --project backend
 
 El backend utiliza Microsoft Identity Framework para la gestión de usuarios, combinado con JWT para autenticación:
 
-- El endpoint `/api/auth/login` permite autenticación y devuelve un JWT válido para credenciales correctas
+- El endpoint `/api/auth/login` permite autenticación y devuelve un JWT válido para credenciales correctas. **Este endpoint recibe un objeto JSON con los campos `username` y `password` (DTO `LoginRequest`), no el modelo completo de usuario.**
 - El endpoint `/api/users` permite consultar los usuarios (requiere rol Admin)
 - La protección de endpoints se realiza mediante atributos `[Authorize]` y roles
 

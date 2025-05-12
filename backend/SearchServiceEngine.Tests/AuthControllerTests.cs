@@ -29,10 +29,10 @@ namespace SearchServiceEngine.Tests
                 Mock.Of<IUserClaimsPrincipalFactory<User>>(), null, null, null, null);
             var mockConfig = new Mock<IConfiguration>();
             var controller = new AuthController(userManager, mockSignInManager.Object, mockConfig.Object);
-            var loginUser = new User { UserName = "notfound" };
+            var loginRequest = new LoginRequest { UserName = "notfound", Password = "irrelevant" };
 
             // Act
-            var result = await controller.Login(loginUser);
+            var result = await controller.Login(loginRequest);
 
             // Assert
             Assert.IsType<UnauthorizedResult>(result);
@@ -62,10 +62,10 @@ namespace SearchServiceEngine.Tests
             mockConfig.Setup(c => c["Jwt:Issuer"]).Returns("test_issuer");
             mockConfig.Setup(c => c["Jwt:Audience"]).Returns("test_audience");
             var controller = new AuthController(userManager.Object, signInManager.Object, mockConfig.Object);
-            var loginUser = new User { UserName = "admin", PasswordHash = "1234" };
+            var loginRequest = new LoginRequest { UserName = "admin", Password = "1234" };
 
             // Act
-            var result = await controller.Login(loginUser);
+            var result = await controller.Login(loginRequest);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);

@@ -35,6 +35,13 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - Se restauraron e instalaron los paquetes NuGet necesarios (Entity Framework Core, Sqlite, JWT).
 - Se verificó la compilación y ejecución correcta del backend tras la migración.
 
+## 2025-05-12 (continuación)
+
+- Se refactorizó el endpoint de login en `AuthController` para que reciba un DTO `LoginRequest` (solo usuario y contraseña) en vez del modelo completo de usuario.
+- Se creó la clase `LoginRequest` en `Models`.
+- Se actualizaron los tests unitarios de login para usar el nuevo DTO.
+- Se verificó que los tests unitarios pasan correctamente tras el cambio.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

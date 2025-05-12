@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SearchServiceEngine.Data;
 using SearchServiceEngine.Models;
 using Microsoft.AspNetCore.Identity;
+using SearchServiceEngine.Request;
 
 namespace SearchServiceEngine.Controllers
 {
@@ -29,16 +30,16 @@ namespace SearchServiceEngine.Controllers
         /// <summary>
         /// Inicia sesión con usuario y contraseña. Devuelve un JWT si las credenciales son válidas.
         /// </summary>
-        /// <param name="loginUser">Usuario y contraseña.</param>
+        /// <param name="loginRequest">Usuario y contraseña.</param>
         /// <returns>Token JWT si es correcto, 401 si no autorizado.</returns>
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] User loginUser)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginUser.UserName);
+            var user = await _userManager.FindByNameAsync(loginRequest.UserName);
             if (user == null)
                 return Unauthorized();
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginUser.PasswordHash, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginRequest.Password, false);
             if (!result.Succeeded)
                 return Unauthorized();
 

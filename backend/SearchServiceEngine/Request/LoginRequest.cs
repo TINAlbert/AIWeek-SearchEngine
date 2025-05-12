@@ -1,4 +1,4 @@
-namespace SearchServiceEngine.Models
+namespace SearchServiceEngine.Request
 {
     /// <summary>
     /// DTO para la acción de login, contiene únicamente usuario y contraseña.
