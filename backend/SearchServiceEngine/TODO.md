@@ -16,6 +16,9 @@ Este archivo contiene una lista inicial de tareas y funcionalidades pendientes p
 - [ ] Mejorar la gestión de contraseñas (hashing).
 - [ ] Añadir endpoints CRUD completos para usuarios.
 - [x] Poblar la base de datos con usuarios de ejemplo desde migraciones o seeders.
+- [x] Crear proyecto de pruebas unitarias con xUnit y Moq para el backend.
+- [x] Añadir pruebas unitarias para AuthController (login correcto y fallido).
+- [ ] Añadir más pruebas unitarias para otros controladores y lógica de negocio.
 - [ ] Añadir pruebas unitarias y de integración.
 - [ ] Documentar la API con OpenAPI/Swagger.
 - [ ] Configurar despliegue y CI/CD.
