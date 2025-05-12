@@ -1,0 +1,43 @@
+@backend_HostAddress = http://localhost:5252
+@token = ""
+
+### Prueba automática del endpoint /api/auth/login
+POST {{backend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Prueba automática del endpoint /api/auth/login para usuario no existente
+POST {{backend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin2",
+  "password": "admin123"
+}
+
+### Prueba automática del endpoint /api/auth/login para contraseña incorrecta
+POST {{backend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin1234"
+}
+
+### Prueba automática del endpoint /api/auth/login para usuario no administrador
+POST {{backend_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user123"
+}
+
+### Prueba automática del endpoint /api/users (requiere token de admin)
+GET {{backend_HostAddress}}/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NzA0ODU4NSwiaXNzIjoiQUlXZWVrSXNzdWVyIiwiYXVkIjoiQUlXZWVrQXVkaWVuY2UifQ.57qqMWl5glHJ7lytMIM28I39m_dQlIUB8u6la6o31fE
+Accept: application/json
