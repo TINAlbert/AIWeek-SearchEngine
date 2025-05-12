@@ -8,6 +8,9 @@ using SearchServiceEngine.Models;
 
 namespace SearchServiceEngine.Controllers
 {
+    /// <summary>
+    /// Controlador de autenticación. Permite iniciar sesión y obtener un JWT válido.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -20,6 +23,11 @@ namespace SearchServiceEngine.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// Inicia sesión con usuario y contraseña. Devuelve un JWT si las credenciales son válidas.
+        /// </summary>
+        /// <param name="loginUser">Usuario y contraseña.</param>
+        /// <returns>Token JWT si es correcto, 401 si no autorizado.</returns>
         [HttpPost("login")]
         public IActionResult Login([FromBody] User loginUser)
         {
