@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SearchServiceEngine.Models;
 using SearchServiceEngine.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace SearchServiceEngine.Controllers
 {
@@ -11,6 +12,7 @@ namespace SearchServiceEngine.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] // Protección global para todos los endpoints del controlador
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -24,25 +26,23 @@ namespace SearchServiceEngine.Controllers
         /// </summary>
         /// <returns>Lista de usuarios.</returns>
         [HttpGet]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Roles = "Admin")] // Protección por rol usando Identity
         public ActionResult<IEnumerable<object>> GetAll()
         {
-            // No devolver contraseñas en producción
-            var users = _context.Users.Select(u => new { u.Id, u.Username, u.Role }).ToList();
+            var users = _context.Users.Select(u => new { u.Id, u.UserName, u.Role }).ToList();
             return Ok(users);
         }
 
         [HttpPost("seed")]
         [AllowAnonymous]
-        public IActionResult Seed()
+        public async Task<IActionResult> Seed([FromServices] UserManager<User> userManager)
         {
             if (!_context.Users.Any())
             {
-                _context.Users.AddRange(
-                    new User { Username = "admin", Password = "admin123", Role = "Admin" },
-                    new User { Username = "user", Password = "user123", Role = "User" }
-                );
-                _context.SaveChanges();
+                var admin = new User { UserName = "admin", Role = "Admin" };
+                var user = new User { UserName = "user", Role = "User" };
+                await userManager.CreateAsync(admin, "admin123");
+                await userManager.CreateAsync(user, "user123");
                 return Ok("Usuarios de ejemplo insertados.");
             }
             return Ok("Ya existen usuarios en la base de datos.");

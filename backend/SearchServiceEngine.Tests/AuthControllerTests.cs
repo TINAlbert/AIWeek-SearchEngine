@@ -8,51 +8,64 @@ using SearchServiceEngine.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace SearchServiceEngine.Tests
 {
     public class AuthControllerTests
     {
         [Fact]
-        public void Login_ReturnsUnauthorized_WhenUserNotFound()
+        public async Task Login_ReturnsUnauthorized_WhenUserNotFound()
         {
             // Arrange: usar EF Core InMemory
-            var options = new Microsoft.EntityFrameworkCore.DbContextOptionsBuilder<AppDbContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestDb1")
                 .Options;
             using var context = new AppDbContext(options);
-            // No agregamos usuarios
+            var mockUserStore = new Mock<IUserStore<User>>();
+            var userManager = new UserManager<User>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+            var mockSignInManager = new Mock<SignInManager<User>>(userManager,
+                Mock.Of<Microsoft.AspNetCore.Http.IHttpContextAccessor>(),
+                Mock.Of<IUserClaimsPrincipalFactory<User>>(), null, null, null, null);
             var mockConfig = new Mock<IConfiguration>();
-            var controller = new AuthController(context, mockConfig.Object);
-            var loginUser = new User { Username = "notfound", Password = "wrong" };
+            var controller = new AuthController(userManager, mockSignInManager.Object, mockConfig.Object);
+            var loginUser = new User { UserName = "notfound" };
 
             // Act
-            var result = controller.Login(loginUser);
+            var result = await controller.Login(loginUser);
 
             // Assert
             Assert.IsType<UnauthorizedResult>(result);
         }
 
         [Fact]
-        public void Login_ReturnsToken_WhenUserExistsAndPasswordMatches()
+        public async Task Login_ReturnsToken_WhenUserExistsAndPasswordMatches()
         {
             // Arrange: usar EF Core InMemory
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestDb2")
                 .Options;
             using var context = new AppDbContext(options);
-            context.Users.Add(new User { Username = "admin", Password = "1234", Role = "Admin" });
+            var user = new User { UserName = "admin", Role = "Admin" };
+            context.Users.Add(user);
             context.SaveChanges();
 
+            var mockUserStore = new Mock<IUserStore<User>>();
+            var userManager = new Mock<UserManager<User>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
+            userManager.Setup(m => m.FindByNameAsync("admin")).ReturnsAsync(user);
+            var signInManager = new Mock<SignInManager<User>>(userManager.Object,
+                Mock.Of<Microsoft.AspNetCore.Http.IHttpContextAccessor>(),
+                Mock.Of<IUserClaimsPrincipalFactory<User>>(), null, null, null, null);
+            signInManager.Setup(m => m.CheckPasswordSignInAsync(user, It.IsAny<string>(), false)).ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
             var mockConfig = new Mock<IConfiguration>();
             mockConfig.Setup(c => c["Jwt:Key"]).Returns("test_secret_key_1234567890123456");
             mockConfig.Setup(c => c["Jwt:Issuer"]).Returns("test_issuer");
             mockConfig.Setup(c => c["Jwt:Audience"]).Returns("test_audience");
-            var controller = new AuthController(context, mockConfig.Object);
-            var loginUser = new User { Username = "admin", Password = "1234" };
+            var controller = new AuthController(userManager.Object, signInManager.Object, mockConfig.Object);
+            var loginUser = new User { UserName = "admin", PasswordHash = "1234" };
 
             // Act
-            var result = controller.Login(loginUser);
+            var result = await controller.Login(loginUser);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);

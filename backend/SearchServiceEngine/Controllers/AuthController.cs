@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using SearchServiceEngine.Data;
 using SearchServiceEngine.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SearchServiceEngine.Controllers
 {
@@ -15,11 +16,13 @@ namespace SearchServiceEngine.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
-        public AuthController(AppDbContext context, IConfiguration config)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration config)
         {
-            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _config = config;
         }
 
@@ -29,18 +32,21 @@ namespace SearchServiceEngine.Controllers
         /// <param name="loginUser">Usuario y contraseña.</param>
         /// <returns>Token JWT si es correcto, 401 si no autorizado.</returns>
         [HttpPost("login")]
-        public IActionResult Login([FromBody] User loginUser)
+        public async Task<IActionResult> Login([FromBody] User loginUser)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == loginUser.Username && u.Password == loginUser.Password);
-            if (user is null)
-            {
+            var user = await _userManager.FindByNameAsync(loginUser.UserName);
+            if (user == null)
                 return Unauthorized();
-            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginUser.PasswordHash, false);
+            if (!result.Succeeded)
+                return Unauthorized();
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Role, user.Role ?? "User")
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

@@ -1,9 +1,9 @@
-namespace SearchServiceEngine.Models;
+using Microsoft.AspNetCore.Identity;
 
-public class User
+namespace SearchServiceEngine.Models
 {
-    public int Id { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
+    public class User : IdentityUser
+    {
+        public string Role { get; set; } = string.Empty;
+    }
 }

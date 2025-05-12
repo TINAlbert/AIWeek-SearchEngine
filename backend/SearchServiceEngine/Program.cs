@@ -5,8 +5,25 @@ using SearchServiceEngine.Models;
 using Microsoft.EntityFrameworkCore;
 using SearchServiceEngine.Data;
 using Scalar.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configuración de Identity y JWT
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Configuración de contraseñas, bloqueo, etc. (opcional)
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+});
 
 // Configuración de autenticación JWT
 builder.Services.AddAuthentication(options =>
@@ -57,12 +74,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Lista de usuarios en memoria (para pruebas)
-var users = new List<User>
-{
-    new User { Username = "admin", Password = "admin123", Role = "Admin" },
-    new User { Username = "user", Password = "user123", Role = "User" }
-};
 
 app.Run();
