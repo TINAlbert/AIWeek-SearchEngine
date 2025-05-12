@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SearchServiceEngine.Controllers;
 using SearchServiceEngine.Data;
 using SearchServiceEngine.Models;
+using SearchServiceEngine.Request;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
