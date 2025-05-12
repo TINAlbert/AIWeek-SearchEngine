@@ -22,7 +22,8 @@ Este proyecto está orientado a probar y documentar las capacidades de la IA en 
 El backend está implementado como un servicio Web API en .NET Core. Para ejecutarlo localmente:
 
 ```powershell
-dotnet run --project backend
+dotnet build backend/SearchServiceEngine/SearchServiceEngine.csproj
+dotnet run --project backend/SearchServiceEngine/SearchServiceEngine.csproj
 ```
 
 ### Autenticación y Autorización
