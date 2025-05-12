@@ -28,6 +28,13 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - El endpoint `GET /api/users`, protegido por rol Admin, responde correctamente cuando se usa el token obtenido en el login.
 - Se realizaron pruebas automáticas exitosas de ambos endpoints usando PowerShell.
 
+## Registro de actividad reciente
+
+- Se renombró y reorganizó el proyecto backend a SearchServiceEngine.
+- Se actualizaron todos los namespaces y referencias internas a SearchServiceEngine.
+- Se restauraron e instalaron los paquetes NuGet necesarios (Entity Framework Core, Sqlite, JWT).
+- Se verificó la compilación y ejecución correcta del backend tras la migración.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.
