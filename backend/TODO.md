@@ -4,10 +4,11 @@ Este archivo contiene una lista inicial de tareas y funcionalidades pendientes p
 
 ## Tareas pendientes
 
-- [ ] Definir los endpoints principales de la API
-- [ ] Implementar autenticación y autorización (si aplica)
-- [ ] Crear modelos de datos
-- [ ] Configurar acceso a base de datos
+- [x] Definir los endpoints principales de la API (login, weatherforecast)
+- [x] Implementar autenticación (JWT Bearer) y autorización basada en roles o políticas
+- [x] Diseñar y crear los modelos de datos principales (User, WeatherForecast)
+- [ ] Configurar el acceso a base de datos (por ejemplo, Entity Framework Core con SQL Server o SQLite)
+- [ ] Crear y aplicar migraciones de base de datos
 - [ ] Añadir pruebas unitarias y de integración
 - [ ] Documentar la API con OpenAPI/Swagger
 - [ ] Configurar despliegue y CI/CD
