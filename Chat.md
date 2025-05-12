@@ -16,6 +16,18 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - Inicialización del frontend con Vite (React + TypeScript + SWC) y verificación de funcionamiento.
 - Actualización de las instrucciones para especificar el entorno Windows y la necesidad de mantener actualizado este archivo `Chat.md`.
 
+## 2025-05-12 (continuación)
+
+- Se implementó un endpoint `/login` en el backend que valida usuario y contraseña y devuelve un JWT si las credenciales son correctas.
+- Se configuró correctamente la clave JWT para cumplir con los requisitos de seguridad del algoritmo HS256.
+- Se realizó una prueba automática del endpoint `/login` mediante PowerShell y HTTP, obteniendo un token JWT válido al enviar las credenciales:
+  - username: `admin`
+  - password: `admin123`
+- Se refactorizó el backend para organizar los endpoints en controladores (`UsersController` y `AuthController`).
+- El endpoint `POST /api/auth/login` permite autenticación y devuelve un JWT válido.
+- El endpoint `GET /api/users`, protegido por rol Admin, responde correctamente cuando se usa el token obtenido en el login.
+- Se realizaron pruebas automáticas exitosas de ambos endpoints usando PowerShell.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

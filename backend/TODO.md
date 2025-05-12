@@ -10,8 +10,13 @@ Este archivo contiene una lista inicial de tareas y funcionalidades pendientes p
 - [x] Organizar los endpoints en controladores y eliminar código innecesario (WeatherForecast)
 - [ ] Configurar el acceso a base de datos (por ejemplo, Entity Framework Core con SQL Server o SQLite)
 - [ ] Crear y aplicar migraciones de base de datos
-- [ ] Añadir pruebas unitarias y de integración
-- [ ] Documentar la API con OpenAPI/Swagger
-- [ ] Configurar despliegue y CI/CD
+- [ ] Mejorar la gestión de contraseñas (hashing).
+- [ ] Añadir endpoints CRUD completos para usuarios.
+- [ ] Poblar la base de datos con usuarios de ejemplo desde migraciones o seeders.
+- [ ] Añadir pruebas unitarias y de integración.
+- [ ] Documentar la API con OpenAPI/Swagger.
+- [ ] Configurar despliegue y CI/CD.
+- [ ] Continuar con la implementación y estructura del frontend en React.
+- [ ] Mantener actualizado Chat.md y la documentación según se avance.
 
 Este archivo se irá actualizando conforme se definan y completen nuevas tareas.
