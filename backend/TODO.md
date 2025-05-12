@@ -8,11 +8,12 @@ Este archivo contiene una lista inicial de tareas y funcionalidades pendientes p
 - [x] Implementar autenticación (JWT Bearer) y autorización basada en roles o políticas
 - [x] Diseñar y crear los modelos de datos principales (User)
 - [x] Organizar los endpoints en controladores y eliminar código innecesario (WeatherForecast)
-- [ ] Configurar el acceso a base de datos (por ejemplo, Entity Framework Core con SQL Server o SQLite)
-- [ ] Crear y aplicar migraciones de base de datos
+- [x] Configurar el acceso a base de datos (por ejemplo, Entity Framework Core con SQL Server o SQLite)
+- [x] Crear y aplicar migraciones de base de datos
+- [x] Automatizar la captura y uso del token JWT en backend.http usando scripting de REST Client
 - [ ] Mejorar la gestión de contraseñas (hashing).
 - [ ] Añadir endpoints CRUD completos para usuarios.
-- [ ] Poblar la base de datos con usuarios de ejemplo desde migraciones o seeders.
+- [x] Poblar la base de datos con usuarios de ejemplo desde migraciones o seeders.
 - [ ] Añadir pruebas unitarias y de integración.
 - [ ] Documentar la API con OpenAPI/Swagger.
 - [ ] Configurar despliegue y CI/CD.
