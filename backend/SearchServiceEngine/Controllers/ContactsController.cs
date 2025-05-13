@@ -1,0 +1,85 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SearchServiceEngine.DTOs;
+using SearchServiceEngine.Services;
+
+namespace SearchServiceEngine.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class ContactsController : ControllerBase
+    {
+        private readonly IContactService _contactService;
+        public ContactsController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+
+        /// <summary>
+        /// Obtiene una lista paginada de contactos, con opción de filtrar por nombre o email.
+        /// </summary>
+        /// <param name="filter">Texto para filtrar por nombre o email (opcional).</param>
+        /// <param name="page">Número de página (por defecto 1).</param>
+        /// <param name="pageSize">Tamaño de página (por defecto 10).</param>
+        /// <returns>Lista paginada de contactos.</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] string? filter, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var result = await _contactService.GetAllAsync(filter, page, pageSize);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Obtiene un contacto por su identificador único.
+        /// </summary>
+        /// <param name="id">Identificador del contacto.</param>
+        /// <returns>El contacto solicitado o NotFound si no existe.</returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _contactService.GetByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Crea un nuevo contacto.
+        /// </summary>
+        /// <param name="dto">Datos del contacto a crear.</param>
+        /// <returns>El contacto creado.</returns>
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] ContactCreateDto dto)
+        {
+            var created = await _contactService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        }
+
+        /// <summary>
+        /// Actualiza un contacto existente.
+        /// </summary>
+        /// <param name="id">Identificador del contacto a actualizar.</param>
+        /// <param name="dto">Datos actualizados del contacto.</param>
+        /// <returns>NoContent si se actualizó correctamente, NotFound si no existe.</returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ContactUpdateDto dto)
+        {
+            var updated = await _contactService.UpdateAsync(id, dto);
+            if (!updated) return NotFound();
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Elimina un contacto por su identificador.
+        /// </summary>
+        /// <param name="id">Identificador del contacto a eliminar.</param>
+        /// <returns>NoContent si se eliminó correctamente, NotFound si no existe.</returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _contactService.DeleteAsync(id);
+            if (!deleted) return NotFound();
+            return NoContent();
+        }
+    }
+}

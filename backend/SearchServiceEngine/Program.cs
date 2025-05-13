@@ -7,6 +7,8 @@ using SearchServiceEngine.Data;
 using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using SearchServiceEngine.Repositories;
+using SearchServiceEngine.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,10 +53,16 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
+// Registrar servicios y repositorios personalizados
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContactService, ContactService>();
+
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddDbContext<SearchServiceEngine.Data.AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

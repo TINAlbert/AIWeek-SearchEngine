@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SearchServiceEngine.Data;
 
@@ -10,9 +11,11 @@ using SearchServiceEngine.Data;
 namespace SearchServiceEngine.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250513080206_SeedContacts")]
+    partial class SeedContacts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
@@ -194,27 +197,27 @@ namespace SearchServiceEngine.Migrations
                         {
                             Id = 1,
                             Address = "Calle Falsa 123, Madrid",
-                            CreatedAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedAt = new DateTime(2025, 5, 13, 8, 2, 6, 187, DateTimeKind.Utc).AddTicks(4030),
                             Document = "12345678A",
                             Email = "juan.perez@example.com",
                             FirstName = "Juan",
                             LastName = "Pérez",
                             Phone = "+34123456789",
                             Status = "Activo",
-                            UpdatedAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2025, 5, 13, 8, 2, 6, 187, DateTimeKind.Utc).AddTicks(4141)
                         },
                         new
                         {
                             Id = 2,
                             Address = "Avenida Real 456, Barcelona",
-                            CreatedAt = new DateTime(2024, 1, 2, 12, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedAt = new DateTime(2025, 5, 13, 8, 2, 6, 187, DateTimeKind.Utc).AddTicks(4208),
                             Document = "87654321B",
                             Email = "ana.garcia@example.com",
                             FirstName = "Ana",
                             LastName = "García",
                             Phone = "+34987654321",
                             Status = "Inactivo",
-                            UpdatedAt = new DateTime(2024, 1, 2, 12, 0, 0, 0, DateTimeKind.Utc)
+                            UpdatedAt = new DateTime(2025, 5, 13, 8, 2, 6, 187, DateTimeKind.Utc).AddTicks(4209)
                         });
                 });
 

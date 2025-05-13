@@ -1,0 +1,148 @@
+# Especificación del Proyecto Backend: API REST para Buscador de Contactos
+
+## 1. Objetivo del Proyecto
+
+Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestión y consulta de contactos/fichas personales, con acceso autenticado mediante JWT y Refresh Tokens. Se utilizará **Entity Framework Core** para la persistencia de datos y **Microsoft Identity** para la autenticación y autorización.
+
+---
+
+## 2. Requisitos Funcionales
+
+### 2.1 Autenticación y Autorización
+
+* Registro de usuarios (opcional)
+* Inicio de sesión con emisión de **Access Token (JWT)** y **Refresh Token**
+* Refresco de tokens válidos mediante un endpoint
+* Roles y claims gestionados con Microsoft Identity
+
+### 2.2 Gestión de Contactos
+
+* CRUD de contactos (según rol del usuario):
+
+  * `GET /contacts` con soporte para filtros y búsquedas
+  * `GET /contacts/{id}`
+  * `POST /contacts`
+  * `PUT /contacts/{id}`
+  * `DELETE /contacts/{id}` (si aplica)
+
+### 2.3 Paginación y Filtros
+
+* Paginación en consultas masivas con `page`, `pageSize`
+* Filtros por nombre, documento, estado, etc.
+
+### 2.4 Seguridad
+
+* Verificación de roles y claims en cada endpoint
+* Manejo de expiración y renovación de tokens
+* Almacenamiento seguro de refresh tokens en base de datos
+
+---
+
+## 3. Requisitos Técnicos
+
+### 3.1 Tecnologías y Frameworks
+
+* **.NET Core** (7.0 o superior)
+* **Entity Framework Core** para ORM y migraciones
+* **Microsoft Identity Framework** para autenticación y autorización
+* **JWT** para tokens de acceso
+* **AutoMapper** para mapeo DTOs
+* **FluentValidation** para validaciones de entrada (opcional)
+* **Scalar** para documentación de la API
+
+### 3.2 Estructura de Capas
+
+* `Controllers` (Web API)
+* `Services` (lógica de negocio)
+* `Repositories` (acceso a datos via EF Core)
+* `DTOs` (Data Transfer Objects)
+* `Models` (entidades de EF)
+* `Authentication` (generación y validación de JWT)
+
+---
+
+## 4. Esquema de Base de Datos (simplificado)
+
+### Entidades principales:
+
+* **User** (IdentityUser extendido)
+* **Contact**
+
+  * Id
+  * Nombre
+  * Apellido
+  * Documento
+  * Email
+  * Teléfono
+  * Dirección
+  * Estado
+  * Fecha de creación / actualización
+* **RefreshToken**
+
+  * Id
+  * UsuarioId
+  * Token
+  * Fecha expiración
+  * Revocado
+
+---
+
+## 5. Endpoints Principales
+
+### Autenticación
+
+* `POST /auth/login` → retorna JWT + Refresh Token
+* `POST /auth/refresh` → renueva tokens
+* `POST /auth/logout` → revoca refresh token (opcional)
+
+### Usuarios (opcional, admin)
+
+* `GET /users`
+* `POST /users`
+* `PUT /users/{id}`
+
+### Contactos
+
+* `GET /contacts?query=&page=&pageSize=`
+* `GET /contacts/{id}`
+* `POST /contacts`
+* `PUT /contacts/{id}`
+* `DELETE /contacts/{id}`
+
+---
+
+## 6. Seguridad
+
+* JWT con firma HMAC-SHA256
+* Expiración del access token (ej: 15 minutos)
+* Refresh token válido por varios días (ej: 7 días)
+* Middleware de autorización con roles
+* Almacenamiento cifrado de refresh tokens
+
+---
+
+## 7. Consideraciones de Desarrollo
+
+* Uso de `appsettings.json` para configuraciones sensibles (secret key, expiración tokens, cadena de conexión)
+* Inyección de dependencias (DI) para servicios y repositorios
+* Unit Testing con xUnit o NUnit
+* Migraciones automáticas o controladas con EF Core
+
+---
+
+## 8. Extras Opcionales
+
+* Registro y verificación de email de usuarios
+* Logs con Serilog
+* Políticas de CORS seguras para frontend
+* Documentación interactiva con Swagger UI
+
+---
+
+## 9. Entregables Esperados
+
+* Proyecto .NET Core con estructura limpia y modular
+* Base de datos generada por migraciones de EF Core
+* API documentada con Scalar
+* Tests unitarios básicos
+* Seguridad completa implementada (login, JWT, refresh tokens)
