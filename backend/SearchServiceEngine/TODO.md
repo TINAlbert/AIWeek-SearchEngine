@@ -63,13 +63,16 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] ContactController (CRUD y filtros)
   - [x] UsersController (CRUD)
   - [x] Servicios y lógica de negocio
-- [ ] Añadir pruebas de integración
+- [ ] (Opcional) Añadir pruebas de integración
 
 ### 8. DevOps y despliegue
+<!-- No aplica en este proyecto por ahora -->
+<!--
 - [ ] Configurar despliegue y CI/CD
 - [ ] Configurar migraciones automáticas/controladas
 - [ ] Configurar logs (ej: Serilog)
 - [ ] Configurar políticas de CORS seguras
+-->
 
 ### 9. Extras opcionales
 - [ ] Registro y verificación de email de usuarios

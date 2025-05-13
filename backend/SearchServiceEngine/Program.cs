@@ -63,7 +63,6 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
@@ -78,7 +77,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();   
+    app.MapScalarApiReference( (options) =>
+    {
+        options.WithTitle("Search service engine API Reference");
+        // Configura autenticación Bearer en la UI
+        options.AddHttpAuthentication("Bearer", scheme =>
+        {
+            scheme.Description = "Introduce el token JWT como: Bearer {token}";
+        });
+    });   
 }
 
 app.UseHttpsRedirection();

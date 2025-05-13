@@ -73,6 +73,13 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - Corregidos los warnings de posibles valores nulos en claims y configuración JWT.
 - El backend compila correctamente y está listo para pruebas.
 
+## 2025-05-13
+
+- Integrada la autenticación Bearer JWT en la documentación interactiva Scalar UI del backend.
+- Se aclara que Scalar UI no muestra botón "Authorize"; el token debe añadirse manualmente en los headers al probar endpoints protegidos.
+- El backend compila y funciona correctamente con la configuración actual de seguridad y documentación.
+- Listo para commit final de la configuración de Scalar/OpenAPI y autenticación JWT.
+
 # Resumen de cambios recientes (13/05/2025)
 
 - Refactor y robustecimiento de controladores y servicios principales (Contacts, Users, Auth) en el backend.
