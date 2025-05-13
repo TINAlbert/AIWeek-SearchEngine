@@ -38,6 +38,8 @@ namespace SearchServiceEngine.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+            if (id <= 0)
+                return BadRequest();
             var result = await _contactService.GetByIdAsync(id);
             if (result == null) return NotFound();
             return Ok(result);
@@ -51,8 +53,17 @@ namespace SearchServiceEngine.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ContactCreateDto dto)
         {
-            var created = await _contactService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            try
+            {
+                var created = await _contactService.CreateAsync(dto);
+                if (created == null)
+                    return BadRequest();
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         /// <summary>
@@ -64,9 +75,18 @@ namespace SearchServiceEngine.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ContactUpdateDto dto)
         {
-            var updated = await _contactService.UpdateAsync(id, dto);
-            if (!updated) return NotFound();
-            return NoContent();
+            if (id <= 0 || dto == null)
+                return BadRequest();
+            try
+            {
+                var updated = await _contactService.UpdateAsync(id, dto);
+                if (!updated) return NotFound();
+                return NoContent();
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         /// <summary>
@@ -77,9 +97,18 @@ namespace SearchServiceEngine.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _contactService.DeleteAsync(id);
-            if (!deleted) return NotFound();
-            return NoContent();
+            if (id <= 0)
+                return BadRequest();
+            try
+            {
+                var deleted = await _contactService.DeleteAsync(id);
+                if (!deleted) return NotFound();
+                return NoContent();
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

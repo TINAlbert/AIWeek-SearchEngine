@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="78f6b3f5-d676-40f8-96ab-0196701658aa" name="albert.garcia@TIN-DEV-AGARCIA 2025-05-13 11:41:26" runUser="T-INNOVA\albert.garcia" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-05-13T11:41:26.2973267+02:00" queuing="2025-05-13T11:41:26.2973277+02:00" start="2025-05-13T11:41:25.1867305+02:00" finish="2025-05-13T11:41:26.8379857+02:00" />
+  <TestSettings name="default" id="14ecb2e4-1664-413f-9b54-9c9c96cd19ad">
+    <Deployment runDeploymentRoot="albert.garcia_TIN-DEV-AGARCIA_2025-05-13_11_41_26" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="2278ec20-33c2-472d-93a7-73de45f34009" testId="d1694594-3a7a-1b20-d8df-018290b36237" testName="SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsUnauthorized_WhenUserNotFound" computerName="TIN-DEV-AGARCIA" duration="00:00:00.3141920" startTime="2025-05-13T11:41:26.3627286+02:00" endTime="2025-05-13T11:41:26.3627290+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2278ec20-33c2-472d-93a7-73de45f34009" />
+    <UnitTestResult executionId="f20e9c46-42d0-4b48-b5af-681b08c70289" testId="5e55ebdf-1684-de55-bab2-716d70d5a0f5" testName="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_CreatesContact" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0028663" startTime="2025-05-13T11:41:26.2635112+02:00" endTime="2025-05-13T11:41:26.2635112+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f20e9c46-42d0-4b48-b5af-681b08c70289" />
+    <UnitTestResult executionId="43fb3ada-2a45-4dc0-a3d9-70d5923d92d2" testId="e7a25220-0255-8636-91f1-32363b800f06" testName="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsOk_WhenUserCreated" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0026512" startTime="2025-05-13T11:41:26.3677877+02:00" endTime="2025-05-13T11:41:26.3677880+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="43fb3ada-2a45-4dc0-a3d9-70d5923d92d2" />
+    <UnitTestResult executionId="ed52e01b-9fd8-4ec2-8b98-b75c9b6feb53" testId="509a5ae8-44d7-06df-a438-2d80a41f02ec" testName="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsServerError_WhenServiceThrowsException" computerName="TIN-DEV-AGARCIA" duration="00:00:00.1523098" startTime="2025-05-13T11:41:26.2161815+02:00" endTime="2025-05-13T11:41:26.2161818+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed52e01b-9fd8-4ec2-8b98-b75c9b6feb53">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Exception : DB error</Message>
+          <StackTrace>   at SearchServiceEngine.Controllers.ContactsController.Update(Int32 id, ContactUpdateDto dto) in e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs:line 67&#xD;
+   at SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsServerError_WhenServiceThrowsException() in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs:line 129&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="80fb0587-9521-4b91-b3c6-78db9dd55324" testId="f0277c31-c4e0-3698-eee7-eaa634e2e218" testName="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ThrowsException_WhenRepositoryFails" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0034919" startTime="2025-05-13T11:41:26.2641880+02:00" endTime="2025-05-13T11:41:26.2641881+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="80fb0587-9521-4b91-b3c6-78db9dd55324">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: Exception type was not an exact match&#xD;
+Expected: typeof(System.Exception)&#xD;
+Actual:   typeof(System.NullReferenceException)&#xD;
+---- System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ThrowsException_WhenRepositoryFails() in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactServiceTests.cs:line 152&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+   at SearchServiceEngine.Services.ContactService.CreateAsync(ContactCreateDto dto) in e:\AIWeek\backend\SearchServiceEngine\Services\ContactService.cs:line 33</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="53750fcb-6843-40e3-99c2-79bd3bc6eb8d" testId="2cd2687f-980f-27e3-3d6c-09988a9d0f4b" testName="SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsToken_WhenUserExistsAndPasswordMatches" computerName="TIN-DEV-AGARCIA" duration="00:00:00.4236693" startTime="2025-05-13T11:41:26.7871468+02:00" endTime="2025-05-13T11:41:26.7871471+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="53750fcb-6843-40e3-99c2-79bd3bc6eb8d">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at SearchServiceEngine.Controllers.AuthController.Login(LoginRequest loginRequest) in e:\AIWeek\backend\SearchServiceEngine\Controllers\AuthController.cs:line 71&#xD;
+   at SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsToken_WhenUserExistsAndPasswordMatches() in e:\AIWeek\backend\SearchServiceEngine.Tests\AuthControllerTests.cs:line 72&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e5ff515a-26ff-4ec4-86ba-ead284df16c2" testId="e79908dc-bf70-a386-2987-fbb93c8d42a5" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetAll_ReturnsOkResult_WithContacts" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0040854" startTime="2025-05-13T11:41:26.2634894+02:00" endTime="2025-05-13T11:41:26.2634894+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e5ff515a-26ff-4ec4-86ba-ead284df16c2" />
+    <UnitTestResult executionId="abbd750f-a128-4b68-88bd-6c5a35fc6c98" testId="4eaa212b-b5f5-57b9-882f-d67b2c589a35" testName="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsNoContent_WhenSuccessful" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0007800" startTime="2025-05-13T11:41:26.2212557+02:00" endTime="2025-05-13T11:41:26.2212561+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="abbd750f-a128-4b68-88bd-6c5a35fc6c98" />
+    <UnitTestResult executionId="6c3e5c06-09dd-4d6f-bc4a-887d6025b89d" testId="9b7f19fe-c4af-a98a-ca23-419acfb4d9d7" testName="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ReturnsTrue_WhenContactExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0006418" startTime="2025-05-13T11:41:26.2635533+02:00" endTime="2025-05-13T11:41:26.2635533+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6c3e5c06-09dd-4d6f-bc4a-887d6025b89d" />
+    <UnitTestResult executionId="84b506f6-634f-4ec3-9d10-6d9ab3ae17e4" testId="c1546487-1ce5-a177-bb0a-6a3fa2f88a23" testName="SearchServiceEngine.Tests.UnitTest1.Test1" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0311759" startTime="2025-05-13T11:41:26.0829705+02:00" endTime="2025-05-13T11:41:26.0829942+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="84b506f6-634f-4ec3-9d10-6d9ab3ae17e4" />
+    <UnitTestResult executionId="2d4b48f8-60d9-41ea-b107-47e3860da2b2" testId="641a7d4c-a836-5167-cd96-a1a527b1a890" testName="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ThrowsException_WhenRepositoryFails" computerName="TIN-DEV-AGARCIA" duration="00:00:00.1900605" startTime="2025-05-13T11:41:26.2355818+02:00" endTime="2025-05-13T11:41:26.2355824+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d4b48f8-60d9-41ea-b107-47e3860da2b2" />
+    <UnitTestResult executionId="aabd8714-37c5-4879-96cb-8a0bc59f2773" testId="599ce980-334a-321f-b0bd-7d4ffd7984b9" testName="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenNotExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0003697" startTime="2025-05-13T11:41:26.2635924+02:00" endTime="2025-05-13T11:41:26.2635925+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aabd8714-37c5-4879-96cb-8a0bc59f2773" />
+    <UnitTestResult executionId="dc92c126-ae93-449c-97d9-596c05ba4f43" testId="fddbf25c-186d-a113-bd50-04940fa4387c" testName="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ReturnsFalse_WhenContactNotExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0004688" startTime="2025-05-13T11:41:26.2635728+02:00" endTime="2025-05-13T11:41:26.2635728+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc92c126-ae93-449c-97d9-596c05ba4f43" />
+    <UnitTestResult executionId="2ef8f758-0553-484a-85fa-11958e74ca30" testId="2212c445-5eef-5a30-9d81-05c1b024fc47" testName="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsNotFound_WhenContactDoesNotExist" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0030303" startTime="2025-05-13T11:41:26.2164929+02:00" endTime="2025-05-13T11:41:26.2164930+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ef8f758-0553-484a-85fa-11958e74ca30" />
+    <UnitTestResult executionId="12fb8ccb-04b5-428c-9df0-cd8a5236b533" testId="660dbcb9-ad0c-1ea6-d24d-2379001c6280" testName="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsContact_WhenExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0017499" startTime="2025-05-13T11:41:26.2663882+02:00" endTime="2025-05-13T11:41:26.2663887+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12fb8ccb-04b5-428c-9df0-cd8a5236b533" />
+    <UnitTestResult executionId="85799d4c-a052-4448-aff2-46e8097a1b29" testId="5f6215f5-e980-8733-90a4-f44f99c7f101" testName="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ReturnsFalse_WhenContactNotExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0006297" startTime="2025-05-13T11:41:26.2636113+02:00" endTime="2025-05-13T11:41:26.2636113+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="85799d4c-a052-4448-aff2-46e8097a1b29" />
+    <UnitTestResult executionId="6d99236b-fcaf-4664-a50c-3f27b1c149de" testId="b26e07c6-2818-7d81-9f80-a22f66b96e27" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: -1)" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0002527" startTime="2025-05-13T11:41:26.2624464+02:00" endTime="2025-05-13T11:41:26.2624465+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6d99236b-fcaf-4664-a50c-3f27b1c149de">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsType() Failure: Value is not the exact type&#xD;
+Expected: typeof(Microsoft.AspNetCore.Mvc.BadRequestResult)&#xD;
+Actual:   typeof(Microsoft.AspNetCore.Mvc.NotFoundResult)</Message>
+          <StackTrace>   at SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(Int32 invalidId) in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs:line 77&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="05ea57f3-e3fd-472e-bda4-022c8716bc5a" testId="bb07df78-3ab1-ade3-a846-792c12d33a64" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetAll_ReturnsOkResult_WhenNoContacts" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0013575" startTime="2025-05-13T11:41:26.2635343+02:00" endTime="2025-05-13T11:41:26.2635344+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="05ea57f3-e3fd-472e-bda4-022c8716bc5a" />
+    <UnitTestResult executionId="df159cb3-88fc-4d99-b9f9-10b2cddcb83f" testId="f5437979-3b12-b40f-3ea6-bf001100d4fd" testName="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsNotFound_WhenContactDoesNotExist" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0013391" startTime="2025-05-13T11:41:26.2626249+02:00" endTime="2025-05-13T11:41:26.2626249+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="df159cb3-88fc-4d99-b9f9-10b2cddcb83f" />
+    <UnitTestResult executionId="769cb562-4049-4d59-b1df-80a5e33b2053" testId="408e7cbc-3845-7f6f-3bba-f73cbb826974" testName="SearchServiceEngine.Tests.ContactServiceTests.GetAllAsync_ThrowsException_WhenRepositoryFails" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0010686" startTime="2025-05-13T11:41:26.2645357+02:00" endTime="2025-05-13T11:41:26.2645360+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="769cb562-4049-4d59-b1df-80a5e33b2053" />
+    <UnitTestResult executionId="1ad92d25-3eb7-48db-b170-d9478aaa47ad" testId="f84ec6fc-21b2-056b-e802-583f63cf8a7b" testName="SearchServiceEngine.Tests.ContactServiceTests.GetAllAsync_ReturnsContacts" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0031433" startTime="2025-05-13T11:41:26.2638998+02:00" endTime="2025-05-13T11:41:26.2638998+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1ad92d25-3eb7-48db-b170-d9478aaa47ad" />
+    <UnitTestResult executionId="b83f672a-1ef1-4448-8306-79c4733e75cd" testId="7b79e1e0-538c-94f7-1b88-4b10950a4e88" testName="SearchServiceEngine.Tests.UsersControllerTests.GetAll_ReturnsOk_WithUsers" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0336404" startTime="2025-05-13T11:41:26.3657174+02:00" endTime="2025-05-13T11:41:26.3657176+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b83f672a-1ef1-4448-8306-79c4733e75cd">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsType() Failure: Value is not the exact type&#xD;
+Expected: typeof(Microsoft.AspNetCore.Mvc.OkObjectResult)&#xD;
+Actual:   typeof(Microsoft.AspNetCore.Mvc.ActionResult&lt;IEnumerable&lt;object&gt;&gt;)</Message>
+          <StackTrace>   at SearchServiceEngine.Tests.UsersControllerTests.GetAll_ReturnsOk_WithUsers() in e:\AIWeek\backend\SearchServiceEngine.Tests\UsersControllerTests.cs:line 42&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c490e65d-14ff-4f8b-9c6a-5d8c642d097b" testId="9d9b91b7-da70-282d-59e9-07245e3346ed" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsOk_WhenContactExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0058959" startTime="2025-05-13T11:41:26.2203926+02:00" endTime="2025-05-13T11:41:26.2203929+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c490e65d-14ff-4f8b-9c6a-5d8c642d097b" />
+    <UnitTestResult executionId="80016c33-2849-4803-a4a3-0dc692ea7b91" testId="21620adb-b1c5-04a0-99c2-38e72fea61f5" testName="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ReturnsTrue_WhenContactExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0021564" startTime="2025-05-13T11:41:26.2642185+02:00" endTime="2025-05-13T11:41:26.2642186+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="80016c33-2849-4803-a4a3-0dc692ea7b91" />
+    <UnitTestResult executionId="d354b833-9575-4df6-9d0e-ca763001cb87" testId="760ea78e-785d-970d-2468-39b5bef9dd9e" testName="SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsBadRequest_WhenServiceReturnsNull" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0027770" startTime="2025-05-13T11:41:26.2625698+02:00" endTime="2025-05-13T11:41:26.2625698+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d354b833-9575-4df6-9d0e-ca763001cb87">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at SearchServiceEngine.Controllers.ContactsController.Create(ContactCreateDto dto) in e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs:line 55&#xD;
+   at SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsBadRequest_WhenServiceReturnsNull() in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs:line 98&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f013b3de-4ecf-4659-8858-fc162a3614f5" testId="eef8312d-55cc-ad4d-af37-5ad81b35f17d" testName="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsNoContent_WhenSuccessful" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0011398" startTime="2025-05-13T11:41:26.2638844+02:00" endTime="2025-05-13T11:41:26.2638845+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f013b3de-4ecf-4659-8858-fc162a3614f5" />
+    <UnitTestResult executionId="7f7c986d-d32c-4ae7-99e8-8c83bb78f4e9" testId="ce0fe7f2-ecd6-b105-bb46-79e4b4fdc1bb" testName="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsBadRequest_WhenValidationFails" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0075364" startTime="2025-05-13T11:41:26.3754116+02:00" endTime="2025-05-13T11:41:26.3754123+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f7c986d-d32c-4ae7-99e8-8c83bb78f4e9" />
+    <UnitTestResult executionId="7e7a0e01-c815-4d36-bbc4-5b35817d6a85" testId="b787aed3-2672-514b-fc99-9ea9ee92c6c0" testName="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ThrowsException_WhenRepositoryFails" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0087448" startTime="2025-05-13T11:41:26.2627964+02:00" endTime="2025-05-13T11:41:26.2627964+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7e7a0e01-c815-4d36-bbc4-5b35817d6a85" />
+    <UnitTestResult executionId="e6a20d23-3e06-4ffb-b723-7da98ddd4bb4" testId="5031f7ba-4bb2-341b-b7fc-b019a0d8c961" testName="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsServerError_WhenServiceThrowsException" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0010619" startTime="2025-05-13T11:41:26.2627663+02:00" endTime="2025-05-13T11:41:26.2627665+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e6a20d23-3e06-4ffb-b723-7da98ddd4bb4">
+      <Output>
+        <ErrorInfo>
+          <Message>System.Exception : DB error</Message>
+          <StackTrace>   at SearchServiceEngine.Controllers.ContactsController.Delete(Int32 id) in e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs:line 80&#xD;
+   at SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsServerError_WhenServiceThrowsException() in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs:line 158&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d7aa6dd2-eeb8-4380-a203-db5849de075d" testId="3e39cf01-8704-6944-2c01-8adcb12dbf2f" testName="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenIdIsInvalid(invalidId: -1)" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0002473" startTime="2025-05-13T11:41:26.2634613+02:00" endTime="2025-05-13T11:41:26.2634614+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d7aa6dd2-eeb8-4380-a203-db5849de075d" />
+    <UnitTestResult executionId="4280a74f-c132-4568-88ff-530a3fb83af8" testId="7f2a3e6b-8c63-b03c-3303-a5f856b38508" testName="SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsCreatedAtAction_WithContact" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0019440" startTime="2025-05-13T11:41:26.2638583+02:00" endTime="2025-05-13T11:41:26.2638584+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4280a74f-c132-4568-88ff-530a3fb83af8" />
+    <UnitTestResult executionId="20cbd16a-6ad6-4243-89bf-4105e3875963" testId="f4ff7352-a860-88a7-721e-dca8d723a1d0" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsNotFound_WhenContactDoesNotExist" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0009711" startTime="2025-05-13T11:41:26.2625972+02:00" endTime="2025-05-13T11:41:26.2625973+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="20cbd16a-6ad6-4243-89bf-4105e3875963" />
+    <UnitTestResult executionId="5cb04cb7-92d0-4ae8-8918-66eff414e6ec" testId="98742c3a-7a81-d772-7866-ea3c0ccc0145" testName="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ReturnsNull_WhenRepositoryReturnsNull" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0009495" startTime="2025-05-13T11:41:26.2643305+02:00" endTime="2025-05-13T11:41:26.2643305+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5cb04cb7-92d0-4ae8-8918-66eff414e6ec">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NullReferenceException : Object reference not set to an instance of an object.</Message>
+          <StackTrace>   at SearchServiceEngine.Services.ContactService.CreateAsync(ContactCreateDto dto) in e:\AIWeek\backend\SearchServiceEngine\Services\ContactService.cs:line 33&#xD;
+   at SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ReturnsNull_WhenRepositoryReturnsNull() in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactServiceTests.cs:line 143&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="66284fe5-cf5f-4273-9786-96acec7bef09" testId="2e70f137-8a32-ecd0-0e00-e92430acad35" testName="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsConflict_WhenUserExists" computerName="TIN-DEV-AGARCIA" duration="00:00:00.2857526" startTime="2025-05-13T11:41:26.3312335+02:00" endTime="2025-05-13T11:41:26.3312340+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="66284fe5-cf5f-4273-9786-96acec7bef09" />
+    <UnitTestResult executionId="cdcc6ff1-1361-42c1-8e09-6cd56cbbb7d8" testId="d4662883-189b-134a-bca7-c61d32823a01" testName="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenIdIsInvalid(invalidId: 0)" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0011536" startTime="2025-05-13T11:41:26.2628197+02:00" endTime="2025-05-13T11:41:26.2628198+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cdcc6ff1-1361-42c1-8e09-6cd56cbbb7d8" />
+    <UnitTestResult executionId="4cc21aa8-db0b-45bd-9e67-a1f6794f3329" testId="ab2cadc0-3002-ab5a-02a7-1fd59f663ba8" testName="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: 0)" computerName="TIN-DEV-AGARCIA" duration="00:00:00.0136597" startTime="2025-05-13T11:41:26.2621793+02:00" endTime="2025-05-13T11:41:26.2621794+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4cc21aa8-db0b-45bd-9e67-a1f6794f3329">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsType() Failure: Value is not the exact type&#xD;
+Expected: typeof(Microsoft.AspNetCore.Mvc.BadRequestResult)&#xD;
+Actual:   typeof(Microsoft.AspNetCore.Mvc.NotFoundResult)</Message>
+          <StackTrace>   at SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(Int32 invalidId) in e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs:line 77&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ReturnsTrue_WhenContactExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="21620adb-b1c5-04a0-99c2-38e72fea61f5">
+      <Execution id="80016c33-2849-4803-a4a3-0dc692ea7b91" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="UpdateAsync_ReturnsTrue_WhenContactExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ReturnsFalse_WhenContactNotExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="fddbf25c-186d-a113-bd50-04940fa4387c">
+      <Execution id="dc92c126-ae93-449c-97d9-596c05ba4f43" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="DeleteAsync_ReturnsFalse_WhenContactNotExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.UsersControllerTests.GetAll_ReturnsOk_WithUsers" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="7b79e1e0-538c-94f7-1b88-4b10950a4e88">
+      <Execution id="b83f672a-1ef1-4448-8306-79c4733e75cd" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.UsersControllerTests" name="GetAll_ReturnsOk_WithUsers" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenNotExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="599ce980-334a-321f-b0bd-7d4ffd7984b9">
+      <Execution id="aabd8714-37c5-4879-96cb-8a0bc59f2773" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetByIdAsync_ReturnsNull_WhenNotExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ReturnsNull_WhenRepositoryReturnsNull" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="98742c3a-7a81-d772-7866-ea3c0ccc0145">
+      <Execution id="5cb04cb7-92d0-4ae8-8918-66eff414e6ec" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="CreateAsync_ReturnsNull_WhenRepositoryReturnsNull" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetAll_ReturnsOkResult_WhenNoContacts" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="bb07df78-3ab1-ade3-a846-792c12d33a64">
+      <Execution id="05ea57f3-e3fd-472e-bda4-022c8716bc5a" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetAll_ReturnsOkResult_WhenNoContacts" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenIdIsInvalid(invalidId: 0)" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="d4662883-189b-134a-bca7-c61d32823a01">
+      <Execution id="cdcc6ff1-1361-42c1-8e09-6cd56cbbb7d8" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetByIdAsync_ReturnsNull_WhenIdIsInvalid" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsBadRequest_WhenServiceReturnsNull" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="760ea78e-785d-970d-2468-39b5bef9dd9e">
+      <Execution id="d354b833-9575-4df6-9d0e-ca763001cb87" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Create_ReturnsBadRequest_WhenServiceReturnsNull" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsServerError_WhenServiceThrowsException" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="5031f7ba-4bb2-341b-b7fc-b019a0d8c961">
+      <Execution id="e6a20d23-3e06-4ffb-b723-7da98ddd4bb4" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Delete_ReturnsServerError_WhenServiceThrowsException" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsContact_WhenExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="660dbcb9-ad0c-1ea6-d24d-2379001c6280">
+      <Execution id="12fb8ccb-04b5-428c-9df0-cd8a5236b533" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetByIdAsync_ReturnsContact_WhenExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ThrowsException_WhenRepositoryFails" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="f0277c31-c4e0-3698-eee7-eaa634e2e218">
+      <Execution id="80fb0587-9521-4b91-b3c6-78db9dd55324" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="CreateAsync_ThrowsException_WhenRepositoryFails" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsBadRequest_WhenValidationFails" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="ce0fe7f2-ecd6-b105-bb46-79e4b4fdc1bb">
+      <Execution id="7f7c986d-d32c-4ae7-99e8-8c83bb78f4e9" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.UsersControllerTests" name="Create_ReturnsBadRequest_WhenValidationFails" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetAllAsync_ThrowsException_WhenRepositoryFails" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="408e7cbc-3845-7f6f-3bba-f73cbb826974">
+      <Execution id="769cb562-4049-4d59-b1df-80a5e33b2053" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetAllAsync_ThrowsException_WhenRepositoryFails" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsToken_WhenUserExistsAndPasswordMatches" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="2cd2687f-980f-27e3-3d6c-09988a9d0f4b">
+      <Execution id="53750fcb-6843-40e3-99c2-79bd3bc6eb8d" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.AuthControllerTests" name="Login_ReturnsToken_WhenUserExistsAndPasswordMatches" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: -1)" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="b26e07c6-2818-7d81-9f80-a22f66b96e27">
+      <Execution id="6d99236b-fcaf-4664-a50c-3f27b1c149de" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetById_ReturnsBadRequest_WhenIdIsInvalid" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ReturnsTrue_WhenContactExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="9b7f19fe-c4af-a98a-ca23-419acfb4d9d7">
+      <Execution id="6c3e5c06-09dd-4d6f-bc4a-887d6025b89d" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="DeleteAsync_ReturnsTrue_WhenContactExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsServerError_WhenServiceThrowsException" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="509a5ae8-44d7-06df-a438-2d80a41f02ec">
+      <Execution id="ed52e01b-9fd8-4ec2-8b98-b75c9b6feb53" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Update_ReturnsServerError_WhenServiceThrowsException" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsUnauthorized_WhenUserNotFound" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="d1694594-3a7a-1b20-d8df-018290b36237">
+      <Execution id="2278ec20-33c2-472d-93a7-73de45f34009" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.AuthControllerTests" name="Login_ReturnsUnauthorized_WhenUserNotFound" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetByIdAsync_ReturnsNull_WhenIdIsInvalid(invalidId: -1)" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="3e39cf01-8704-6944-2c01-8adcb12dbf2f">
+      <Execution id="d7aa6dd2-eeb8-4380-a203-db5849de075d" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetByIdAsync_ReturnsNull_WhenIdIsInvalid" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsOk_WhenUserCreated" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="e7a25220-0255-8636-91f1-32363b800f06">
+      <Execution id="43fb3ada-2a45-4dc0-a3d9-70d5923d92d2" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.UsersControllerTests" name="Create_ReturnsOk_WhenUserCreated" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ReturnsFalse_WhenContactNotExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="5f6215f5-e980-8733-90a4-f44f99c7f101">
+      <Execution id="85799d4c-a052-4448-aff2-46e8097a1b29" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="UpdateAsync_ReturnsFalse_WhenContactNotExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.UpdateAsync_ThrowsException_WhenRepositoryFails" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="b787aed3-2672-514b-fc99-9ea9ee92c6c0">
+      <Execution id="7e7a0e01-c815-4d36-bbc4-5b35817d6a85" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="UpdateAsync_ThrowsException_WhenRepositoryFails" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsNotFound_WhenContactDoesNotExist" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="f4ff7352-a860-88a7-721e-dca8d723a1d0">
+      <Execution id="20cbd16a-6ad6-4243-89bf-4105e3875963" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetById_ReturnsNotFound_WhenContactDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: 0)" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="ab2cadc0-3002-ab5a-02a7-1fd59f663ba8">
+      <Execution id="4cc21aa8-db0b-45bd-9e67-a1f6794f3329" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetById_ReturnsBadRequest_WhenIdIsInvalid" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsNoContent_WhenSuccessful" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="4eaa212b-b5f5-57b9-882f-d67b2c589a35">
+      <Execution id="abbd750f-a128-4b68-88bd-6c5a35fc6c98" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Delete_ReturnsNoContent_WhenSuccessful" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsNoContent_WhenSuccessful" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="eef8312d-55cc-ad4d-af37-5ad81b35f17d">
+      <Execution id="f013b3de-4ecf-4659-8858-fc162a3614f5" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Update_ReturnsNoContent_WhenSuccessful" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsNotFound_WhenContactDoesNotExist" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="2212c445-5eef-5a30-9d81-05c1b024fc47">
+      <Execution id="2ef8f758-0553-484a-85fa-11958e74ca30" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Delete_ReturnsNotFound_WhenContactDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetAll_ReturnsOkResult_WithContacts" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="e79908dc-bf70-a386-2987-fbb93c8d42a5">
+      <Execution id="e5ff515a-26ff-4ec4-86ba-ead284df16c2" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetAll_ReturnsOkResult_WithContacts" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.GetAllAsync_ReturnsContacts" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="f84ec6fc-21b2-056b-e802-583f63cf8a7b">
+      <Execution id="1ad92d25-3eb7-48db-b170-d9478aaa47ad" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="GetAllAsync_ReturnsContacts" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_CreatesContact" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="5e55ebdf-1684-de55-bab2-716d70d5a0f5">
+      <Execution id="f20e9c46-42d0-4b48-b5af-681b08c70289" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="CreateAsync_CreatesContact" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.UnitTest1.Test1" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="c1546487-1ce5-a177-bb0a-6a3fa2f88a23">
+      <Execution id="84b506f6-634f-4ec3-9d10-6d9ab3ae17e4" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.UnitTest1" name="Test1" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsCreatedAtAction_WithContact" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="7f2a3e6b-8c63-b03c-3303-a5f856b38508">
+      <Execution id="4280a74f-c132-4568-88ff-530a3fb83af8" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Create_ReturnsCreatedAtAction_WithContact" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.UsersControllerTests.Create_ReturnsConflict_WhenUserExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="2e70f137-8a32-ecd0-0e00-e92430acad35">
+      <Execution id="66284fe5-cf5f-4273-9786-96acec7bef09" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.UsersControllerTests" name="Create_ReturnsConflict_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactServiceTests.DeleteAsync_ThrowsException_WhenRepositoryFails" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="641a7d4c-a836-5167-cd96-a1a527b1a890">
+      <Execution id="2d4b48f8-60d9-41ea-b107-47e3860da2b2" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactServiceTests" name="DeleteAsync_ThrowsException_WhenRepositoryFails" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsNotFound_WhenContactDoesNotExist" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="f5437979-3b12-b40f-3ea6-bf001100d4fd">
+      <Execution id="df159cb3-88fc-4d99-b9f9-10b2cddcb83f" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="Update_ReturnsNotFound_WhenContactDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsOk_WhenContactExists" storage="e:\aiweek\backend\searchserviceengine.tests\bin\debug\net9.0\searchserviceengine.tests.dll" id="9d9b91b7-da70-282d-59e9-07245e3346ed">
+      <Execution id="c490e65d-14ff-4f8b-9c6a-5d8c642d097b" />
+      <TestMethod codeBase="e:\AIWeek\backend\SearchServiceEngine.Tests\bin\Debug\net9.0\SearchServiceEngine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="SearchServiceEngine.Tests.ContactsControllerTests" name="GetById_ReturnsOk_WhenContactExists" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="d1694594-3a7a-1b20-d8df-018290b36237" executionId="2278ec20-33c2-472d-93a7-73de45f34009" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e55ebdf-1684-de55-bab2-716d70d5a0f5" executionId="f20e9c46-42d0-4b48-b5af-681b08c70289" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7a25220-0255-8636-91f1-32363b800f06" executionId="43fb3ada-2a45-4dc0-a3d9-70d5923d92d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="509a5ae8-44d7-06df-a438-2d80a41f02ec" executionId="ed52e01b-9fd8-4ec2-8b98-b75c9b6feb53" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f0277c31-c4e0-3698-eee7-eaa634e2e218" executionId="80fb0587-9521-4b91-b3c6-78db9dd55324" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2cd2687f-980f-27e3-3d6c-09988a9d0f4b" executionId="53750fcb-6843-40e3-99c2-79bd3bc6eb8d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e79908dc-bf70-a386-2987-fbb93c8d42a5" executionId="e5ff515a-26ff-4ec4-86ba-ead284df16c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4eaa212b-b5f5-57b9-882f-d67b2c589a35" executionId="abbd750f-a128-4b68-88bd-6c5a35fc6c98" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9b7f19fe-c4af-a98a-ca23-419acfb4d9d7" executionId="6c3e5c06-09dd-4d6f-bc4a-887d6025b89d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1546487-1ce5-a177-bb0a-6a3fa2f88a23" executionId="84b506f6-634f-4ec3-9d10-6d9ab3ae17e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="641a7d4c-a836-5167-cd96-a1a527b1a890" executionId="2d4b48f8-60d9-41ea-b107-47e3860da2b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="599ce980-334a-321f-b0bd-7d4ffd7984b9" executionId="aabd8714-37c5-4879-96cb-8a0bc59f2773" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fddbf25c-186d-a113-bd50-04940fa4387c" executionId="dc92c126-ae93-449c-97d9-596c05ba4f43" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2212c445-5eef-5a30-9d81-05c1b024fc47" executionId="2ef8f758-0553-484a-85fa-11958e74ca30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="660dbcb9-ad0c-1ea6-d24d-2379001c6280" executionId="12fb8ccb-04b5-428c-9df0-cd8a5236b533" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5f6215f5-e980-8733-90a4-f44f99c7f101" executionId="85799d4c-a052-4448-aff2-46e8097a1b29" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b26e07c6-2818-7d81-9f80-a22f66b96e27" executionId="6d99236b-fcaf-4664-a50c-3f27b1c149de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb07df78-3ab1-ade3-a846-792c12d33a64" executionId="05ea57f3-e3fd-472e-bda4-022c8716bc5a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f5437979-3b12-b40f-3ea6-bf001100d4fd" executionId="df159cb3-88fc-4d99-b9f9-10b2cddcb83f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="408e7cbc-3845-7f6f-3bba-f73cbb826974" executionId="769cb562-4049-4d59-b1df-80a5e33b2053" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f84ec6fc-21b2-056b-e802-583f63cf8a7b" executionId="1ad92d25-3eb7-48db-b170-d9478aaa47ad" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b79e1e0-538c-94f7-1b88-4b10950a4e88" executionId="b83f672a-1ef1-4448-8306-79c4733e75cd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d9b91b7-da70-282d-59e9-07245e3346ed" executionId="c490e65d-14ff-4f8b-9c6a-5d8c642d097b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="21620adb-b1c5-04a0-99c2-38e72fea61f5" executionId="80016c33-2849-4803-a4a3-0dc692ea7b91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="760ea78e-785d-970d-2468-39b5bef9dd9e" executionId="d354b833-9575-4df6-9d0e-ca763001cb87" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eef8312d-55cc-ad4d-af37-5ad81b35f17d" executionId="f013b3de-4ecf-4659-8858-fc162a3614f5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ce0fe7f2-ecd6-b105-bb46-79e4b4fdc1bb" executionId="7f7c986d-d32c-4ae7-99e8-8c83bb78f4e9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b787aed3-2672-514b-fc99-9ea9ee92c6c0" executionId="7e7a0e01-c815-4d36-bbc4-5b35817d6a85" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5031f7ba-4bb2-341b-b7fc-b019a0d8c961" executionId="e6a20d23-3e06-4ffb-b723-7da98ddd4bb4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e39cf01-8704-6944-2c01-8adcb12dbf2f" executionId="d7aa6dd2-eeb8-4380-a203-db5849de075d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f2a3e6b-8c63-b03c-3303-a5f856b38508" executionId="4280a74f-c132-4568-88ff-530a3fb83af8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f4ff7352-a860-88a7-721e-dca8d723a1d0" executionId="20cbd16a-6ad6-4243-89bf-4105e3875963" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98742c3a-7a81-d772-7866-ea3c0ccc0145" executionId="5cb04cb7-92d0-4ae8-8918-66eff414e6ec" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2e70f137-8a32-ecd0-0e00-e92430acad35" executionId="66284fe5-cf5f-4273-9786-96acec7bef09" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d4662883-189b-134a-bca7-c61d32823a01" executionId="cdcc6ff1-1361-42c1-8e09-6cd56cbbb7d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab2cadc0-3002-ab5a-02a7-1fd59f663ba8" executionId="4cc21aa8-db0b-45bd-9e67-a1f6794f3329" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Resultados sin formato de lista" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Todos los resultados cargados" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="36" executed="36" passed="27" failed="9" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 9.0.4)&#xD;
+[xUnit.net 00:00:00.15]   Discovering: SearchServiceEngine.Tests&#xD;
+[xUnit.net 00:00:00.20]   Discovered:  SearchServiceEngine.Tests&#xD;
+[xUnit.net 00:00:00.20]   Starting:    SearchServiceEngine.Tests&#xD;
+[xUnit.net 00:00:00.41]       System.Exception : DB error&#xD;
+[xUnit.net 00:00:00.41]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.41]         e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs(67,0): at SearchServiceEngine.Controllers.ContactsController.Update(Int32 id, ContactUpdateDto dto)&#xD;
+[xUnit.net 00:00:00.41]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs(129,0): at SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsServerError_WhenServiceThrowsException()&#xD;
+[xUnit.net 00:00:00.41]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]       Assert.IsType() Failure: Value is not the exact type&#xD;
+[xUnit.net 00:00:00.45]       Expected: typeof(Microsoft.AspNetCore.Mvc.BadRequestResult)&#xD;
+[xUnit.net 00:00:00.45]       Actual:   typeof(Microsoft.AspNetCore.Mvc.NotFoundResult)&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs(77,0): at SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(Int32 invalidId)&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]       Assert.IsType() Failure: Value is not the exact type&#xD;
+[xUnit.net 00:00:00.45]       Expected: typeof(Microsoft.AspNetCore.Mvc.BadRequestResult)&#xD;
+[xUnit.net 00:00:00.45]       Actual:   typeof(Microsoft.AspNetCore.Mvc.NotFoundResult)&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs(77,0): at SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(Int32 invalidId)&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]       System.NullReferenceException : Object reference not set to an instance of an object.&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs(55,0): at SearchServiceEngine.Controllers.ContactsController.Create(ContactCreateDto dto)&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs(98,0): at SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsBadRequest_WhenServiceReturnsNull()&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]       System.Exception : DB error&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine\Controllers\ContactsController.cs(80,0): at SearchServiceEngine.Controllers.ContactsController.Delete(Int32 id)&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactsControllerTests.cs(158,0): at SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsServerError_WhenServiceThrowsException()&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]       Assert.Throws() Failure: Exception type was not an exact match&#xD;
+[xUnit.net 00:00:00.45]       Expected: typeof(System.Exception)&#xD;
+[xUnit.net 00:00:00.45]       Actual:   typeof(System.NullReferenceException)&#xD;
+[xUnit.net 00:00:00.45]       ---- System.NullReferenceException : Object reference not set to an instance of an object.&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactServiceTests.cs(152,0): at SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ThrowsException_WhenRepositoryFails()&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.45]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine\Services\ContactService.cs(33,0): at SearchServiceEngine.Services.ContactService.CreateAsync(ContactCreateDto dto)&#xD;
+[xUnit.net 00:00:00.45]       System.NullReferenceException : Object reference not set to an instance of an object.&#xD;
+[xUnit.net 00:00:00.45]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine\Services\ContactService.cs(33,0): at SearchServiceEngine.Services.ContactService.CreateAsync(ContactCreateDto dto)&#xD;
+[xUnit.net 00:00:00.45]         e:\AIWeek\backend\SearchServiceEngine.Tests\ContactServiceTests.cs(143,0): at SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ReturnsNull_WhenRepositoryReturnsNull()&#xD;
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.56]       Assert.IsType() Failure: Value is not the exact type&#xD;
+[xUnit.net 00:00:00.56]       Expected: typeof(Microsoft.AspNetCore.Mvc.OkObjectResult)&#xD;
+[xUnit.net 00:00:00.56]       Actual:   typeof(Microsoft.AspNetCore.Mvc.ActionResult&lt;IEnumerable&lt;object&gt;&gt;)&#xD;
+[xUnit.net 00:00:00.56]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.56]         e:\AIWeek\backend\SearchServiceEngine.Tests\UsersControllerTests.cs(42,0): at SearchServiceEngine.Tests.UsersControllerTests.GetAll_ReturnsOk_WithUsers()&#xD;
+[xUnit.net 00:00:00.56]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)&#xD;
+[xUnit.net 00:00:00.56]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:00.98]       System.NullReferenceException : Object reference not set to an instance of an object.&#xD;
+[xUnit.net 00:00:00.98]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.98]         e:\AIWeek\backend\SearchServiceEngine\Controllers\AuthController.cs(71,0): at SearchServiceEngine.Controllers.AuthController.Login(LoginRequest loginRequest)&#xD;
+[xUnit.net 00:00:00.98]         e:\AIWeek\backend\SearchServiceEngine.Tests\AuthControllerTests.cs(72,0): at SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsToken_WhenUserExistsAndPasswordMatches()&#xD;
+[xUnit.net 00:00:00.98]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.98]   Finished:    SearchServiceEngine.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.2144833+02:00">
+        <Text>[xUnit.net 00:00:00.40]     SearchServiceEngine.Tests.ContactsControllerTests.Update_ReturnsServerError_WhenServiceThrowsException [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3196693+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: 0) [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3200870+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactsControllerTests.GetById_ReturnsBadRequest_WhenIdIsInvalid(invalidId: -1) [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3203697+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactsControllerTests.Create_ReturnsBadRequest_WhenServiceReturnsNull [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3206707+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactsControllerTests.Delete_ReturnsServerError_WhenServiceThrowsException [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3229270+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ThrowsException_WhenRepositoryFails [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3231524+02:00">
+        <Text>[xUnit.net 00:00:00.45]     SearchServiceEngine.Tests.ContactServiceTests.CreateAsync_ReturnsNull_WhenRepositoryReturnsNull [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.3654484+02:00">
+        <Text>[xUnit.net 00:00:00.56]     SearchServiceEngine.Tests.UsersControllerTests.GetAll_ReturnsOk_WithUsers [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="TIN-DEV-AGARCIA" outcome="Error" timestamp="2025-05-13T11:41:26.7871468+02:00">
+        <Text>[xUnit.net 00:00:00.98]     SearchServiceEngine.Tests.AuthControllerTests.Login_ReturnsToken_WhenUserExistsAndPasswordMatches [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

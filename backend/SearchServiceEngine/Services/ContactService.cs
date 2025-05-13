@@ -27,13 +27,17 @@ namespace SearchServiceEngine.Services
             return c == null ? null : _mapper.Map<ContactDto>(c);
         }
 
-        public async Task<ContactDto> CreateAsync(ContactCreateDto dto)
+        public async Task<ContactDto?> CreateAsync(ContactCreateDto dto)
         {
             var c = _mapper.Map<Contact>(dto);
+            if (c == null) throw new InvalidOperationException("Error mapping ContactCreateDto to Contact");
             c.CreatedAt = DateTime.UtcNow;
             c.UpdatedAt = DateTime.UtcNow;
-            var created = await _repository.CreateAsync(c);
-            return _mapper.Map<ContactDto>(created);
+            var created = await _repository.CreateAsync(c); // Si el repo lanza excepción, que se propague
+            if (created == null) return null;
+            var result = _mapper.Map<ContactDto>(created);
+            if (result == null) return null;
+            return result;
         }
 
         public async Task<bool> UpdateAsync(int id, ContactUpdateDto dto)

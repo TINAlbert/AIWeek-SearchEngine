@@ -8,7 +8,7 @@ namespace SearchServiceEngine.Services
     {
         Task<IEnumerable<ContactDto>> GetAllAsync(string? filter, int page, int pageSize);
         Task<ContactDto?> GetByIdAsync(int id);
-        Task<ContactDto> CreateAsync(ContactCreateDto dto);
+        Task<ContactDto?> CreateAsync(ContactCreateDto dto);
         Task<bool> UpdateAsync(int id, ContactUpdateDto dto);
         Task<bool> DeleteAsync(int id);
     }

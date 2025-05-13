@@ -13,7 +13,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] Endpoint POST /auth/logout para revocar refresh token
   - [x] Manejar expiración y revocación/eliminación de refresh tokens
   - [x] Eliminar todos los refresh tokens activos previos tras login
-- [ ] (Opcional) Implementar registro de usuarios
+- [x] (Opcional) Implementar registro de usuarios (solo Admin)
 - [ ] Añadir claims personalizados si es necesario
 
 ### 2. Gestión de Contactos
@@ -33,10 +33,10 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 3. Gestión de Usuarios (Admin)
 - [x] Endpoint GET /users
-- [ ] Endpoint POST /users (crear usuario)
+- [x] Endpoint POST /users (crear usuario solo Admin)
 - [ ] Endpoint PUT /users/{id} (editar usuario)
 - [ ] Endpoint DELETE /users/{id} (opcional)
-- [ ] Crear DTOs para usuario (entrada/salida)
+- [x] Crear DTOs para usuario (entrada/salida)
 
 ### 4. Seguridad
 - [x] Verificación de roles en endpoints
@@ -73,7 +73,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 9. Extras opcionales
 - [ ] Registro y verificación de email de usuarios
-- [ ] Documentación interactiva con Swagger UI
+- [X] Documentación interactiva con Scalar UI
 - [ ] Mejorar la gestión de errores y respuestas estándar
 
 Este archivo se irá actualizando conforme se definan y completen nuevas tareas.

@@ -77,6 +77,63 @@ El proyecto ha sido migrado a Microsoft Identity Framework para mejorar la segur
 
 Los tests unitarios han sido adaptados para trabajar con Identity Framework utilizando `UserManager` y `SignInManager` mockeados.
 
+# SearchServiceEngine Backend
+
+Este proyecto implementa un backend robusto para la gestión de contactos y usuarios, siguiendo buenas prácticas de arquitectura (capas, DTOs, servicios, repositorios) y seguridad (JWT, roles, validación).
+
+## Características principales
+- Autenticación JWT y protección de endpoints con roles.
+- CRUD de contactos con filtros y paginación.
+- Validación de entrada con FluentValidation.
+- Mapeo de entidades y DTOs con AutoMapper.
+- Semilla de datos de ejemplo y migraciones automáticas.
+- Documentación automática de la API (Swagger/OpenAPI).
+- Gestión segura y eliminación de refresh tokens tras login.
+- Registro de usuarios solo por administradores.
+- Estructura modular y escalable.
+
+## Últimos avances (13/05/2025)
+- Implementado endpoint de registro de usuarios (solo Admin) con validación avanzada.
+- Documentados endpoints, DTOs y validadores de usuario.
+- Corregidos los principales warnings de compilación.
+
+## Estructura del proyecto
+- `Controllers/`: Endpoints de la API (Contactos, Usuarios, Auth).
+- `DTOs/`: Modelos de transferencia de datos y validadores.
+- `Models/`: Entidades de base de datos.
+- `Services/`: Lógica de negocio.
+- `Repositories/`: Acceso a datos.
+- `Data/`: Contexto de base de datos y migraciones.
+
+## Próximos pasos
+- Completar CRUD de usuarios y sus DTOs.
+- Añadir ejemplos de uso y más pruebas unitarias.
+- Mejorar la documentación y despliegue.
+
+## Cómo contribuir
+Consulta el archivo `TODO.md` para ver el estado y prioridades del desarrollo.
+
+## Frontend
+
+El frontend está desarrollado en React utilizando Vite como herramienta de construcción y desarrollo rápido. La estructura inicial incluye:
+
+- **React 19** y **Vite** para desarrollo moderno y rápido.
+- **React Router** para gestión de rutas y navegación SPA.
+- Estructura de carpetas bajo `src/` con páginas (`pages/`), rutas centralizadas (`routes.tsx`) y assets.
+- Páginas base implementadas: Home, Login, Dashboard y NotFound (404).
+- Preparado para consumir la API del backend y gestionar autenticación JWT.
+- Listo para añadir componentes reutilizables, estilos y lógica de negocio.
+
+Para iniciar el frontend en modo desarrollo:
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+El frontend se irá ampliando con autenticación, consumo de API, diseño responsivo y pruebas conforme avance el proyecto.
+
 ---
 
 Consulta el archivo `.github/.instructions.md` para conocer las reglas de trabajo y colaboración.

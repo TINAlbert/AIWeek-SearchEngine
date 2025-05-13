@@ -42,6 +42,37 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - Se actualizaron los tests unitarios de login para usar el nuevo DTO.
 - Se verificó que los tests unitarios pasan correctamente tras el cambio.
 
+## 2025-05-13
+
+- Se reorganizó el backend siguiendo buenas prácticas: separación en capas Controllers, Services, Repositories, Models y DTOs.
+- Se implementó la entidad Contact y sus DTOs, así como la capa de servicios y repositorios para contactos.
+- Se integró AutoMapper para el mapeo entre entidades y DTOs.
+- Se integró FluentValidation para la validación automática de los DTOs de contacto.
+- Se crearon los endpoints CRUD completos para contactos, con soporte de filtros y paginación.
+- Se añadieron datos de ejemplo (seed) para la entidad Contact y se aplicaron las migraciones correspondientes.
+- Se verificó la correcta compilación y funcionamiento de la API tras los cambios estructurales.
+
+## 2025-05-13
+
+- Se documentaron todos los endpoints del ContactsController con comentarios XML para mejorar la generación de documentación automática (Swagger/OpenAPI).
+- Se documentaron los DTOs de contacto (ContactDto, ContactCreateDto, ContactUpdateDto) con comentarios XML en sus clases y propiedades.
+- Se explicó el uso y funcionamiento de ContactUpdateDtoValidator: se utiliza automáticamente en el endpoint PUT /contacts/{id} para validar los datos de actualización de contactos mediante FluentValidation.
+
+## 2025-05-13
+
+- Implementada la gestión completa de refresh tokens: creación, almacenamiento seguro, expiración, revocación y eliminación tras login.
+- Añadidos endpoints POST /auth/refresh y POST /auth/logout.
+- Ahora, tras un login correcto, se eliminan todos los refresh tokens activos previos del usuario.
+- Documentados los endpoints de autenticación y su flujo en AuthController.
+- Actualizada la documentación de endpoints y DTOs de contactos.
+
+## 2025-05-13
+
+- Implementado endpoint POST /api/users para registro de usuarios (solo Admin), con validación avanzada y DTO documentado.
+- Añadida documentación XML a endpoints, DTOs y validadores de usuario.
+- Corregidos los warnings de posibles valores nulos en claims y configuración JWT.
+- El backend compila correctamente y está listo para pruebas.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

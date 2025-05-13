@@ -27,7 +27,7 @@ namespace SearchServiceEngine.Controllers
         /// <returns>Lista de usuarios.</returns>
         [HttpGet]
         [Authorize(Roles = "Admin")] // Protección por rol usando Identity
-        public ActionResult<IEnumerable<object>> GetAll()
+        public IActionResult GetAll()
         {
             var users = _context.Users.Select(u => new { u.Id, u.UserName, u.Role }).ToList();
             return Ok(users);

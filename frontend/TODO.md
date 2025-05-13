@@ -5,7 +5,7 @@ Este archivo contiene una lista inicial de tareas y funcionalidades pendientes p
 ## Tareas pendientes
 
 - [x] Inicializar el proyecto en React con Vite
-- [ ] Configurar estructura de carpetas y rutas
+- [x] Configurar estructura de carpetas y rutas
 - [ ] Crear componentes base
 - [ ] Implementar consumo de la API backend
 - [ ] Añadir estilos y diseño responsivo
