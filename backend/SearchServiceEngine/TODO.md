@@ -6,12 +6,13 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 1. Autenticación y Autorización
 - [x] Implementar login con JWT (Access Token)
-- [ ] Implementar Refresh Token:
-  - [ ] Crear entidad/modelo RefreshToken
-  - [ ] Guardar refresh tokens en base de datos
-  - [ ] Endpoint POST /auth/refresh para renovar tokens
-  - [ ] Endpoint POST /auth/logout para revocar refresh token
-  - [ ] Manejar expiración y revocación de refresh tokens
+- [x] Implementar Refresh Token:
+  - [x] Crear entidad/modelo RefreshToken
+  - [x] Guardar refresh tokens en base de datos
+  - [x] Endpoint POST /auth/refresh para renovar tokens
+  - [x] Endpoint POST /auth/logout para revocar refresh token
+  - [x] Manejar expiración y revocación/eliminación de refresh tokens
+  - [x] Eliminar todos los refresh tokens activos previos tras login
 - [ ] (Opcional) Implementar registro de usuarios
 - [ ] Añadir claims personalizados si es necesario
 
@@ -39,9 +40,9 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 4. Seguridad
 - [x] Verificación de roles en endpoints
+- [x] Almacenamiento seguro y eliminación de refresh tokens
+- [x] Configurar expiración de access token y refresh token
 - [ ] Añadir claims personalizados y validación si aplica
-- [ ] Almacenamiento seguro y cifrado de refresh tokens
-- [ ] Configurar expiración de access token y refresh token
 
 ### 5. Estructura y buenas prácticas
 - [x] Crear capa de servicios (Services)
@@ -52,7 +53,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 6. Documentación y herramientas
 - [x] Documentar la API con OpenAPI/Scalar
-- [ ] Mejorar y mantener la documentación de endpoints y modelos
+- [x] Mejorar y mantener la documentación de endpoints y modelos
 - [ ] Añadir ejemplos de uso en backend.http
 
 ### 7. Testing

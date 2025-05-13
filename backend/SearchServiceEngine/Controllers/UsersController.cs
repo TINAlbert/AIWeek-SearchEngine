@@ -47,5 +47,32 @@ namespace SearchServiceEngine.Controllers
             }
             return Ok("Ya existen usuarios en la base de datos.");
         }
+
+        /// <summary>
+        /// Crea un nuevo usuario. Solo accesible para administradores.
+        /// </summary>
+        /// <param name="dto">Datos del usuario a crear (UserName, Password, Role).</param>
+        /// <param name="userManager">UserManager inyectado para la gestión de usuarios.</param>
+        /// <returns>Usuario creado (Id, UserName, Role) o errores de validación/conflicto.</returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([FromBody] DTOs.UserCreateDto dto, [FromServices] UserManager<User> userManager)
+        {
+            var validator = new DTOs.UserCreateDtoValidator();
+            var validation = validator.Validate(dto);
+            if (!validation.IsValid)
+                return BadRequest(validation.Errors);
+
+            var exists = await userManager.FindByNameAsync(dto.UserName);
+            if (exists != null)
+                return Conflict("El nombre de usuario ya existe.");
+
+            var user = new User { UserName = dto.UserName, Role = dto.Role };
+            var result = await userManager.CreateAsync(user, dto.Password);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            return Ok(new { user.Id, user.UserName, user.Role });
+        }
     }
 }

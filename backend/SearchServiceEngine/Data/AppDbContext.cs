@@ -8,8 +8,10 @@ public class AppDbContext : IdentityDbContext<User>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<User> Users => Set<User>();
+    // Elimino la propiedad Users para evitar conflicto con IdentityDbContext
+    // public DbSet<User> Users => Set<User>();
     public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
