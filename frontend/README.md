@@ -28,9 +28,10 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 
 ### 2.3 Autenticación
 
-* Login con usuario y contraseña (JWT u OAuth2)
+* Login con usuario y contraseña (JWT)
 * Tokens almacenados en memoria o almacenamiento seguro
 * Comprobación de sesión activa y expiración automática
+* Utilización de refresh token si es necesario
 
 ### 2.4 Autorización
 
@@ -59,12 +60,19 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 ### 3.2 Backend (solo consumo)
 
 * API REST con autenticación y autorización
-* Endpoints esperados:
+* Endpoints esperados (según backend real):
 
-  * `POST /auth/login`
-  * `GET /contacts?query=...`
-  * `GET /contacts/:id`
-  * `PUT /contacts/:id` (si aplica)
+  * `POST /api/auth/login` — Login de usuario. Body: `{ "userName": string, "password": string }`. Devuelve: `{ accessToken, refreshToken }`.
+  * `GET /api/contacts?query=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación. Requiere header `Authorization: Bearer <token>`.
+  * `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID. Requiere header `Authorization`.
+  * `PUT /api/contacts/{id}` — Editar contacto (según permisos). Body: datos a actualizar. Requiere header `Authorization`.
+  * `GET /api/users` — Listar usuarios (solo Admin). Requiere header `Authorization`.
+  * `POST /api/users` — Crear usuario (solo Admin). Body: `{ userName, password, role }`. Requiere header `Authorization`.
+
+* Notas:
+  * Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`.
+  * El login devuelve tanto accessToken como refreshToken.
+  * El endpoint de refresh (`POST /api/auth/refresh`) y logout (`POST /api/auth/logout`) están disponibles para gestión de sesión avanzada.
 
 ---
 
