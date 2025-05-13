@@ -34,15 +34,15 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 ### 3. Gestión de Usuarios (Admin)
 - [x] Endpoint GET /users
 - [x] Endpoint POST /users (crear usuario solo Admin)
-- [ ] Endpoint PUT /users/{id} (editar usuario)
-- [ ] Endpoint DELETE /users/{id} (opcional)
+- [x] Endpoint PUT /users/{id} (editar usuario)
+- [x] Endpoint DELETE /users/{id} (opcional)
 - [x] Crear DTOs para usuario (entrada/salida)
 
 ### 4. Seguridad
 - [x] Verificación de roles en endpoints
 - [x] Almacenamiento seguro y eliminación de refresh tokens
 - [x] Configurar expiración de access token y refresh token
-- [ ] Añadir claims personalizados y validación si aplica
+- [x] Añadir claims personalizados y validación si aplica
 
 ### 5. Estructura y buenas prácticas
 - [x] Crear capa de servicios (Services)
@@ -54,15 +54,15 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 ### 6. Documentación y herramientas
 - [x] Documentar la API con OpenAPI/Scalar
 - [x] Mejorar y mantener la documentación de endpoints y modelos
-- [ ] Añadir ejemplos de uso en backend.http
+- [x] Añadir ejemplos de uso en backend.http
 
 ### 7. Testing
 - [x] Crear proyecto de pruebas unitarias con xUnit y Moq
 - [x] Añadir pruebas unitarias para AuthController (login correcto y fallido)
-- [ ] Añadir más pruebas unitarias para:
-  - [ ] ContactController (CRUD y filtros)
-  - [ ] UsersController (CRUD)
-  - [ ] Servicios y lógica de negocio
+- [x] Añadir más pruebas unitarias para:
+  - [x] ContactController (CRUD y filtros)
+  - [x] UsersController (CRUD)
+  - [x] Servicios y lógica de negocio
 - [ ] Añadir pruebas de integración
 
 ### 8. DevOps y despliegue
@@ -73,7 +73,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 
 ### 9. Extras opcionales
 - [ ] Registro y verificación de email de usuarios
-- [X] Documentación interactiva con Scalar UI
-- [ ] Mejorar la gestión de errores y respuestas estándar
+- [x] Documentación interactiva con Scalar UI
+- [x] Mejorar la gestión de errores y respuestas estándar
 
 Este archivo se irá actualizando conforme se definan y completen nuevas tareas.

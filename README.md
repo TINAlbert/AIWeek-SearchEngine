@@ -97,6 +97,18 @@ Este proyecto implementa un backend robusto para la gestión de contactos y usua
 - Documentados endpoints, DTOs y validadores de usuario.
 - Corregidos los principales warnings de compilación.
 
+## Estado del backend (actualizado 13/05/2025)
+
+- Controladores y servicios principales refactorizados y robustos (Contacts, Users, Auth).
+- Tests unitarios completos y pasando para controladores y servicios principales.
+- Eliminadas advertencias de nulabilidad en los tests.
+- TODO.md actualizado con el progreso real.
+
+### Próximos pasos sugeridos
+- Añadir pruebas de integración.
+- Configurar CI/CD, logs y CORS.
+- Mantener documentación y ejemplos de uso actualizados.
+
 ## Estructura del proyecto
 - `Controllers/`: Endpoints de la API (Contactos, Usuarios, Auth).
 - `DTOs/`: Modelos de transferencia de datos y validadores.

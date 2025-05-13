@@ -73,6 +73,19 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - Corregidos los warnings de posibles valores nulos en claims y configuración JWT.
 - El backend compila correctamente y está listo para pruebas.
 
+# Resumen de cambios recientes (13/05/2025)
+
+- Refactor y robustecimiento de controladores y servicios principales (Contacts, Users, Auth) en el backend.
+- Corrección y ampliación de tests unitarios para todos los controladores y servicios principales.
+- Eliminación de advertencias de nulabilidad en los tests.
+- Todos los tests relevantes pasan correctamente.
+- Actualización de TODO.md para reflejar el estado real del proyecto tras el commit.
+
+Próximos pasos sugeridos:
+- Añadir pruebas de integración.
+- Configurar CI/CD, logs y CORS.
+- Mejorar documentación de uso en backend.http si es necesario.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.
