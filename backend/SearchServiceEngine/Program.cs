@@ -12,6 +12,20 @@ using SearchServiceEngine.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de CORS
+var allowedOrigins = "frontend-cors-policy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowedOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
+
 // Configuración de Identity y JWT
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -72,6 +86,9 @@ builder.Services.AddDbContext<SearchServiceEngine.Data.AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+// Usar CORS antes de los endpoints
+app.UseCors(allowedOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
