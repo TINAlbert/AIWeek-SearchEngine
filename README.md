@@ -29,6 +29,7 @@ El backend implementa una API REST robusta para la gestión de contactos y usuar
 - Gestión segura y eliminación de refresh tokens tras login.
 - Registro de usuarios solo por administradores.
 - Estructura modular y escalable.
+- El login devuelve tanto `token` como `refreshToken` (ya no `accessToken`).
 
 ## Estado actual (13/05/2025)
 - Controladores y servicios principales refactorizados y robustos (Contacts, Users, Auth).
