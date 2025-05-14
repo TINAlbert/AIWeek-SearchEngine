@@ -121,6 +121,16 @@ Próximos pasos sugeridos:
 - El listado de contactos ya puede probarse desde la navegación de la app.
 - Actualizado `TODO.md` para reflejar el avance en el punto 3 (consumo de API y UI de contactos).
 
+### (continuación)
+
+- Adaptado el frontend para consumir y mostrar la nueva estructura de paginación enriquecida del backend:
+  - Actualizados los tipos en `src/types/contact.ts` para reflejar los nuevos campos (`totalPages`, `hasNextPage`, `hasPreviousPage`).
+  - Modificado el servicio `contactsService` para usar el nuevo tipo de respuesta.
+  - Refactorizada la página `ContactsPage` para mostrar correctamente la información de paginación enriquecida y mejorar la experiencia de usuario.
+  - La UI ahora muestra el total de contactos, la página actual, el total de páginas y los botones de navegación usan los flags `hasNextPage` y `hasPreviousPage`.
+- Verificado que no hay errores de compilación en los archivos modificados.
+- Listo para realizar commits separados en backend y frontend por los cambios de paginación y adaptación de la UI.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

@@ -6,9 +6,13 @@ const menuItems = [
   { label: "Contactos", to: "/contacts", icon: "📇" },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  collapsed: boolean;
+  setCollapsed: (v: boolean) => void;
+}
+
+export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
   const [open, setOpen] = useState(false); // mobile
-  const [collapsed, setCollapsed] = useState(false); // desktop
   const location = useLocation();
 
   return (
@@ -31,23 +35,29 @@ export default function Sidebar() {
         <div className="h-16 flex items-center justify-center px-4 border-b">
           <button
             className={`font-bold text-blue-600 text-xl transition-all duration-200 flex items-center focus:outline-none select-none ${collapsed ? 'w-10 justify-center' : 'w-auto justify-center'}`}
-            onClick={() => setCollapsed((v) => !v)}
+            onClick={() => setCollapsed(!collapsed)}
             aria-label={collapsed ? "Expandir barra lateral" : "Colapsar barra lateral"}
           >
             {collapsed ? 'AI' : 'AIWeek'}
           </button>
         </div>
         <nav className="flex-1 flex flex-col gap-2 p-4">
-          {menuItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${location.pathname.startsWith(item.to) ? "bg-blue-100 text-blue-700" : ""}`}
-            >
-              <span className="text-lg">{item.icon}</span>
-              <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{item.label}</span>
-            </Link>
-          ))}
+          {menuItems.map((item) => {
+            const isActive =
+              item.to === "/"
+                ? location.pathname === "/"
+                : location.pathname.startsWith(item.to) && item.to !== "/";
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+              >
+                <span className="text-lg">{item.icon}</span>
+                <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
       </aside>
       {/* Drawer (mobile) */}
@@ -63,17 +73,23 @@ export default function Sidebar() {
           <button className="text-2xl" onClick={() => setOpen(false)} aria-label="Cerrar menú">×</button>
         </div>
         <nav className="flex-1 flex flex-col gap-2 p-4">
-          {menuItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${location.pathname.startsWith(item.to) ? "bg-blue-100 text-blue-700" : ""}`}
-              onClick={() => setOpen(false)}
-            >
-              <span className="text-lg">{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+          {menuItems.map((item) => {
+            const isActive =
+              item.to === "/"
+                ? location.pathname === "/"
+                : location.pathname.startsWith(item.to) && item.to !== "/";
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+                onClick={() => setOpen(false)}
+              >
+                <span className="text-lg">{item.icon}</span>
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </aside>
       {/* Padding for content */}
