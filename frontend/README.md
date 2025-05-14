@@ -62,7 +62,7 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 * API REST con autenticación y autorización
 * Endpoints esperados (según backend real):
 
-  * `POST /api/auth/login` — Login de usuario. Body: `{ "userName": string, "password": string }`. Devuelve: `{ accessToken, refreshToken }`.
+  * `POST /api/auth/login` — Login de usuario. Body: `{ "userName": string, "password": string }`. Devuelve: `{ token, refreshToken }`.
   * `GET /api/contacts?query=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación. Requiere header `Authorization: Bearer <token>`.
   * `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID. Requiere header `Authorization`.
   * `PUT /api/contacts/{id}` — Editar contacto (según permisos). Body: datos a actualizar. Requiere header `Authorization`.
@@ -71,8 +71,20 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 
 * Notas:
   * Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`.
-  * El login devuelve tanto accessToken como refreshToken.
+  * El login devuelve tanto `token` como `refreshToken` (ya no `accessToken`).
   * El endpoint de refresh (`POST /api/auth/refresh`) y logout (`POST /api/auth/logout`) están disponibles para gestión de sesión avanzada.
+
+---
+
+## Variables de entorno
+
+Crea un archivo `.env` en la raíz del frontend con la siguiente variable:
+
+```
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+Esto permite cambiar fácilmente el endpoint de la API sin modificar el código fuente. Usa `import.meta.env.VITE_API_BASE_URL` en los servicios para acceder a la URL base.
 
 ---
 

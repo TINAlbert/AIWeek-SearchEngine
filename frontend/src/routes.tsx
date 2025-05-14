@@ -8,11 +8,11 @@ import PrivateRoute from './components/PrivateRoute';
 export default function AppRoutes() {
   return (
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
         <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
   );

@@ -1,48 +1,67 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { type LoginResponse, refreshToken as refreshTokenService } from "../services/auth";
+import { refreshToken as refreshTokenService } from "../services/auth";
 import { setupInterceptors, api } from "../services/api";
 import toast from "react-hot-toast";
 
 interface AuthContextType {
-  user: LoginResponse["user"] | null;
   accessToken: string | null;
   refreshToken: string | null;
-  login: (data: LoginResponse) => void;
+  login: (data: { token: string; refreshToken: string }) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<LoginResponse["user"] | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(() => localStorage.getItem("accessToken"));
+  const [refreshToken, setRefreshToken] = useState<string | null>(() => localStorage.getItem("refreshToken"));
 
   const navigate = useNavigate();
 
-  const login = (data: LoginResponse) => {
-    setUser(data.user);
-    setAccessToken(data.accessToken);
+  const login = (data: { token: string; refreshToken: string }) => {
+    setAccessToken(data.token);
     setRefreshToken(data.refreshToken);
+    localStorage.setItem("accessToken", data.token);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    console.log("[LOGIN] Guardado en localStorage:", {
+      accessToken: data.token,
+      refreshToken: data.refreshToken,
+    });
   };
 
   const logout = () => {
-    setUser(null);
     setAccessToken(null);
     setRefreshToken(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    console.log("[LOGOUT] Tokens eliminados de localStorage");
   };
 
   useEffect(() => {
+    // Log de valores leídos al montar
+    console.log("[AuthProvider] Estado inicial:", {
+      accessToken,
+      refreshToken,
+      localStorageAccessToken: localStorage.getItem("accessToken"),
+      localStorageRefreshToken: localStorage.getItem("refreshToken"),
+    });
+    // Si no hay accessToken o refreshToken, forzar logout y redirigir a login
+    if (!accessToken || !refreshToken) {
+      logout();
+      navigate("/login", { replace: true });
+      return;
+    }
     setupInterceptors(
       () => accessToken,
       async () => {
         if (!refreshToken) throw new Error("No refresh token");
         try {
           const res = await refreshTokenService(refreshToken);
-          setAccessToken(res.accessToken);
+          setAccessToken(res.token);
           setRefreshToken(res.refreshToken);
-          setUser(res.user);
+          localStorage.setItem("accessToken", res.token);
+          localStorage.setItem("refreshToken", res.refreshToken);
         } catch (e: unknown) {
           toast.error("Sesión expirada. Por favor, inicia sesión de nuevo.");
           logout();
@@ -54,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [accessToken, refreshToken, navigate]);
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, refreshToken, login, logout }}>
+    <AuthContext.Provider value={{ accessToken, refreshToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

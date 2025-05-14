@@ -4,14 +4,15 @@ import * as yup from "yup";
 import { login as loginService } from "../services/auth";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
-  email: yup.string().email("Email no válido").required("El email es obligatorio"),
-  password: yup.string().min(6, "Mínimo 6 caracteres").required("La contraseña es obligatoria"),
+  username: yup.string().required("El usuario es obligatorio"),
+  password: yup.string().min(3, "Mínimo 3 caracteres").required("La contraseña es obligatoria"),
 });
 
 interface LoginForm {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -26,12 +27,13 @@ export default function Login() {
   });
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      const res = await loginService(data.email, data.password);
+      const res = await loginService(data.username, data.password);
       login(res); // Guardar tokens y usuario en contexto
-      // Aquí puedes redirigir al dashboard o página protegida
+      navigate("/dashboard", { replace: true }); // Redirigir tras login
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Error de autenticación");
       setError("root", { message: err?.response?.data?.message || "Error de autenticación" });
@@ -47,13 +49,13 @@ export default function Login() {
       >
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-2">Iniciar sesión</h2>
         <input
-          type="email"
+          type="text"
           className="border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Email"
-          {...register("email")}
+          placeholder="Usuario"
+          {...register("username")}
         />
-        {errors.email && (
-          <span className="text-red-500 text-sm">{errors.email.message as string}</span>
+        {errors.username && (
+          <span className="text-red-500 text-sm">{errors.username.message as string}</span>
         )}
         <input
           type="password"
