@@ -2,10 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 const menuItems = [
-  { label: "Dashboard", to: "/dashboard", icon: "🏠" },
+  { label: "Home", to: "/", icon: "🏠" },
   { label: "Contactos", to: "/contacts", icon: "📇" },
-  { label: "Usuarios", to: "/users", icon: "👤" },
-  { label: "Salir", to: "/logout", icon: "🚪" },
 ];
 
 export default function Sidebar() {
