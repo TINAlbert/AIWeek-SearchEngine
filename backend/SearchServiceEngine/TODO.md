@@ -29,6 +29,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] DELETE /contacts/{id}
 - [x] Añadir filtros por nombre, documento, estado, etc.
 - [x] Añadir paginación (page, pageSize)
+- [x] Refactor de paginación enriquecida en /contacts y adaptación de tests y servicios.
 - [x] Añadir datos de ejemplo (seed) y migraciones
 
 ### 3. Gestión de Usuarios (Admin)

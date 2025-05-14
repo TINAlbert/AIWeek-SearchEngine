@@ -146,3 +146,10 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 * API documentada con Scalar
 * Tests unitarios básicos
 * Seguridad completa implementada (login, JWT, refresh tokens)
+
+---
+
+## Cambios recientes
+
+- El endpoint `GET /contacts` ahora devuelve un objeto paginado enriquecido (`PagedResultDto<ContactDto>`) con los campos: `data`, `total`, `page`, `pageSize`, `totalPages`, `hasNextPage`, `hasPreviousPage`.
+- Adaptados los tests y servicios para soportar esta nueva estructura.
