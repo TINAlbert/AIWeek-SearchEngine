@@ -80,6 +80,20 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 - El backend compila y funciona correctamente con la configuración actual de seguridad y documentación.
 - Listo para commit final de la configuración de Scalar/OpenAPI y autenticación JWT.
 
+## 2025-05-14
+
+- Instalado y configurado Tailwind CSS en el frontend con Vite, asegurando compatibilidad y buenas prácticas.
+- Implementado formulario de login robusto usando React Hook Form y Yup para validación, con diseño en Tailwind.
+- Creado servicio de autenticación con Axios para consumir el endpoint de login del backend.
+- Añadido contexto global de autenticación (AuthContext) para almacenar tokens y usuario en memoria.
+- Implementada lógica de refresh token automático mediante interceptor de Axios y endpoint /auth/refresh.
+- Añadido logout y limpieza de tokens en el contexto global.
+- Protegidas rutas privadas con componente PrivateRoute y React Router DOM.
+- Añadido sistema global de toasts de error con react-hot-toast, mostrando mensajes claros en login, refresh y logout.
+- Sincronizada la expiración de sesión con el backend: si el refresh token falla, se hace logout, se muestra un toast y se redirige a /login.
+- Actualizado TODO.md marcando como completados todos los puntos de autenticación y protección de rutas privadas.
+- Realizado commit de todos los cambios relevantes en frontend.
+
 # Resumen de cambios recientes (13/05/2025)
 
 - Refactor y robustecimiento de controladores y servicios principales (Contacts, Users, Auth) en el backend.
