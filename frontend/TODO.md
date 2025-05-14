@@ -27,6 +27,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Configurar Axios con interceptores para Authorization y manejo de errores global
 - [x] Crear servicios para consumo de endpoints (contacts, users, auth)
 - [x] Página de listado de contactos creada e integrada en rutas privadas (`/contacts`)
+- [x] Adaptar frontend para consumir y mostrar la nueva estructura de paginación enriquecida.
 - [ ] Integrar acciones de crear, editar y eliminar contacto en la UI
 - [ ] Implementar CRUD de contactos:
     - [x] Listar contactos (GET /contacts, con filtros y paginación)

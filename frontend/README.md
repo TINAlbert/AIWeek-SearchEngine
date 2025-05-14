@@ -124,3 +124,11 @@ Esto permite cambiar fácilmente el endpoint de la API sin modificar el código 
 * Cacheo local de fichas consultadas
 * Testing con React Testing Library
 * Login persistente con expiración segura
+
+---
+
+## Cambios recientes
+
+- Adaptación del frontend para consumir la nueva estructura de paginación enriquecida del endpoint `/contacts`.
+- Tipos y servicio de contactos actualizados para reflejar los campos: `totalPages`, `hasNextPage`, `hasPreviousPage`.
+- UI de paginación mejorada en la página de contactos.
