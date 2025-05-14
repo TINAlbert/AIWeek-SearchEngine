@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { contactsService } from "../services/contacts";
 import type { Contact } from "../types/contact";
+import type { ContactListResponse } from "../types/contact";
 
 const PAGE_SIZE = 10;
 
@@ -8,18 +9,26 @@ export default function ContactsPage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const [pageSize] = useState(PAGE_SIZE);
+  const [totalPages, setTotalPages] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     contactsService
-      .list({ page, pageSize: PAGE_SIZE })
+      .list({ page, pageSize })
       .then((res) => {
-        setContacts(res.data.data);
-        setTotal(res.data.total);
+        const paged: ContactListResponse = res.data;
+        setContacts(paged.data);
+        setTotal(paged.total);
+        setTotalPages(paged.totalPages);
+        setHasNextPage(paged.hasNextPage);
+        setHasPreviousPage(paged.hasPreviousPage);
       })
       .finally(() => setLoading(false));
-  }, [page]);
+  }, [page, pageSize]);
 
   return (
     <div className="p-4">
@@ -58,25 +67,30 @@ export default function ContactsPage() {
           </table>
         </div>
       )}
-      {/* Paginación básica */}
-      <div className="flex justify-end items-center gap-2 mt-4">
-        <button
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
-          disabled={page === 1}
-        >
-          Anterior
-        </button>
-        <span>
-          Página {page} de {Math.ceil(total / PAGE_SIZE) || 1}
-        </span>
-        <button
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-          onClick={() => setPage((p) => p + 1)}
-          disabled={page >= Math.ceil(total / PAGE_SIZE)}
-        >
-          Siguiente
-        </button>
+      {/* Paginación enriquecida */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-2 mt-4">
+        <div className="text-gray-600 text-sm mb-2 sm:mb-0">
+          Total: <b>{total}</b> contactos
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={!hasPreviousPage}
+          >
+            Anterior
+          </button>
+          <span>
+            Página {page} de {totalPages || 1}
+          </span>
+          <button
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            onClick={() => setPage((p) => (hasNextPage ? p + 1 : p))}
+            disabled={!hasNextPage}
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
     </div>
   );
