@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { contactsService } from "../services/contacts";
 import type { Contact } from "../types/contact";
 import type { ContactListResponse } from "../types/contact";
+import ContactsTable from "../components/ContactsTable";
+import ContactsCards from "../components/ContactsCards";
+import Pagination from "../components/Pagination";
 
 const PAGE_SIZE = 10;
 
@@ -30,7 +33,6 @@ export default function ContactsPage() {
       .list({ page, pageSize, search })
       .then((res) => {
         const paged: ContactListResponse = res.data;
-        console.log("Paged contacts:", paged);
         setContacts(paged.data);
         setTotal(paged.total);
         setTotalPages(paged.totalPages);
@@ -85,77 +87,18 @@ export default function ContactsPage() {
       {loading ? (
         <div className="text-center py-8">Cargando...</div>
       ) : viewMode === 'table' ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 rounded shadow">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border-b">Nombre</th>
-                <th className="px-4 py-2 border-b">Email</th>
-                <th className="px-4 py-2 border-b">Teléfono</th>
-                <th className="px-4 py-2 border-b">Dirección</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contacts.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="text-center py-4 text-gray-500">
-                    No hay contactos.
-                  </td>
-                </tr>
-              ) : (
-                contacts.map((contact) => (
-                  <tr key={contact.id}>
-                    <td className="px-4 py-2 border-b">{contact.name}</td>
-                    <td className="px-4 py-2 border-b">{contact.email}</td>
-                    <td className="px-4 py-2 border-b">{contact.phone}</td>
-                    <td className="px-4 py-2 border-b">{contact.address || "-"}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <ContactsTable contacts={contacts} />
       ) : (
-        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-          {contacts.length === 0 ? (
-            <div className="col-span-full text-center py-4 text-gray-500">No hay contactos.</div>
-          ) : (
-            contacts.map((contact) => (
-              <div key={contact.id} className="bg-white border border-gray-200 rounded shadow p-4 flex flex-col gap-2 min-w-0 w-full max-w-full box-border">
-                <div className="font-bold text-lg break-words">{contact.name}</div>
-                <div className="text-sm text-gray-600 break-words">{contact.email}</div>
-                <div className="text-sm break-words">{contact.phone}</div>
-                <div className="text-xs text-gray-500 break-words">{contact.address || "-"}</div>
-              </div>
-            ))
-          )}
-        </div>
+        <ContactsCards contacts={contacts} />
       )}
-      {/* Paginación enriquecida */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-2 mt-4">
-        <div className="text-gray-600 text-sm mb-2 sm:mb-0">
-          Total: <b>{total}</b> contactos
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={!hasPreviousPage}
-          >
-            Anterior
-          </button>
-          <span>
-            Página {page} de {totalPages || 1}
-          </span>
-          <button
-            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-            onClick={() => setPage((p) => (hasNextPage ? p + 1 : p))}
-            disabled={!hasNextPage}
-          >
-            Siguiente
-          </button>
-        </div>
-      </div>
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        hasNextPage={hasNextPage}
+        hasPreviousPage={hasPreviousPage}
+        onPageChange={setPage}
+        total={total}
+      />
     </div>
   );
 }
