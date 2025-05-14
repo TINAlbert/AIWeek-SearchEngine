@@ -1,19 +1,27 @@
 import { api } from "./api";
 import type {
   Contact,
-  ContactListResponse,
   ContactCreateDto,
   ContactUpdateDto,
 } from "../types/contact";
+import type { ApiContact, ApiContactListResponse } from "../types/contact.api";
+import { mapApiContactToContact, mapApiContactListResponseToContactListResponse } from "../types/contact.mapper";
 
 // Servicio para consumo de endpoints de contactos
 export const contactsService = {
   // Listar contactos con filtros y paginación
-  list: (params?: { page?: number; pageSize?: number; search?: string }) =>
-    api.get<ContactListResponse>("/contacts", { params }),
+  list: async (params?: { page?: number; pageSize?: number; search?: string }) => {
+    const res = await api.get<ApiContactListResponse>("/contacts", { params });
+    const mapped = mapApiContactListResponseToContactListResponse(res.data);
+    return { ...res, data: mapped };
+  },
 
   // Obtener detalle de un contacto
-  get: (id: number) => api.get<Contact>(`/contacts/${id}`),
+  get: async (id: number) => {
+    const res = await api.get<ApiContact>(`/contacts/${id}`);
+    const mapped: Contact = mapApiContactToContact(res.data);
+    return { ...res, data: mapped };
+  },
 
   // Crear un nuevo contacto
   create: (data: ContactCreateDto) => api.post<Contact>("/contacts", data),
