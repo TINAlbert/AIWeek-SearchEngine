@@ -16,6 +16,13 @@ export default function ContactsPage() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+
+  // Detectar si es móvil (tailwind: <640px)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  useEffect(() => {
+    if (isMobile && viewMode !== 'cards') setViewMode('cards');
+  }, [isMobile, viewMode]);
 
   useEffect(() => {
     setLoading(true);
@@ -44,7 +51,25 @@ export default function ContactsPage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Contactos</h1>
+      <h1 className="text-2xl font-bold mb-4 flex items-center gap-4">
+        Contactos
+        {!isMobile && (
+          <>
+            <button
+              className={`px-2 py-1 rounded text-xs border ${viewMode === 'table' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
+              onClick={() => setViewMode('table')}
+            >
+              Tabla
+            </button>
+            <button
+              className={`px-2 py-1 rounded text-xs border ${viewMode === 'cards' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
+              onClick={() => setViewMode('cards')}
+            >
+              Tarjetas
+            </button>
+          </>
+        )}
+      </h1>
       <div className="mb-4 flex gap-2">
         <input
           type="text"
@@ -59,7 +84,7 @@ export default function ContactsPage() {
       )}
       {loading ? (
         <div className="text-center py-8">Cargando...</div>
-      ) : (
+      ) : viewMode === 'table' ? (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 rounded shadow">
             <thead>
@@ -89,6 +114,21 @@ export default function ContactsPage() {
               )}
             </tbody>
           </table>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+          {contacts.length === 0 ? (
+            <div className="col-span-full text-center py-4 text-gray-500">No hay contactos.</div>
+          ) : (
+            contacts.map((contact) => (
+              <div key={contact.id} className="bg-white border border-gray-200 rounded shadow p-4 flex flex-col gap-2 min-w-0 w-full max-w-full box-border">
+                <div className="font-bold text-lg break-words">{contact.name}</div>
+                <div className="text-sm text-gray-600 break-words">{contact.email}</div>
+                <div className="text-sm break-words">{contact.phone}</div>
+                <div className="text-xs text-gray-500 break-words">{contact.address || "-"}</div>
+              </div>
+            ))
+          )}
         </div>
       )}
       {/* Paginación enriquecida */}

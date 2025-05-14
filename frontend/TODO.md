@@ -79,6 +79,37 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [ ] Configurar despliegue (Vercel, Netlify, Azure, etc.)
 - [ ] Configurar CI/CD (opcional)
 
+## Mejora sugerida: Página de listado/búsqueda de contactos
+- [x] Mejorar feedback visual de búsqueda:
+    - [x] Mostrar loader/spinner o skeleton en el input mientras se busca
+    - [ ] Resaltar el texto buscado en los resultados
+    - [ ] Botón para limpiar el campo de búsqueda
+    - [ ] Mensaje de “sin resultados” más visual
+- [ ] Filtros avanzados:
+    - [ ] Filtro por estado (Activo/Inactivo)
+    - [ ] Filtro por ciudad
+    - [ ] Filtro por rango de fechas (creación, actualización)
+    - [ ] Selector de campo de búsqueda (nombre, email, documento, etc.)
+- [x] Mejoras de paginación:
+    - [x] Permitir ir a una página específica
+    - [x] Permitir cambiar el tamaño de página (10, 25, 50, 100)
+    - [ ] Scroll infinito (opcional)
+- [x] Acciones rápidas en la tabla:
+    - [x] Botón de ver detalle
+    - [ ] Botón de editar
+    - [ ] Botón de eliminar
+    - [ ] Selección múltiple para eliminar varios contactos
+- [x] Accesibilidad y usabilidad:
+    - [x] Mejorar enfoque del teclado en el input
+    - [x] Soporte para navegación con teclado y lectores de pantalla
+- [x] Rendimiento:
+    - [x] Cachear resultados recientes de búsqueda
+    - [x] Optimizar renderizado de filas
+- [ ] Internacionalización:
+    - [ ] Preparar la UI para varios idiomas (i18n)
+- [x] Vista de tarjetas responsiva y exclusiva en móvil
+- [x] Alternancia entre vista de tabla y tarjetas en escritorio
+
 ### Cambios recientes
 - Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
 - El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.

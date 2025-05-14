@@ -136,3 +136,5 @@ Esto permite cambiar fácilmente el endpoint de la API sin modificar el código 
 - Adaptación del frontend para consumir la nueva estructura de paginación enriquecida del endpoint `/contacts`.
 - Tipos y servicio de contactos actualizados para reflejar los campos: `totalPages`, `hasNextPage`, `hasPreviousPage`.
 - UI de paginación mejorada en la página de contactos.
+- Vista de contactos mejorada: ahora puedes alternar entre vista de tabla y tarjetas en escritorio, y en móvil solo está disponible la vista de tarjetas, completamente responsiva.
+- Mejoras de usabilidad y feedback visual en la búsqueda.
