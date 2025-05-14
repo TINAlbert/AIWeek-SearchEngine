@@ -5,10 +5,10 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 ## 1. Estructura base y configuración
 - [x] Inicializar el proyecto en React con Vite
 - [x] Configurar estructura de carpetas y rutas
-- [ ] Crear componentes base (Layout, Header, Footer, Loader, etc.)
+- [x] Crear menú lateral responsive (Sidebar) con colapsado en escritorio y navbar en móvil
 - [x] Configurar React Router con páginas iniciales (Home, Login, Dashboard, NotFound)
 - [x] Implementar protección de rutas privadas que requieren login
-- [ ] Configurar variables de entorno para endpoints y claves
+- [x] Configurar variables de entorno para endpoints y claves
 
 ## 2. Autenticación y seguridad
 - [x] Implementar formulario de login
@@ -47,7 +47,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Actualizar estado global tras login/logout/refresh
 
 ## 5. UI/UX y validaciones
-- [ ] Añadir estilos y diseño responsivo usando Tailwind CSS
+- [ ] Añadir estilos y diseño responsivo usando Tailwind CSS (Sidebar funcional, pendiente estilos generales)
 - [ ] Implementar validaciones de formularios (ej: react-hook-form + yup)
 - [ ] Mostrar feedback visual de errores y validaciones
 - [ ] Añadir loaders/spinners y skeletons en cargas

@@ -56,6 +56,7 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 * **UI/Estilos**: Tailwind CSS
 * **Manejo API**: Axios con manejo de errores
 * **Formularios**: React Hook Form + Zod o Yup
+* Menú lateral (Sidebar) responsive: colapsable en escritorio, navbar superior en móvil, integrado en todas las páginas privadas.
 
 ### 3.2 Backend (solo consumo)
 
