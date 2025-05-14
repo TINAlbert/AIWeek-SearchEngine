@@ -53,5 +53,10 @@ namespace SearchServiceEngine.Services
         {
             return await _repository.DeleteAsync(id);
         }
+
+        public async Task<int> CountAsync(string? filter)
+        {
+            return await _repository.CountAsync(filter);
+        }
     }
 }

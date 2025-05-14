@@ -24,9 +24,22 @@ namespace SearchServiceEngine.Controllers
         /// <param name="pageSize">Tamaño de página (por defecto 10).</param>
         /// <returns>Lista paginada de contactos.</returns>
         [HttpGet]
+        [ProducesResponseType(typeof(PagedResultDto<ContactDto>), 200)]
         public async Task<IActionResult> GetAll([FromQuery] string? filter, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var result = await _contactService.GetAllAsync(filter, page, pageSize);
+            var data = await _contactService.GetAllAsync(filter, page, pageSize);
+            var total = await _contactService.CountAsync(filter);
+            var totalPages = (int)Math.Ceiling((double)total / pageSize);
+            var result = new PagedResultDto<ContactDto>
+            {
+                Data = data,
+                Total = total,
+                Page = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                HasNextPage = page < totalPages,
+                HasPreviousPage = page > 1
+            };
             return Ok(result);
         }
 

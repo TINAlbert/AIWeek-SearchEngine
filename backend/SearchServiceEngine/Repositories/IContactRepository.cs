@@ -11,5 +11,7 @@ namespace SearchServiceEngine.Repositories
         Task<Contact> CreateAsync(Contact contact);
         Task<bool> UpdateAsync(Contact contact);
         Task<bool> DeleteAsync(int id);
+        IQueryable<Contact> Query();
+        Task<int> CountAsync(string? filter);
     }
 }

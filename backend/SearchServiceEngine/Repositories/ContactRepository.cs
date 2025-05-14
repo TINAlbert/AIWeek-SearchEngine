@@ -26,6 +26,16 @@ namespace SearchServiceEngine.Repositories
                 .ToListAsync();
         }
 
+        public async Task<int> CountAsync(string? filter)
+        {
+            var query = _context.Contacts.AsQueryable();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(c => c.FirstName.Contains(filter) || c.LastName.Contains(filter) || c.Document.Contains(filter));
+            }
+            return await query.CountAsync();
+        }
+
         public async Task<Contact?> GetByIdAsync(int id)
         {
             return await _context.Contacts.FindAsync(id);
@@ -50,6 +60,11 @@ namespace SearchServiceEngine.Repositories
             if (c == null) return false;
             _context.Contacts.Remove(c);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public IQueryable<Contact> Query()
+        {
+            return _context.Contacts.AsQueryable();
         }
     }
 }

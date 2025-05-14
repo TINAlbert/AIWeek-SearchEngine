@@ -27,23 +27,38 @@ namespace SearchServiceEngine.Tests
             // Arrange
             var contacts = new List<ContactDto> { new ContactDto { Id = 1, FirstName = "Test", LastName = "User" } };
             _serviceMock.Setup(s => s.GetAllAsync(null, 1, 10)).ReturnsAsync(contacts);
+            _serviceMock.Setup(s => s.CountAsync(null)).ReturnsAsync(1);
 
             // Act
             var result = await _controller.GetAll(null, 1, 10);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(contacts, okResult.Value);
+            var paged = Assert.IsType<PagedResultDto<ContactDto>>(okResult.Value);
+            Assert.Equal(contacts, paged.Data);
+            Assert.Equal(1, paged.Total);
+            Assert.Equal(1, paged.Page);
+            Assert.Equal(10, paged.PageSize);
+            Assert.Equal(1, paged.TotalPages);
+            Assert.False(paged.HasNextPage);
+            Assert.False(paged.HasPreviousPage);
         }
 
         [Fact]
         public async Task GetAll_ReturnsOkResult_WhenNoContacts()
         {
             _serviceMock.Setup(s => s.GetAllAsync(null, 1, 10)).ReturnsAsync(new List<ContactDto>());
+            _serviceMock.Setup(s => s.CountAsync(null)).ReturnsAsync(0);
             var result = await _controller.GetAll(null, 1, 10);
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var value = Assert.IsAssignableFrom<IEnumerable<ContactDto>>(okResult.Value);
-            Assert.Empty(value);
+            var paged = Assert.IsType<PagedResultDto<ContactDto>>(okResult.Value);
+            Assert.Empty(paged.Data);
+            Assert.Equal(0, paged.Total);
+            Assert.Equal(1, paged.Page);
+            Assert.Equal(10, paged.PageSize);
+            Assert.Equal(0, paged.TotalPages);
+            Assert.False(paged.HasNextPage);
+            Assert.False(paged.HasPreviousPage);
         }
 
         [Fact]

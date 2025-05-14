@@ -11,5 +11,6 @@ namespace SearchServiceEngine.Services
         Task<ContactDto?> CreateAsync(ContactCreateDto dto);
         Task<bool> UpdateAsync(int id, ContactUpdateDto dto);
         Task<bool> DeleteAsync(int id);
+        Task<int> CountAsync(string? filter);
     }
 }
