@@ -7,18 +7,18 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Configurar estructura de carpetas y rutas
 - [ ] Crear componentes base (Layout, Header, Footer, Loader, etc.)
 - [x] Configurar React Router con páginas iniciales (Home, Login, Dashboard, NotFound)
-- [ ] Implementar protección de rutas privadas que requieren login
+- [x] Implementar protección de rutas privadas que requieren login
 - [ ] Configurar variables de entorno para endpoints y claves
 
 ## 2. Autenticación y seguridad
-- [ ] Implementar formulario de login
-- [ ] Consumir endpoint de login del backend
-- [ ] Almacenar tokens (access y refresh) de forma segura (memoria/contexto, nunca localStorage para access token)
-- [ ] Implementar lógica de refresh token automático (interceptor de Axios)
-- [ ] Implementar logout y limpieza de tokens
-- [ ] Proteger rutas privadas (middleware/guard)
-- [ ] Mostrar mensajes de error claros en login/logout/refresh
-- [ ] Sincronizar expiración de sesión con backend
+- [x] Implementar formulario de login
+- [x] Consumir endpoint de login del backend
+- [x] Almacenar tokens (access y refresh) de forma segura (memoria/contexto, nunca localStorage para access token)
+- [x] Implementar lógica de refresh token automático (interceptor de Axios)
+- [x] Implementar logout y limpieza de tokens
+- [x] Proteger rutas privadas (middleware/guard)
+- [x] Mostrar mensajes de error claros en login/logout/refresh
+- [x] Sincronizar expiración de sesión con backend
 
 ## 3. Consumo de API y lógica de negocio
 - [ ] Configurar Axios con interceptores para Authorization y manejo de errores global
