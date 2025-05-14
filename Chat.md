@@ -113,6 +113,14 @@ Próximos pasos sugeridos:
   - El logo "AIWeek" funciona como botón para expandir/colapsar, mostrando solo "AI" en modo colapsado.
 - Actualizado TODO.md para reflejar la tarea completada y anotación sobre estilos generales pendientes.
 
+- Se configuró Axios con interceptores para Authorization y manejo global de errores (toasts) en el frontend.
+- Se creó el archivo de tipos `src/types/contact.ts` para la entidad Contact y operaciones relacionadas.
+- Se implementó el servicio `contactsService` en `src/services/contacts.ts` para consumir los endpoints de contactos (listado, detalle, crear, editar, eliminar), usando import type para cumplir con `verbatimModuleSyntax`.
+- Se creó la página `ContactsPage` que muestra el listado de contactos en una tabla, con paginación y feedback de carga.
+- Se integró la ruta `/contacts` como ruta privada en el sistema de rutas, accesible solo para usuarios autenticados.
+- El listado de contactos ya puede probarse desde la navegación de la app.
+- Actualizado `TODO.md` para reflejar el avance en el punto 3 (consumo de API y UI de contactos).
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

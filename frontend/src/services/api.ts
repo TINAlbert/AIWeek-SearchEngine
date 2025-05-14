@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 // Crea una instancia de Axios para la API
 export const api = axios.create({
@@ -30,6 +30,9 @@ export function setupInterceptors(getAccessToken: () => string | null, onRefresh
           return Promise.reject(refreshError);
         }
       }
+      // Manejo global de errores (4xx/5xx excepto 401)
+      const message = error.response?.data?.message || error.message || "Ocurrió un error inesperado";
+      toast.error(message);
       return Promise.reject(error);
     }
   );
