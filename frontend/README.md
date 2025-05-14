@@ -64,7 +64,7 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 * Endpoints esperados (según backend real):
 
   * `POST /api/auth/login` — Login de usuario. Body: `{ "userName": string, "password": string }`. Devuelve: `{ token, refreshToken }`.
-  * `GET /api/contacts?query=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación. Requiere header `Authorization: Bearer <token>`.
+  * `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación. Requiere header `Authorization: Bearer <token>`.
   * `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID. Requiere header `Authorization`.
   * `PUT /api/contacts/{id}` — Editar contacto (según permisos). Body: datos a actualizar. Requiere header `Authorization`.
   * `GET /api/users` — Listar usuarios (solo Admin). Requiere header `Authorization`.
@@ -129,6 +129,10 @@ Esto permite cambiar fácilmente el endpoint de la API sin modificar el código 
 
 ## Cambios recientes
 
+- Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
+- El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
+- Mejoras de documentación y alineación de endpoints en README.
+- Seed de backend con 500 contactos para pruebas de rendimiento y búsqueda.
 - Adaptación del frontend para consumir la nueva estructura de paginación enriquecida del endpoint `/contacts`.
 - Tipos y servicio de contactos actualizados para reflejar los campos: `totalPages`, `hasNextPage`, `hasPreviousPage`.
 - UI de paginación mejorada en la página de contactos.

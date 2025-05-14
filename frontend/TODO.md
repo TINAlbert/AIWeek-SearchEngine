@@ -28,6 +28,8 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Crear servicios para consumo de endpoints (contacts, users, auth)
 - [x] Página de listado de contactos creada e integrada en rutas privadas (`/contacts`)
 - [x] Adaptar frontend para consumir y mostrar la nueva estructura de paginación enriquecida.
+- [x] Búsqueda de contactos con debounce automático (sin botón buscar)
+- [x] El frontend envía correctamente el parámetro de búsqueda como `filter` (no `search`)
 - [ ] Integrar acciones de crear, editar y eliminar contacto en la UI
 - [ ] Implementar CRUD de contactos:
     - [x] Listar contactos (GET /contacts, con filtros y paginación)
@@ -77,4 +79,8 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [ ] Configurar despliegue (Vercel, Netlify, Azure, etc.)
 - [ ] Configurar CI/CD (opcional)
 
-Este archivo se irá actualizando conforme se definan y completen nuevas tareas.
+### Cambios recientes
+- Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
+- El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
+- Mejoras de documentación y alineación de endpoints en README.
+- Seed de backend con 500 contactos para pruebas de rendimiento y búsqueda.

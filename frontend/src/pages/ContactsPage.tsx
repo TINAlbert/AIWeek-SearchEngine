@@ -14,13 +14,16 @@ export default function ContactsPage() {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     setLoading(true);
     contactsService
-      .list({ page, pageSize })
+      .list({ page, pageSize, search })
       .then((res) => {
         const paged: ContactListResponse = res.data;
+        console.log("Paged contacts:", paged);
         setContacts(paged.data);
         setTotal(paged.total);
         setTotalPages(paged.totalPages);
@@ -28,11 +31,32 @@ export default function ContactsPage() {
         setHasPreviousPage(paged.hasPreviousPage);
       })
       .finally(() => setLoading(false));
-  }, [page, pageSize]);
+  }, [page, pageSize, search]);
+
+  // Efecto para aplicar debounce a la búsqueda
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setPage(1);
+      setSearch(searchInput.trim());
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [searchInput]);
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Contactos</h1>
+      <div className="mb-4 flex gap-2">
+        <input
+          type="text"
+          placeholder="Buscar por nombre, email, etc."
+          className="border rounded px-3 py-1 w-full max-w-xs"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </div>
+      {search && (
+        <div className="mb-2 text-sm text-gray-500">Buscando: <b>{search}</b></div>
+      )}
       {loading ? (
         <div className="text-center py-8">Cargando...</div>
       ) : (

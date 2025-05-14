@@ -11,7 +11,10 @@ import { mapApiContactToContact, mapApiContactListResponseToContactListResponse 
 export const contactsService = {
   // Listar contactos con filtros y paginación
   list: async (params?: { page?: number; pageSize?: number; search?: string }) => {
-    const res = await api.get<ApiContactListResponse>("/contacts", { params });
+    // Adaptar el nombre del parámetro de búsqueda a 'filter' para la API
+    const { search, ...rest } = params || {};
+    const apiParams = { ...rest, filter: search };
+    const res = await api.get<ApiContactListResponse>("/contacts", { params: apiParams });
     const mapped = mapApiContactListResponseToContactListResponse(res.data);
     return { ...res, data: mapped };
   },
