@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUserProfile, getUserAvatar, uploadUserAvatar } from "../services/user";
 import type { UserProfile } from "../types/user";
+import { Camera } from "lucide-react";
 
 const AVATAR_PLACEHOLDER = "/avatar-placeholder.png";
 
@@ -58,9 +59,9 @@ export default function ProfilePage() {
   if (!profile) return null;
 
   return (
-    <div className="max-w-2xl mx-auto p-4 mt-10">
+    <div className="max-w-2xl mx-auto px-2 pb-8">
       <div className="flex flex-col items-center gap-8">
-        <div className="relative flex flex-col items-center w-full">
+        <div className="relative flex flex-col items-center w-full mt-8">
           <div className="relative group">
             <img
               src={avatarUrl}
@@ -68,7 +69,7 @@ export default function ProfilePage() {
               className="w-36 h-36 rounded-full object-cover border-4 border-gray-300 shadow bg-gray-100 transition-all duration-300 group-hover:brightness-95"
             />
             <label className="absolute bottom-2 right-2 cursor-pointer bg-neutral-800 hover:bg-neutral-700 text-white rounded-full p-3 shadow border-2 border-white flex items-center justify-center transition-colors duration-200 group-hover:scale-110" title="Cambiar avatar" style={{zIndex:2}}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2a2.828 2.828 0 11-4-4 2.828 2.828 0 014 4z" /></svg>
+              <Camera className="h-5 w-5" />
               <input
                 type="file"
                 accept="image/*"

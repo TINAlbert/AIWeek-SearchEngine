@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { Home, BookUser, User } from "lucide-react";
 
-const menuItems = [
-  { label: "Home", to: "/", icon: "🏠" },
-  { label: "Contactos", to: "/contacts", icon: "📇" },
-  { label: "Perfil", to: "/profile", icon: "👤" },
+const mainMenuItems = [
+  { label: "Home", to: "/", icon: <Home className="w-5 h-5" /> },
+  { label: "Contactos", to: "/contacts", icon: <BookUser className="w-5 h-5" /> },
 ];
+const profileMenuItem = { label: "Perfil", to: "/profile", icon: <User className="w-5 h-5" /> };
 
 interface SidebarProps {
   collapsed: boolean;
@@ -43,7 +44,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
           </button>
         </div>
         <nav className="flex-1 flex flex-col gap-2 p-4">
-          {menuItems.map((item) => {
+          {mainMenuItems.map((item) => {
             const isActive =
               item.to === "/"
                 ? location.pathname === "/"
@@ -60,6 +61,20 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             );
           })}
         </nav>
+        <div className="mt-auto p-4 pb-6">
+          {(() => {
+            const isActive = location.pathname.startsWith(profileMenuItem.to);
+            return (
+              <Link
+                to={profileMenuItem.to}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+              >
+                <span className="text-lg">{profileMenuItem.icon}</span>
+                <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{profileMenuItem.label}</span>
+              </Link>
+            );
+          })()}
+        </div>
       </aside>
       {/* Drawer (mobile) */}
       <div
@@ -74,7 +89,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
           <button className="text-2xl" onClick={() => setOpen(false)} aria-label="Cerrar menú">×</button>
         </div>
         <nav className="flex-1 flex flex-col gap-2 p-4">
-          {menuItems.map((item) => {
+          {mainMenuItems.map((item) => {
             const isActive =
               item.to === "/"
                 ? location.pathname === "/"
@@ -92,6 +107,21 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             );
           })}
         </nav>
+        <div className="mt-auto p-4 pb-6">
+          {(() => {
+            const isActive = location.pathname.startsWith(profileMenuItem.to);
+            return (
+              <Link
+                to={profileMenuItem.to}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+                onClick={() => setOpen(false)}
+              >
+                <span className="text-lg">{profileMenuItem.icon}</span>
+                {profileMenuItem.label}
+              </Link>
+            );
+          })()}
+        </div>
       </aside>
       {/* Padding for content */}
       <div className={`md:ml-${collapsed ? '20' : '56'} pt-16 md:pt-0 transition-all duration-200`} />
