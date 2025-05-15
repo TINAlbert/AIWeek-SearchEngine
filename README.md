@@ -32,7 +32,7 @@ Plataforma fullstack para la gestión y búsqueda de contactos personales, compu
    ```sh
    dotnet run
    ```
-   Por defecto, la API estará en `http://localhost:5000/api`.
+   Por defecto, la API estará en `http://localhost:5252/api`.
 
 ### 2. Frontend
 
@@ -43,7 +43,7 @@ Plataforma fullstack para la gestión y búsqueda de contactos personales, compu
    ```
 3. Crea un archivo `.env` con la URL de la API:
    ```
-   VITE_API_BASE_URL=http://localhost:5000/api
+   VITE_API_BASE_URL=http://localhost:5252/api
    ```
 4. Ejecuta la app:
    ```sh
@@ -112,10 +112,26 @@ const url = URL.createObjectURL(res.data);
 
 ---
 
-## Variables de entorno
+## Variables de entorno y configuración
 
-- **Frontend:** `.env` con `VITE_API_BASE_URL=http://localhost:5000/api`
-- **Backend:** `appsettings.json` con cadena de conexión, claves JWT y ruta de avatares
+- **Frontend:** `.env` con:
+  ```
+  VITE_API_BASE_URL=http://localhost:5252/api
+  ```
+- **Backend:** `appsettings.json` con:
+  ```json
+  {
+    "Jwt": {
+      "Key": "SuperSecretKey12345678901234567890123456789012",
+      "Issuer": "AIWeekIssuer",
+      "Audience": "AIWeekAudience"
+    },
+    "ConnectionStrings": {
+      "DefaultConnection": "Data Source=aiweek.db"
+    },
+    "AvatarsPath": "wwwroot/avatars"
+  }
+  ```
 
 ---
 

@@ -102,15 +102,35 @@ const url = URL.createObjectURL(res.data);
 
 ---
 
-## Variables de entorno
+## Configuración esperada del backend
 
-Crea un archivo `.env` en la raíz del frontend con la siguiente variable:
+El backend debe estar configurado (en `appsettings.json`) con los siguientes valores por defecto:
+
+```json
+{
+  "Jwt": {
+    "Key": "SuperSecretKey12345678901234567890123456789012",
+    "Issuer": "AIWeekIssuer",
+    "Audience": "AIWeekAudience"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=aiweek.db"
+  },
+  "AvatarsPath": "wwwroot/avatars"
+}
+```
+
+---
+
+## Variables de entorno (frontend)
+
+Crea un archivo `.env` en la raíz del frontend con:
 
 ```
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:5252/api
 ```
 
-Esto permite cambiar fácilmente el endpoint de la API sin modificar el código fuente. Usa `import.meta.env.VITE_API_BASE_URL` en los servicios para acceder a la URL base.
+Esto debe coincidir con la URL base expuesta por el backend.
 
 ---
 

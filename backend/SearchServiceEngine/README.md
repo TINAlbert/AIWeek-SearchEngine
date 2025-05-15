@@ -4,6 +4,8 @@
 
 Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestión y consulta de contactos/fichas personales, con acceso autenticado mediante JWT y Refresh Tokens. Se utilizará **Entity Framework Core** para la persistencia de datos y **Microsoft Identity** para la autenticación y autorización.
 
+> La URL base por defecto de la API es `http://localhost:5252/api` (ver `Properties/launchSettings.json`).
+
 ---
 
 ## 2. Requisitos Funcionales
@@ -227,3 +229,26 @@ La ruta de almacenamiento de los archivos de avatar se define en `appsettings.js
   curl -X GET https://localhost:5001/api/users/me/avatar \
     -H "Authorization: Bearer <token>" --output avatar.png
   ```
+
+---
+
+## Configuración por defecto (`appsettings.json`)
+
+```json
+{
+  "Jwt": {
+    "Key": "SuperSecretKey12345678901234567890123456789012",
+    "Issuer": "AIWeekIssuer",
+    "Audience": "AIWeekAudience"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=aiweek.db"
+  },
+  "AvatarsPath": "wwwroot/avatars"
+}
+```
+
+- **Key:** Cambia este valor en producción por una clave segura y privada.
+- **Issuer/Audience:** Identificadores del emisor y audiencia del JWT.
+- **DefaultConnection:** Usa SQLite por defecto (`aiweek.db`).
+- **AvatarsPath:** Carpeta donde se almacenan los avatares de usuario.
