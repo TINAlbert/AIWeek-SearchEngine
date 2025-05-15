@@ -154,6 +154,13 @@ Esto permite cambiar fácilmente el endpoint de la API sin modificar el código 
 
 ## Cambios recientes
 
+- Flujo de autenticación y perfil robusto y sincronizado con backend.
+- Avatar y datos de usuario integrados y protegidos, con placeholder y favicon personalizados "AI".
+- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
+- Sincronización total de tokens y usuario en frontend/backend.
+- Mejoras de UX y feedback visual en login/logout/perfil.
+- Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes.
+- Limpieza de código y documentación alineada con la implementación final.
 - Pantalla Home ahora muestra una grid de indicadores alineados arriba, con diseño moderno y limpio, sin fondo degradado.
 - El selector de vista de contactos (tabla/tarjetas) es un componente reutilizable y está fuera del h1 para accesibilidad.
 - En móvil, la vista de contactos solo muestra tarjetas.

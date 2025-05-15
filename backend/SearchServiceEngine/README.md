@@ -177,6 +177,14 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 - Adaptados los tests y servicios para soportar esta nueva estructura.
 
+- Flujo de autenticación y perfil robusto y coherente con frontend.
+- Avatar y datos de usuario integrados y protegidos.
+- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
+- Placeholder de avatar y favicon personalizados con identidad "AI".
+- Sincronización total de tokens y usuario en frontend/backend.
+- Mejoras de UX y feedback visual en login/logout/perfil.
+- Documentación y endpoints alineados con la implementación final.
+
 ---
 
 ## Gestión de avatar de usuario

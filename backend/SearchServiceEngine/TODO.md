@@ -14,7 +14,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] Manejar expiración y revocación/eliminación de refresh tokens
   - [x] Eliminar todos los refresh tokens activos previos tras login
 - [x] (Opcional) Implementar registro de usuarios (solo Admin)
-- [ ] Añadir claims personalizados si es necesario
+- [x] Añadir claims personalizados si es necesario
 
 ### 2. Gestión de Contactos
 - [x] Crear entidad/modelo Contact
@@ -88,4 +88,12 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [ ] Revisar seguridad y validaciones en subida de archivos
 - [ ] (Opcional) Permitir actualización de perfil (FirstName, LastName, etc.) desde frontend
 
-Este archivo se irá actualizando conforme se definan y completen nuevas tareas.
+---
+
+**Actualización:**
+- Flujo de autenticación y perfil robusto y coherente con frontend.
+- Avatar y datos de usuario integrados y protegidos.
+- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
+- Placeholder de avatar y favicon personalizados con identidad "AI".
+- Sincronización total de tokens y usuario en frontend/backend.
+- Mejoras de UX y feedback visual en login/logout/perfil.
