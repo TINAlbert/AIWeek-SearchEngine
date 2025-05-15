@@ -11,14 +11,29 @@ using SearchServiceEngine.Data;
 namespace SearchServiceEngine.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250515065503_ExtendUserWithProfileAndAvatar")]
-    partial class ExtendUserWithProfileAndAvatar
+    [Migration("20250515124936_InitialClean")]
+    partial class InitialClean
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
+
+            modelBuilder.Entity("ContactProfile", b =>
+                {
+                    b.Property<int>("ContactsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfilesId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ContactsId", "ProfilesId");
+
+                    b.HasIndex("ProfilesId");
+
+                    b.ToTable("ContactProfiles", (string)null);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -148,6 +163,42 @@ namespace SearchServiceEngine.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SearchServiceEngine.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("SearchServiceEngine.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -156,39 +207,49 @@ namespace SearchServiceEngine.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Document")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Contacts");
 
@@ -203,7 +264,7 @@ namespace SearchServiceEngine.Migrations
                             FirstName = "Juan",
                             LastName = "Pérez",
                             Phone = "+34123456789",
-                            Status = "Activo",
+                            Status = 0,
                             UpdatedAt = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
@@ -216,9 +277,30 @@ namespace SearchServiceEngine.Migrations
                             FirstName = "Ana",
                             LastName = "García",
                             Phone = "+34987654321",
-                            Status = "Inactivo",
+                            Status = 1,
                             UpdatedAt = new DateTime(2024, 1, 2, 12, 0, 0, 0, DateTimeKind.Utc)
                         });
+                });
+
+            modelBuilder.Entity("SearchServiceEngine.Models.Profile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("SearchServiceEngine.Models.RefreshToken", b =>
@@ -343,6 +425,21 @@ namespace SearchServiceEngine.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ContactProfile", b =>
+                {
+                    b.HasOne("SearchServiceEngine.Models.Contact", null)
+                        .WithMany()
+                        .HasForeignKey("ContactsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SearchServiceEngine.Models.Profile", null)
+                        .WithMany()
+                        .HasForeignKey("ProfilesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -394,6 +491,16 @@ namespace SearchServiceEngine.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SearchServiceEngine.Models.Contact", b =>
+                {
+                    b.HasOne("SearchServiceEngine.Models.Company", "Company")
+                        .WithMany("Contacts")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("SearchServiceEngine.Models.RefreshToken", b =>
                 {
                     b.HasOne("SearchServiceEngine.Models.User", "User")
@@ -403,6 +510,11 @@ namespace SearchServiceEngine.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SearchServiceEngine.Models.Company", b =>
+                {
+                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

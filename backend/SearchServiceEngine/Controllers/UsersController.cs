@@ -42,8 +42,27 @@ namespace SearchServiceEngine.Controllers
         {
             if (!_context.Users.Any())
             {
-                var admin = new User { UserName = "admin", Role = "Admin" };
-                var user = new User { UserName = "user", Role = "User" };
+                var now = DateTime.UtcNow;
+                var admin = new User {
+                    UserName = "admin",
+                    Role = "Admin",
+                    FirstName = "Administrador",
+                    LastName = "Principal",
+                    IsActive = true,
+                    CreatedAt = now,
+                    UpdatedAt = now,
+                    AvatarFileName = null
+                };
+                var user = new User {
+                    UserName = "user",
+                    Role = "User",
+                    FirstName = "Usuario",
+                    LastName = "Ejemplo",
+                    IsActive = true,
+                    CreatedAt = now,
+                    UpdatedAt = now,
+                    AvatarFileName = null
+                };
                 await userManager.CreateAsync(admin, "admin123");
                 await userManager.CreateAsync(user, "user123");
                 return Ok("Usuarios de ejemplo insertados.");

@@ -1,3 +1,5 @@
+using SearchServiceEngine.Models;
+
 namespace SearchServiceEngine.DTOs
 {
     /// <summary>
@@ -36,6 +38,18 @@ namespace SearchServiceEngine.DTOs
         /// <summary>
         /// Estado del contacto.
         /// </summary>
-        public string Status { get; set; } = string.Empty;
+        public ContactStatus Status { get; set; } = ContactStatus.Activo;
+        /// <summary>
+        /// Identificador de la empresa.
+        /// </summary>
+        public int? CompanyId { get; set; }
+        /// <summary>
+        /// Nombre de la empresa.
+        /// </summary>
+        public string? CompanyName { get; set; }
+        /// <summary>
+        /// Perfiles asociados al contacto.
+        /// </summary>
+        public List<ProfileDto> Profiles { get; set; } = new();
     }
 }
