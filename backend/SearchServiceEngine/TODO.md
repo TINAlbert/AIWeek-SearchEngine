@@ -38,6 +38,10 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Endpoint PUT /users/{id} (editar usuario)
 - [x] Endpoint DELETE /users/{id} (opcional)
 - [x] Crear DTOs para usuario (entrada/salida)
+- [x] Extender modelo User con campos de perfil y avatar (FirstName, LastName, IsActive, CreatedAt, UpdatedAt, AvatarFileName)
+- [x] Endpoints para subir y obtener avatar del usuario autenticado
+- [x] Documentar endpoints y ejemplos de uso en README
+- [x] Unificar documentación de endpoints y evitar duplicados
 
 ### 4. Seguridad
 - [x] Verificación de roles en endpoints
@@ -65,6 +69,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] UsersController (CRUD)
   - [x] Servicios y lógica de negocio
 - [ ] (Opcional) Añadir pruebas de integración
+- [ ] Mejorar tests de integración para endpoints de usuario/avatar
 
 ### 8. DevOps y despliegue
 <!-- No aplica en este proyecto por ahora -->
@@ -79,5 +84,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [ ] Registro y verificación de email de usuarios
 - [x] Documentación interactiva con Scalar UI
 - [x] Mejorar la gestión de errores y respuestas estándar
+- [ ] Revisar seguridad y validaciones en subida de archivos
+- [ ] (Opcional) Permitir actualización de perfil (FirstName, LastName, etc.) desde frontend
 
 Este archivo se irá actualizando conforme se definan y completen nuevas tareas.

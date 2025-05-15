@@ -91,23 +91,27 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 ### Autenticación
 
-* `POST /auth/login` → retorna JWT + Refresh Token
-* `POST /auth/refresh` → renueva tokens
-* `POST /auth/logout` → revoca refresh token (opcional)
+- `POST /auth/login` — Inicia sesión y retorna JWT + Refresh Token (requiere credenciales válidas)
+- `POST /auth/refresh` — Renueva tokens de acceso y refresh (requiere refresh token válido)
+- `POST /auth/logout` — Revoca el refresh token actual (requiere autenticación)
 
-### Usuarios (opcional, admin)
+### Usuarios
 
-* `GET /users`
-* `POST /users`
-* `PUT /users/{id}`
+- `GET /users` — Lista todos los usuarios (requiere rol Admin)
+- `POST /users` — Crea un nuevo usuario (requiere rol Admin)
+- `PUT /users/{id}` — Actualiza un usuario existente (requiere rol Admin)
+- `GET /users/{id}` — Obtiene un usuario por su identificador (requiere rol Admin)
+- `GET /users/me` — Obtiene los datos del usuario autenticado (requiere autenticación)
+- `POST /users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (requiere autenticación, multipart/form-data)
+- `GET /users/me/avatar` — Descarga el avatar del usuario autenticado (requiere autenticación)
 
 ### Contactos
 
-* `GET /contacts?query=&page=&pageSize=`
-* `GET /contacts/{id}`
-* `POST /contacts`
-* `PUT /contacts/{id}`
-* `DELETE /contacts/{id}`
+- `GET /contacts?query=&page=&pageSize=` — Lista contactos con filtros y paginación (requiere autenticación)
+- `GET /contacts/{id}` — Obtiene un contacto por su identificador (requiere autenticación)
+- `POST /contacts` — Crea un nuevo contacto (requiere permisos según rol)
+- `PUT /contacts/{id}` — Actualiza un contacto existente (requiere permisos según rol)
+- `DELETE /contacts/{id}` — Elimina un contacto (requiere permisos según rol)
 
 ---
 
@@ -152,4 +156,48 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 ## Cambios recientes
 
 - El endpoint `GET /contacts` ahora devuelve un objeto paginado enriquecido (`PagedResultDto<ContactDto>`) con los campos: `data`, `total`, `page`, `pageSize`, `totalPages`, `hasNextPage`, `hasPreviousPage`.
+
 - Adaptados los tests y servicios para soportar esta nueva estructura.
+
+---
+
+## Gestión de avatar de usuario
+
+El backend permite a cada usuario autenticado subir y obtener su avatar de perfil.
+
+### Configuración
+
+La ruta de almacenamiento de los archivos de avatar se define en `appsettings.json` con la clave `AvatarsPath`. Por defecto es `wwwroot/avatars`.
+
+```json
+{
+  "AvatarsPath": "wwwroot/avatars"
+}
+```
+
+### Endpoints
+
+- **Subir/Reemplazar avatar**
+  - `POST /api/users/me/avatar`
+  - Autenticación requerida
+  - Content-Type: `multipart/form-data`
+  - Campo: `file` (imagen .jpg, .jpeg, .png, .gif)
+  - Respuesta: `{ message, fileName }`
+
+  **Ejemplo con curl:**
+  ```sh
+  curl -X POST https://localhost:5001/api/users/me/avatar \
+    -H "Authorization: Bearer <token>" \
+    -F "file=@ruta/a/mi_avatar.png"
+  ```
+
+- **Obtener avatar**
+  - `GET /api/users/me/avatar`
+  - Autenticación requerida
+  - Devuelve el archivo de imagen si existe
+
+  **Ejemplo con curl:**
+  ```sh
+  curl -X GET https://localhost:5001/api/users/me/avatar \
+    -H "Authorization: Bearer <token>" --output avatar.png
+  ```
