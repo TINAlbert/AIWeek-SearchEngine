@@ -12,5 +12,7 @@ namespace SearchServiceEngine.Services
         Task<bool> UpdateAsync(int id, ContactUpdateDto dto);
         Task<bool> DeleteAsync(int id);
         Task<int> CountAsync(string? filter);
+        Task<bool> AddProfileAsync(int contactId, int profileId);
+        Task<bool> RemoveProfileAsync(int contactId, int profileId);
     }
 }

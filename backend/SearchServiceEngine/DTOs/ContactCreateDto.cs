@@ -36,5 +36,9 @@ namespace SearchServiceEngine.DTOs
         /// ID de la empresa asociada al contacto (opcional).
         /// </summary>
         public int? CompanyId { get; set; }
+        /// <summary>
+        /// IDs de los perfiles asociados al contacto.
+        /// </summary>
+        public List<int> ProfileIds { get; set; } = new();
     }
 }

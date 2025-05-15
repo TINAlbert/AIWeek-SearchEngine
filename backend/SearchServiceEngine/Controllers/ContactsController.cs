@@ -123,5 +123,39 @@ namespace SearchServiceEngine.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        /// <summary>
+        /// Añade un perfil a un contacto.
+        /// </summary>
+        /// <param name="id">Id del contacto.</param>
+        /// <param name="profileId">Id del perfil a añadir.</param>
+        [HttpPost("{id}/profiles/{profileId}")]
+        public async Task<IActionResult> AddProfile(int id, int profileId, [FromServices] IContactService contactService)
+        {
+            if (id <= 0 || profileId <= 0)
+                return BadRequest();
+            var contact = await contactService.GetByIdAsync(id);
+            if (contact == null) return NotFound();
+            var updated = await contactService.AddProfileAsync(id, profileId);
+            if (!updated) return NotFound("Perfil no encontrado o ya asociado.");
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Quita un perfil de un contacto.
+        /// </summary>
+        /// <param name="id">Id del contacto.</param>
+        /// <param name="profileId">Id del perfil a quitar.</param>
+        [HttpDelete("{id}/profiles/{profileId}")]
+        public async Task<IActionResult> RemoveProfile(int id, int profileId, [FromServices] IContactService contactService)
+        {
+            if (id <= 0 || profileId <= 0)
+                return BadRequest();
+            var contact = await contactService.GetByIdAsync(id);
+            if (contact == null) return NotFound();
+            var updated = await contactService.RemoveProfileAsync(id, profileId);
+            if (!updated) return NotFound("Perfil no encontrado o no asociado.");
+            return NoContent();
+        }
     }
 }
