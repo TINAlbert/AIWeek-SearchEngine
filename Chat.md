@@ -131,6 +131,23 @@ Próximos pasos sugeridos:
 - Verificado que no hay errores de compilación en los archivos modificados.
 - Listo para realizar commits separados en backend y frontend por los cambios de paginación y adaptación de la UI.
 
+- Implementada búsqueda automática (debounce) en la página de contactos del frontend.
+- El frontend ahora envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
+- Mejoras de documentación y alineación de endpoints en README y TODO.
+- Seed masivo en el backend para pruebas de rendimiento y búsqueda.
+- Añadida alternancia entre vista de tabla y tarjetas en el listado de contactos.
+- En dispositivos móviles, solo está disponible la vista de tarjetas, completamente responsiva.
+- Mejoras de usabilidad y feedback visual en la búsqueda.
+
+---
+
+## 2025-05-15
+- Refactorizada la pantalla Home: ahora muestra una grid de indicadores alineados arriba, sin fondo degradado, con diseño moderno y limpio.
+- Corregida la accesibilidad en ContactsPage: el selector de vista (ViewModeToggle) está fuera del h1.
+- Restaurada la lógica para que en móvil solo se muestre la vista de tarjetas en ContactsPage.
+- Integrado el componente ViewModeToggle en ContactsPage.
+- Mejoras visuales y de layout en la paginación y responsividad de la página de contactos.
+
 ---
 
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

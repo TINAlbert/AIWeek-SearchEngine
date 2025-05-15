@@ -5,6 +5,7 @@ import type { ContactListResponse } from "../types/contact";
 import ContactsTable from "../components/ContactsTable";
 import ContactsCards from "../components/ContactsCards";
 import Pagination from "../components/Pagination";
+import ViewModeToggle from "../components/ViewModeToggle";
 
 const PAGE_SIZE = 10;
 
@@ -22,7 +23,16 @@ export default function ContactsPage() {
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
   // Detectar si es móvil (tailwind: <640px)
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     if (isMobile && viewMode !== 'cards') setViewMode('cards');
   }, [isMobile, viewMode]);
@@ -52,26 +62,11 @@ export default function ContactsPage() {
   }, [searchInput]);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 flex items-center gap-4">
-        Contactos
-        {!isMobile && (
-          <>
-            <button
-              className={`px-2 py-1 rounded text-xs border ${viewMode === 'table' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
-              onClick={() => setViewMode('table')}
-            >
-              Tabla
-            </button>
-            <button
-              className={`px-2 py-1 rounded text-xs border ${viewMode === 'cards' ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border-blue-600'}`}
-              onClick={() => setViewMode('cards')}
-            >
-              Tarjetas
-            </button>
-          </>
-        )}
-      </h1>
+    <div className="p-4 flex flex-col">
+      <div className="flex flex-wrap items-center gap-4 mb-4">
+        <h1 className="text-2xl font-bold">Contactos</h1>
+        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} />
+      </div>
       <div className="mb-4 flex gap-2">
         <input
           type="text"
@@ -84,21 +79,29 @@ export default function ContactsPage() {
       {search && (
         <div className="mb-2 text-sm text-gray-500">Buscando: <b>{search}</b></div>
       )}
-      {loading ? (
-        <div className="text-center py-8">Cargando...</div>
-      ) : viewMode === 'table' ? (
-        <ContactsTable contacts={contacts} />
-      ) : (
-        <ContactsCards contacts={contacts} />
-      )}
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        hasNextPage={hasNextPage}
-        hasPreviousPage={hasPreviousPage}
-        onPageChange={setPage}
-        total={total}
-      />
+      <div>
+        {loading ? (
+          <div className="text-center py-8">Cargando...</div>
+        ) : viewMode === 'table' ? (
+          <ContactsTable contacts={contacts} />
+        ) : (
+          <ContactsCards
+            contacts={contacts}
+            scrollable={true}
+            maxHeight={'70vh'}
+          />
+        )}
+      </div>
+      <div className="mt-8">
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          hasNextPage={hasNextPage}
+          hasPreviousPage={hasPreviousPage}
+          onPageChange={setPage}
+          total={total}
+        />
+      </div>
     </div>
   );
 }

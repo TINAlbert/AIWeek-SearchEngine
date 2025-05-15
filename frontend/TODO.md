@@ -110,7 +110,12 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Vista de tarjetas responsiva y exclusiva en móvil
 - [x] Alternancia entre vista de tabla y tarjetas en escritorio
 
-### Cambios recientes
+## Cambios recientes
+- Refactorizada la pantalla Home para mostrar una grid de indicadores alineados arriba, con diseño moderno y limpio, sin fondo degradado.
+- Se corrigió la accesibilidad en ContactsPage: el selector de vista ahora está fuera del h1.
+- Se restauró la lógica para que en móvil solo se muestre la vista de tarjetas en ContactsPage.
+- Se integró el componente ViewModeToggle en ContactsPage para alternar la vista de tabla/tarjetas.
+- Mejoras visuales y de layout en la paginación y la responsividad de la página de contactos.
 - Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
 - El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
 - Mejoras de documentación y alineación de endpoints en README.

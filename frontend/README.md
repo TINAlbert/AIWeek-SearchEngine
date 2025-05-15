@@ -129,6 +129,10 @@ Esto permite cambiar fácilmente el endpoint de la API sin modificar el código 
 
 ## Cambios recientes
 
+- Pantalla Home ahora muestra una grid de indicadores alineados arriba, con diseño moderno y limpio, sin fondo degradado.
+- El selector de vista de contactos (tabla/tarjetas) es un componente reutilizable y está fuera del h1 para accesibilidad.
+- En móvil, la vista de contactos solo muestra tarjetas.
+- Mejoras de layout y paginación en la página de contactos.
 - Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
 - El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
 - Mejoras de documentación y alineación de endpoints en README.
