@@ -63,55 +63,63 @@ export default function ContactsPage() {
   }, [searchInput]);
 
   return (
-    <div className="p-4 flex flex-col">
-      <div className="flex flex-wrap items-center gap-4 mb-4">
-        <h1 className="text-2xl font-bold">Contactos</h1>
-        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} />
-      </div>
-      <div className="mb-4 flex gap-2 items-center">
-        <input
-          type="text"
-          placeholder="Buscar por nombre, email, etc."
-          className="border rounded px-3 py-1 w-full max-w-xs"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-        {searchInput && (
-          <button
-            type="button"
-            aria-label="Limpiar búsqueda"
-            className="ml-1 p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring"
-            onClick={() => setSearchInput("")}
-          >
-            <X size={16} className="text-gray-500" />
-          </button>
+    <div className="bg-gray-50 min-h-screen w-full flex flex-col items-center">
+      <div className="w-full px-2 sm:px-4 md:px-8 mt-2 sm:mt-14">
+        <h1 className="text-2xl font-bold text-gray-800 mb-1 sm:mb-6">Contactos</h1>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 mb-2 sm:mb-6 sticky top-0 z-10 bg-gray-50 pb-2">
+          <div className="flex flex-1 items-center gap-2 max-w-full sm:max-w-xl">
+            <div className="relative w-full">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Buscar por nombre, email, etc."
+                className="pl-9 pr-8 py-2 border border-gray-200 rounded-lg w-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-800 shadow-sm"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              {searchInput && (
+                <button
+                  type="button"
+                  aria-label="Limpiar búsqueda"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring"
+                  onClick={() => setSearchInput("")}
+                >
+                  <X size={16} className="text-gray-400" />
+                </button>
+              )}
+            </div>
+            <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} />
+            {/* Aquí puedes añadir un botón de filtro o exportar si lo necesitas */}
+          </div>
+        </div>
+        {search && (
+          <div className="mb-2 text-sm text-gray-500">Buscando: <b>{search}</b></div>
         )}
-      </div>
-      {search && (
-        <div className="mb-2 text-sm text-gray-500">Buscando: <b>{search}</b></div>
-      )}
-      <div>
-        {loading ? (
-          <div className="text-center py-8">Cargando...</div>
-        ) : viewMode === 'table' ? (
-          <ContactsTable contacts={contacts} />
-        ) : (
-          <ContactsCards
-            contacts={contacts}
-            scrollable={true}
-            maxHeight={'70vh'}
+        <div className="mt-2">
+          {loading ? (
+            <div className="text-center py-16">Cargando...</div>
+          ) : viewMode === 'table' ? (
+            <ContactsTable contacts={contacts} />
+          ) : (
+            <ContactsCards
+              contacts={contacts}
+              scrollable={true}
+              maxHeight={'70vh'}
+            />
+          )}
+        </div>
+        <div className="flex justify-end mt-6">
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            hasNextPage={hasNextPage}
+            hasPreviousPage={hasPreviousPage}
+            onPageChange={setPage}
+            total={total}
           />
-        )}
-      </div>
-      <div className="mt-8">
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          hasNextPage={hasNextPage}
-          hasPreviousPage={hasPreviousPage}
-          onPageChange={setPage}
-          total={total}
-        />
+        </div>
       </div>
     </div>
   );

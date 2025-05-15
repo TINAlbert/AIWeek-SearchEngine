@@ -7,30 +7,38 @@ interface ContactsTableProps {
 
 export default function ContactsTable({ contacts }: ContactsTableProps) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200 rounded shadow">
+    <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-x-auto p-4">
+      <table className="min-w-full bg-white">
         <thead>
-          <tr>
-            <th className="px-4 py-2 border-b">Nombre</th>
-            <th className="px-4 py-2 border-b">Email</th>
-            <th className="px-4 py-2 border-b">Teléfono</th>
-            <th className="px-4 py-2 border-b">Dirección</th>
+          <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
+            <th className="px-4 py-3 text-left font-semibold">Nombre</th>
+            <th className="px-4 py-3 text-left font-semibold">Email</th>
+            <th className="px-4 py-3 text-left font-semibold">Teléfono</th>
+            <th className="px-4 py-3 text-left font-semibold">Dirección</th>
           </tr>
         </thead>
         <tbody>
           {contacts.length === 0 ? (
             <tr>
-              <td colSpan={4}>
-                <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." />
+              <td colSpan={4} className="p-0">
+                <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." className="py-12" />
               </td>
             </tr>
           ) : (
-            contacts.map((contact) => (
-              <tr key={contact.id}>
-                <td className="px-4 py-2 border-b">{contact.name}</td>
-                <td className="px-4 py-2 border-b">{contact.email}</td>
-                <td className="px-4 py-2 border-b">{contact.phone}</td>
-                <td className="px-4 py-2 border-b">{contact.address || "-"}</td>
+            contacts.map((contact, idx) => (
+              <tr
+                key={contact.id}
+                className={
+                  `transition-colors group ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50`
+                }
+              >
+                <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
+                  {/* Aquí podrías poner un avatar si lo tienes: <img ... /> */}
+                  {contact.name}
+                </td>
+                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.email}</td>
+                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.phone}</td>
+                <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{contact.address || "-"}</td>
               </tr>
             ))
           )}

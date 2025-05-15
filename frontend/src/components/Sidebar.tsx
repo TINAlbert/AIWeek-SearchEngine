@@ -1,22 +1,25 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Home, BookUser, LogOut } from "lucide-react";
+import { Home, BookUser, LogOut, Settings } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import avatarPlaceholder from '/avatar-placeholder.png';
 
 const AVATAR_PLACEHOLDER = avatarPlaceholder;
 
 const mainMenuItems = [
-  { label: "Home", to: "/", icon: <Home className="w-5 h-5" /> },
+  { label: "Dashboard", to: "/", icon: <Home className="w-5 h-5" /> },
   { label: "Contactos", to: "/contacts", icon: <BookUser className="w-5 h-5" /> },
+];
+
+const secondaryMenuItems = [
+  { label: "Ajustes", to: "/settings", icon: <Settings className="w-5 h-5" /> },
 ];
 
 interface SidebarProps {
   collapsed: boolean;
-  setCollapsed: (v: boolean) => void;
 }
 
-export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
+export default function Sidebar({ collapsed }: SidebarProps) {
   const [open, setOpen] = useState(false); // mobile
   const location = useLocation();
   const { user, logout } = useAuth();
@@ -48,18 +51,12 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
       </nav>
       {/* Sidebar (desktop) */}
       <aside
-        className={`hidden md:flex flex-col bg-white shadow-lg h-screen fixed top-0 left-0 z-10 transition-all duration-200 ${collapsed ? 'w-20' : 'w-56'}`}
+        className={`hidden md:flex flex-col bg-white h-screen fixed top-0 left-0 z-10 transition-all duration-200 border-r border-gray-100 ${collapsed ? 'w-20' : 'w-56'}`}
       >
-        <div className="h-16 flex items-center justify-center px-4 border-b">
-          <button
-            className={`font-bold text-blue-600 text-xl transition-all duration-200 flex items-center focus:outline-none select-none ${collapsed ? 'w-10 justify-center' : 'w-auto justify-center'}`}
-            onClick={() => setCollapsed(!collapsed)}
-            aria-label={collapsed ? "Expandir barra lateral" : "Colapsar barra lateral"}
-          >
-            {collapsed ? 'AI' : 'AIWeek'}
-          </button>
+        <div className="h-20 flex items-center justify-center border-b border-gray-100">
+          <span className="font-bold text-blue-600 text-xl tracking-tight select-none">AIWeek</span>
         </div>
-        <nav className="flex-1 flex flex-col gap-2 p-4">
+        <nav className="flex-1 flex flex-col gap-1 py-6">
           {mainMenuItems.map((item) => {
             const isActive =
               item.to === "/"
@@ -69,61 +66,50 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+                className={`flex items-center gap-3 px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 transition-colors relative ${isActive ? "bg-blue-50 text-blue-700 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-blue-500 before:rounded-r-lg" : ""}`}
               >
-                <span className="text-lg">{item.icon}</span>
+                <span>{item.icon}</span>
                 <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{item.label}</span>
               </Link>
             );
           })}
         </nav>
-        <div className="mt-auto p-4 pb-6 flex flex-col items-start gap-2">
-          {user && (
-            collapsed ? (
-              <div className="flex flex-col items-center w-full">
-                <Link to="/profile">
-                  <img
-                    src={avatarUrl}
-                    alt="Avatar"
-                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 mx-auto hover:ring-2 hover:ring-blue-400 transition"
-                  />
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="mt-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition self-center"
-                  title="Cerrar sesión"
-                  aria-label="Cerrar sesión"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
+        <div className="flex-1" />
+        <nav className="flex flex-col gap-1 px-2 pb-4">
+          {secondaryMenuItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="flex items-center gap-3 px-6 py-2 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors"
+            >
+              <span>{item.icon}</span>
+              <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{item.label}</span>
+            </Link>
+          ))}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-6 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors mt-2"
+            title="Cerrar sesión"
+            aria-label="Cerrar sesión"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>Cerrar sesión</span>
+          </button>
+        </nav>
+        <div className="border-t border-gray-100 p-4 flex items-center gap-3">
+          <Link to="/profile" className="flex items-center gap-3 min-w-0">
+            <img
+              src={avatarUrl}
+              alt="Avatar"
+              className="w-10 h-10 rounded-full object-cover border border-gray-200 bg-gray-100"
+            />
+            {!collapsed && user && (
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px]">{user.firstName} {user.lastName}</span>
+                <span className="text-xs text-gray-400 truncate max-w-[120px]">{user.email}</span>
               </div>
-            ) : (
-              <div className="flex items-center w-full gap-2">
-                <Link
-                  to="/profile"
-                  className="flex items-center gap-3 flex-1 group min-w-0"
-                >
-                  <img
-                    src={avatarUrl}
-                    alt="Avatar"
-                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 group-hover:ring-2 group-hover:ring-blue-400 transition"
-                  />
-                  <div className="flex flex-col items-start min-w-0">
-                    <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px] group-hover:text-blue-700">{user.firstName} {user.lastName}</span>
-                    <span className="text-xs text-gray-500 truncate max-w-[120px]">{user.email}</span>
-                  </div>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="ml-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition"
-                  title="Cerrar sesión"
-                  aria-label="Cerrar sesión"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
-              </div>
-            )
-          )}
+            )}
+          </Link>
         </div>
       </aside>
       {/* Drawer (mobile) */}
