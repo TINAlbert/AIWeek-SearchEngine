@@ -150,4 +150,60 @@ Próximos pasos sugeridos:
 
 ---
 
+## 2025-05-15
+
+- Rediseño completo del Sidebar:
+  - El indicador visual del item activo ahora aparece en la derecha (borde azul), con la esquina derecha redondeada y sin redondeo en la izquierda.
+  - Se mantiene la coherencia visual con el resto de la app.
+- Home y Dashboard:
+  - Home y Dashboard usan ahora un layout tipo bento, con cards blancas, grid responsiva, iconos y tipografía moderna.
+  - El array de indicadores en Home permite definir el span de columnas y color, y se itera para renderizar las cards.
+  - El icono de cada indicador en Home se sitúa a la derecha del label.
+- ContactsPage y Cards:
+  - Cards y tabla integradas visualmente en una card principal.
+  - Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport.
+  - El campo de búsqueda y la botonera están agrupados y armonizados visualmente.
+- Sidebar:
+  - El borde azul del item activo está a la derecha y solo esa esquina es redondeada.
+  - Eliminado el redondeo en la izquierda del item activo.
+
+---
+
+Todos los cambios mantienen la coherencia visual y funcional con el diseño de referencia y mejoran la experiencia de usuario en móvil y escritorio.
+
+---
+
+# Cambios visuales y de layout (mayo 2025)
+
+## Sidebar
+- El indicador azul del item activo ahora aparece a la derecha, con solo la esquina derecha redondeada (`rounded-r-lg`), sin redondeo en la izquierda (`rounded-l-none`).
+- Refactor visual y estructural para mayor claridad y coherencia.
+
+## ContactsPage
+- Barra de búsqueda y botones agrupados en una barra moderna, con mayor claridad y separación.
+- Botones de vista y exportar más pequeños y alineados a la derecha.
+- Cards y tabla integradas visualmente en una card principal.
+- Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport, sin scroll vertical innecesario.
+- Tabla sin cuadro envolvente, integrada en la card principal.
+- Paginación móvil y desktop correctamente alineadas y visibles.
+
+## Dashboard y Home
+- Layout tipo bento, cards blancas, grid responsiva, iconos y tipografía moderna.
+- Fondo, márgenes y espaciado armonizados con ContactsPage.
+- En Home, el array de indicadores permite definir el span de columnas y color, y se itera para renderizar las cards. El icono de cada indicador se sitúa a la derecha del label.
+
+## Coherencia visual
+- Se mantiene la coherencia visual y funcional en toda la app, tanto en móvil como en escritorio.
+
+## Pendiente
+- Personalizar más widgets o indicadores en Home y Dashboard si se requiere.
+- Añadir nuevas funcionalidades o widgets según feedback.
+- Ajustar detalles visuales adicionales según pruebas finales o nuevas necesidades.
+
+---
+
+Última actualización: 15 mayo 2025
+
+---
+
 Este archivo debe ser actualizado de forma continua para reflejar las acciones y decisiones tomadas mediante la interacción con la IA.

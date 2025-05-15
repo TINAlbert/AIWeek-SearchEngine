@@ -66,7 +66,7 @@ export default function Sidebar({ collapsed }: SidebarProps) {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`flex items-center gap-3 px-6 py-2 rounded-lg font-medium text-gray-700 hover:bg-blue-50 transition-colors relative ${isActive ? "bg-blue-50 text-blue-700 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-blue-500 before:rounded-r-lg" : ""}`}
+                className={`flex items-center gap-3 px-6 py-2 font-medium text-gray-700 hover:bg-blue-50 transition-colors relative ${isActive ? "bg-blue-50 text-blue-700 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-1 after:bg-blue-500 after:rounded-r-lg" : ""} ${isActive ? 'rounded-l-none rounded-r-lg' : 'rounded-lg'}`}
               >
                 <span>{item.icon}</span>
                 <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{item.label}</span>
@@ -124,53 +124,65 @@ export default function Sidebar({ collapsed }: SidebarProps) {
           <span className="font-bold text-blue-600 text-xl">AIWeek</span>
           <button className="text-2xl" onClick={() => setOpen(false)} aria-label="Cerrar menú">×</button>
         </div>
-        <nav className="flex-1 flex flex-col gap-2 p-4">
-          {mainMenuItems.map((item) => {
-            const isActive =
-              item.to === "/"
-                ? location.pathname === "/"
-                : location.pathname.startsWith(item.to) && item.to !== "/";
-            return (
+        <div className="flex flex-col h-full min-h-0">
+          <nav className="flex-1 flex flex-col gap-1 py-6 px-2 overflow-y-auto">
+            {mainMenuItems.map((item) => {
+              const isActive =
+                item.to === "/"
+                  ? location.pathname === "/"
+                  : location.pathname.startsWith(item.to) && item.to !== "/";
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`flex items-center gap-3 px-6 py-2 font-medium text-gray-700 hover:bg-blue-50 transition-colors relative ${isActive ? "bg-blue-50 text-blue-700 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-1 after:bg-blue-500 after:rounded-r-lg" : ""} ${isActive ? 'rounded-l-none rounded-r-lg' : 'rounded-lg'}`}
+                  onClick={() => setOpen(false)}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+          <div className="mt-auto flex flex-col gap-1 px-2 pb-16">
+            {secondaryMenuItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+                className="flex items-center gap-3 px-6 py-2 rounded-lg text-gray-500 hover:bg-gray-50 transition-colors"
                 onClick={() => setOpen(false)}
               >
-                <span className="text-lg">{item.icon}</span>
-                {item.label}
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
               </Link>
-            );
-          })}
-        </nav>
-        <div className="mt-auto p-4 pb-6 flex flex-col items-start gap-2">
-          {user && (
-            <>
-              <Link
-                to="/profile"
-                className="flex items-center gap-3 w-full group justify-start"
-                onClick={() => setOpen(false)}
-              >
+            ))}
+            {/* Avatar y perfil sticky abajo, logout justo encima */}
+            <button
+              onClick={() => { setOpen(false); handleLogout(); }}
+              className="flex items-center gap-3 px-6 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors mt-2 mb-2"
+              title="Cerrar sesión"
+              aria-label="Cerrar sesión"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Cerrar sesión</span>
+            </button>
+            <div className="sticky bottom-0 left-0 right-0 bg-white border-t border-gray-100 pt-4 flex items-center gap-3 min-h-[60px] z-10">
+              <Link to="/profile" className="flex items-center gap-3 min-w-0 px-4 pb-4 w-full" onClick={() => setOpen(false)}>
                 <img
                   src={avatarUrl}
                   alt="Avatar"
-                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 group-hover:ring-2 group-hover:ring-blue-400 transition"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100"
+                  style={{ minWidth: 48, minHeight: 48 }}
                 />
-                <div className="flex flex-col items-start min-w-0">
-                  <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px] group-hover:text-blue-700">{user.firstName} {user.lastName}</span>
-                  <span className="text-xs text-gray-500 truncate max-w-[120px]">{user.email}</span>
-                </div>
+                {user && (
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px]">{user.firstName} {user.lastName}</span>
+                    <span className="text-xs text-gray-400 truncate max-w-[120px]">{user.email}</span>
+                  </div>
+                )}
               </Link>
-              <button
-                onClick={() => { setOpen(false); handleLogout(); }}
-                className="mt-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition self-start"
-                title="Cerrar sesión"
-                aria-label="Cerrar sesión"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
-            </>
-          )}
+            </div>
+          </div>
         </div>
       </aside>
       {/* Padding for content */}

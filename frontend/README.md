@@ -172,25 +172,59 @@ Esto debe coincidir con la URL base expuesta por el backend.
 
 ---
 
-## Cambios recientes
+## Cambios recientes y mejoras visuales (2025-05-15)
 
-- Flujo de autenticación y perfil robusto y sincronizado con backend.
-- Avatar y datos de usuario integrados y protegidos, con placeholder y favicon personalizados "AI".
-- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
-- Sincronización total de tokens y usuario en frontend/backend.
-- Mejoras de UX y feedback visual en login/logout/perfil.
-- Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes.
-- Limpieza de código y documentación alineada con la implementación final.
-- Pantalla Home ahora muestra una grid de indicadores alineados arriba, con diseño moderno y limpio, sin fondo degradado.
-- El selector de vista de contactos (tabla/tarjetas) es un componente reutilizable y está fuera del h1 para accesibilidad.
-- En móvil, la vista de contactos solo muestra tarjetas.
-- Mejoras de layout y paginación en la página de contactos.
-- Búsqueda de contactos ahora es automática (debounce) y no requiere pulsar botón.
-- El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
-- Mejoras de documentación y alineación de endpoints en README.
-- Seed de backend con 500 contactos para pruebas de rendimiento y búsqueda.
-- Adaptación del frontend para consumir la nueva estructura de paginación enriquecida del endpoint `/contacts`.
-- Tipos y servicio de contactos actualizados para reflejar los campos: `totalPages`, `hasNextPage`, `hasPreviousPage`.
-- UI de paginación mejorada en la página de contactos.
-- Vista de contactos mejorada: ahora puedes alternar entre vista de tabla y tarjetas en escritorio, y en móvil solo está disponible la vista de tarjetas, completamente responsiva.
-- Mejoras de usabilidad y feedback visual en la búsqueda.
+- Sidebar:
+  - El indicador visual del item activo (borde azul) ahora aparece en la derecha, con la esquina derecha redondeada y sin redondeo en la izquierda.
+  - Se mantiene la coherencia visual con el resto de la app.
+- Home y Dashboard:
+  - Layout tipo bento, cards blancas, grid responsiva, iconos y tipografía moderna.
+  - El array de indicadores en Home permite definir el span de columnas y color, y se itera para renderizar las cards.
+  - El icono de cada indicador en Home se sitúa a la derecha del label.
+- ContactsPage y Cards:
+  - Cards y tabla integradas visualmente en una card principal.
+  - Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport.
+  - El campo de búsqueda y la botonera están agrupados y armonizados visualmente.
+
+## Estilos y experiencia de usuario
+
+- Todos los componentes principales usan fondo gris claro (`bg-gray-50`), cards blancas con sombra y bordes suaves.
+- El diseño es responsivo y moderno, con especial atención a la experiencia móvil.
+- Se prioriza la coherencia visual y la reutilización de componentes visuales.
+
+---
+
+Para más detalles, ver el registro de actividad en `Chat.md`.
+
+# AIWeek Frontend
+
+## Cambios visuales y de layout (mayo 2025)
+
+### Sidebar
+- Indicador azul del item activo a la derecha, solo la esquina derecha redondeada (`rounded-r-lg`), sin redondeo en la izquierda (`rounded-l-none`).
+- Refactor visual y estructural para mayor claridad y coherencia.
+
+### ContactsPage
+- Barra de búsqueda y botones agrupados en una barra moderna, con mayor claridad y separación.
+- Botones de vista y exportar más pequeños y alineados a la derecha.
+- Cards y tabla integradas visualmente en una card principal.
+- Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport, sin scroll vertical innecesario.
+- Tabla sin cuadro envolvente, integrada en la card principal.
+- Paginación móvil y desktop correctamente alineadas y visibles.
+
+### Dashboard y Home
+- Layout tipo bento, cards blancas, grid responsiva, iconos y tipografía moderna.
+- Fondo, márgenes y espaciado armonizados con ContactsPage.
+- En Home, el array de indicadores permite definir el span de columnas y color, y se itera para renderizar las cards. El icono de cada indicador se sitúa a la derecha del label.
+
+### Coherencia visual
+- Se mantiene la coherencia visual y funcional en toda la app, tanto en móvil como en escritorio.
+
+### Pendiente
+- Personalizar más widgets o indicadores en Home y Dashboard si se requiere.
+- Añadir nuevas funcionalidades o widgets según feedback.
+- Ajustar detalles visuales adicionales según pruebas finales o nuevas necesidades.
+
+---
+
+Última actualización: 15 mayo 2025
