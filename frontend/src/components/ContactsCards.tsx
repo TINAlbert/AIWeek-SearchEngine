@@ -2,11 +2,16 @@ import type { Contact } from "../types/contact";
 
 interface ContactsCardsProps {
   contacts: Contact[];
+  scrollable?: boolean;
+  maxHeight?: string;
 }
 
-export default function ContactsCards({ contacts }: ContactsCardsProps) {
+export default function ContactsCards({ contacts, scrollable = false, maxHeight }: ContactsCardsProps) {
   return (
-    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+    <div
+      className={`grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full ${scrollable ? 'overflow-y-auto' : ''}`}
+      style={scrollable && maxHeight ? { maxHeight } : undefined}
+    >
       {contacts.length === 0 ? (
         <div className="col-span-full text-center py-4 text-gray-500">No hay contactos.</div>
       ) : (

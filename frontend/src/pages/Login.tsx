@@ -33,7 +33,7 @@ export default function Login() {
     try {
       const res = await loginService(data.username, data.password);
       login(res); // Guardar tokens y usuario en contexto
-      navigate("/dashboard", { replace: true }); // Redirigir tras login
+      navigate("/", { replace: true }); // Redirigir tras login
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Error de autenticación");
       setError("root", { message: err?.response?.data?.message || "Error de autenticación" });
