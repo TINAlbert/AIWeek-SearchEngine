@@ -2,12 +2,19 @@
 
 export interface Contact {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
+  document: string;
   email: string;
   phone: string;
-  address?: string;
+  address: string;
+  status: string;
+  companyId?: number;
+  companyName?: string;
+  profiles: import("./profile").Profile[];
   createdAt: string;
   updatedAt: string;
+  name: string;
 }
 
 export interface ContactListResponse {
@@ -21,15 +28,25 @@ export interface ContactListResponse {
 }
 
 export interface ContactCreateDto {
-  name: string;
+  firstName: string;
+  lastName: string;
+  document: string;
   email: string;
   phone: string;
-  address?: string;
+  address: string;
+  status: string;
+  companyId?: number;
+  profileIds: number[];
 }
 
 export interface ContactUpdateDto {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
+  document?: string;
   email?: string;
   phone?: string;
   address?: string;
+  status?: string;
+  companyId?: number;
+  profileIds?: number[];
 }

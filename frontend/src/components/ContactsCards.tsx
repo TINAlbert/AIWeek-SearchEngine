@@ -45,6 +45,15 @@ export default function ContactsCards({ contacts, scrollable = false, maxHeight 
                 {contact.address || '-'}
               </span>
             </div>
+            {contact.profiles && contact.profiles.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-2">
+                {contact.profiles.map((profile) => (
+                  <span key={profile.id} className="inline-block bg-blue-50 text-blue-700 border border-blue-200 rounded px-2 py-0.5 text-xs font-medium">
+                    {profile.name}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         ))
       )}

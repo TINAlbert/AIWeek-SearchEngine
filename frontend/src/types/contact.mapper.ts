@@ -1,9 +1,22 @@
 import type { ApiContact, ApiContactListResponse } from "./contact.api";
 import type { Contact, ContactListResponse } from "./contact";
+import type { Profile } from "./profile";
 
 export function mapApiContactToContact(apiContact: ApiContact): Contact {
   return {
-    ...apiContact,
+    id: apiContact.id,
+    firstName: apiContact.firstName,
+    lastName: apiContact.lastName,
+    document: apiContact.document,
+    email: apiContact.email,
+    phone: apiContact.phone,
+    address: apiContact.address,
+    status: apiContact.status,
+    companyId: apiContact.companyId,
+    companyName: apiContact.companyName,
+    profiles: apiContact.profiles,
+    createdAt: apiContact.createdAt,
+    updatedAt: apiContact.updatedAt,
     name: (apiContact.firstName || "") + (apiContact.lastName ? " " + apiContact.lastName : ""),
   };
 }

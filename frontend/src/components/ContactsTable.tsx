@@ -15,12 +15,13 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
             <th className="px-4 py-3 text-left font-semibold">Email</th>
             <th className="px-4 py-3 text-left font-semibold">Teléfono</th>
             <th className="px-4 py-3 text-left font-semibold">Dirección</th>
+            <th className="px-4 py-3 text-left font-semibold">Perfiles</th>
           </tr>
         </thead>
         <tbody>
           {contacts.length === 0 ? (
             <tr>
-              <td colSpan={4} className="p-0">
+              <td colSpan={5} className="p-0">
                 <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." className="py-12" />
               </td>
             </tr>
@@ -39,6 +40,27 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
                 <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.email}</td>
                 <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.phone}</td>
                 <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{contact.address || "-"}</td>
+                <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
+                  {contact.profiles && contact.profiles.length > 0 ? (
+                    <div className="flex flex-wrap gap-1">
+                      {contact.profiles.slice(0, 2).map((profile) => (
+                        <span key={profile.id} className="inline-block bg-blue-50 text-blue-700 border border-blue-200 rounded px-2 py-0.5 text-xs font-medium">
+                          {profile.name}
+                        </span>
+                      ))}
+                      {contact.profiles.length > 2 && (
+                        <span
+                          className="inline-block bg-gray-100 text-gray-500 border border-gray-200 rounded px-2 py-0.5 text-xs font-medium cursor-pointer"
+                          title={contact.profiles.slice(2).map((p) => p.name).join(", ")}
+                        >
+                          +{contact.profiles.length - 2}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="text-xs text-gray-300">-</span>
+                  )}
+                </td>
               </tr>
             ))
           )}
