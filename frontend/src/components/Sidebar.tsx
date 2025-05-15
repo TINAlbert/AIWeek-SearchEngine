@@ -4,6 +4,7 @@ import { useState } from "react";
 const menuItems = [
   { label: "Home", to: "/", icon: "🏠" },
   { label: "Contactos", to: "/contacts", icon: "📇" },
+  { label: "Perfil", to: "/profile", icon: "👤" },
 ];
 
 interface SidebarProps {

@@ -30,9 +30,15 @@ export function setupInterceptors(getAccessToken: () => string | null, onRefresh
           return Promise.reject(refreshError);
         }
       }
-      // Manejo global de errores (4xx/5xx excepto 401)
-      const message = error.response?.data?.message || error.message || "Ocurrió un error inesperado";
-      toast.error(message);
+      // Evita mostrar toast para 404 de avatar
+      const isAvatar404 =
+        error.response?.status === 404 &&
+        typeof error.config?.url === "string" &&
+        (/\/users\/(me|[\w-]+)\/avatar$/.test(error.config.url));
+      if (!isAvatar404) {
+        const message = error.response?.data?.message || error.message || "Ocurrió un error inesperado";
+        toast.error(message);
+      }
       return Promise.reject(error);
     }
   );

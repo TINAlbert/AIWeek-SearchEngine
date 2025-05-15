@@ -126,3 +126,30 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
 - Mejoras de documentación y alineación de endpoints en README.
 - Seed de backend con 500 contactos para pruebas de rendimiento y búsqueda.
+
+## Integración de perfil y avatar de usuario
+
+### 1. Servicios/API
+- [x] Crear servicio para obtener datos del usuario autenticado (`GET /users/me`)
+- [x] Crear servicio para subir avatar (`POST /users/me/avatar`)
+- [x] Crear servicio para obtener avatar (`GET /users/me/avatar`)
+
+### 2. UI de perfil de usuario
+- [ ] Crear página/componente de perfil de usuario
+- [ ] Mostrar datos de perfil: nombre, apellido, email, rol, estado, avatar
+- [ ] Mostrar avatar actual (o placeholder si no hay)
+- [ ] Botón/input para subir o cambiar avatar
+- [ ] Feedback visual en subida de avatar (cargando, éxito, error)
+
+### 3. Estado y lógica
+- [ ] Integrar estado global/local para datos de usuario y avatar
+- [ ] Actualizar avatar en UI tras subida exitosa
+- [ ] Manejar errores y feedback de API
+
+### 4. Accesibilidad y UX
+- [ ] Asegurar accesibilidad en inputs y botones
+- [ ] Añadir mensajes de ayuda y validación
+
+### 5. (Opcional) Edición de perfil
+- [ ] Permitir edición de nombre y apellido desde frontend
+- [ ] Validar y enviar cambios al backend (cuando esté disponible)
