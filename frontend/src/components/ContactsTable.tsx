@@ -7,7 +7,7 @@ interface ContactsTableProps {
 
 export default function ContactsTable({ contacts }: ContactsTableProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-x-auto p-4">
+    <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
         <thead>
           <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
