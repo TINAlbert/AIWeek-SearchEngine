@@ -64,7 +64,9 @@ export default function ContactsPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen w-full flex flex-col items-center">
-      <div className="w-full px-2 sm:px-4 md:px-8 mt-2 sm:mt-14">
+      <div className={
+        `w-full px-2 sm:px-4 md:px-8 mt-2 sm:mt-14${isMobile && totalPages > 1 ? ' pb-20' : ''}`
+      }>
         <h1 className="text-2xl font-bold text-gray-800 mb-1 sm:mb-6">Contactos</h1>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 mb-2 sm:mb-6 sticky top-0 z-10 bg-gray-50 pb-2">
           <div className="flex flex-1 items-center gap-2 max-w-full sm:max-w-xl">
@@ -110,7 +112,8 @@ export default function ContactsPage() {
             />
           )}
         </div>
-        <div className="flex justify-end mt-6">
+        {/* Desktop pagination */}
+        <div className="hidden sm:flex justify-end mt-6">
           <Pagination
             page={page}
             totalPages={totalPages}
@@ -121,6 +124,21 @@ export default function ContactsPage() {
           />
         </div>
       </div>
+      {/* Mobile fixed pagination */}
+      {isMobile && totalPages > 1 && (
+        <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-20 sm:hidden shadow-md">
+          <div className="max-w-2xl mx-auto px-2 py-2">
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              hasNextPage={hasNextPage}
+              hasPreviousPage={hasPreviousPage}
+              onPageChange={setPage}
+              total={total}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
