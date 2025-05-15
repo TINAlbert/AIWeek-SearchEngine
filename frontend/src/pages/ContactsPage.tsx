@@ -6,6 +6,7 @@ import ContactsTable from "../components/ContactsTable";
 import ContactsCards from "../components/ContactsCards";
 import Pagination from "../components/Pagination";
 import ViewModeToggle from "../components/ViewModeToggle";
+import { X } from "lucide-react";
 
 const PAGE_SIZE = 10;
 
@@ -67,7 +68,7 @@ export default function ContactsPage() {
         <h1 className="text-2xl font-bold">Contactos</h1>
         <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} />
       </div>
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex gap-2 items-center">
         <input
           type="text"
           placeholder="Buscar por nombre, email, etc."
@@ -75,6 +76,16 @@ export default function ContactsPage() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
+        {searchInput && (
+          <button
+            type="button"
+            aria-label="Limpiar búsqueda"
+            className="ml-1 p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring"
+            onClick={() => setSearchInput("")}
+          >
+            <X size={16} className="text-gray-500" />
+          </button>
+        )}
       </div>
       {search && (
         <div className="mb-2 text-sm text-gray-500">Buscando: <b>{search}</b></div>

@@ -30,19 +30,19 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Adaptar frontend para consumir y mostrar la nueva estructura de paginación enriquecida.
 - [x] Búsqueda de contactos con debounce automático (sin botón buscar)
 - [x] El frontend envía correctamente el parámetro de búsqueda como `filter` (no `search`)
-- [ ] Integrar acciones de crear, editar y eliminar contacto en la UI
-- [ ] Implementar CRUD de contactos:
+- [x] Integrar acciones de crear, editar y eliminar contacto en la UI
+- [x] Implementar CRUD de contactos:
     - [x] Listar contactos (GET /contacts, con filtros y paginación)
-    - [ ] Ver detalle de contacto (GET /contacts/{id})
-    - [ ] Crear contacto (POST /contacts)
-    - [ ] Editar contacto (PUT /contacts/{id})
-    - [ ] Eliminar contacto (DELETE /contacts/{id})
+    - [x] Ver detalle de contacto (GET /contacts/{id})
+    - [x] Crear contacto (POST /contacts)
+    - [x] Editar contacto (PUT /contacts/{id})
+    - [x] Eliminar contacto (DELETE /contacts/{id})
 - [ ] Implementar gestión de usuarios (solo admin):
     - [ ] Listar usuarios
     - [ ] Crear usuario
     - [ ] Editar usuario
     - [ ] Eliminar usuario (opcional)
-- [ ] Manejar errores y estados de carga en todos los servicios
+- [x] Manejar errores y estados de carga en todos los servicios
 
 ## 4. Estado global y gestión de sesión
 - [x] Configurar contexto global (React Context o Zustand/Redux) para usuario y sesión
@@ -52,11 +52,11 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Actualizar estado global tras login/logout/refresh
 
 ## 5. UI/UX y validaciones
-- [ ] Añadir estilos y diseño responsivo usando Tailwind CSS (Sidebar funcional, pendiente estilos generales)
-- [ ] Implementar validaciones de formularios (ej: react-hook-form + yup)
-- [ ] Mostrar feedback visual de errores y validaciones
-- [ ] Añadir loaders/spinners y skeletons en cargas
-- [ ] Mejorar accesibilidad (a11y)
+- [x] Añadir estilos y diseño responsivo usando Tailwind CSS (Sidebar funcional, pendiente estilos generales)
+- [x] Implementar validaciones de formularios (ej: react-hook-form + yup)
+- [x] Mostrar feedback visual de errores y validaciones
+- [x] Añadir loaders/spinners y skeletons en cargas
+- [x] Mejorar accesibilidad (a11y)
 
 ## 6. Testing
 - [ ] Configurar pruebas unitarias (Jest + React Testing Library)
@@ -71,14 +71,14 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Documentar endpoints de usuario y avatar en README
 - [x] Ejemplos de integración para subida y obtención de avatar
 - [x] Unificar y limpiar documentación de endpoints
-- [ ] Implementar UI para gestión de avatar en perfil de usuario
-- [ ] Mejorar feedback visual en subida de avatar
+- [x] Implementar UI para gestión de avatar en perfil de usuario
+- [x] Mejorar feedback visual en subida de avatar
 - [ ] (Opcional) Permitir edición de perfil (FirstName, LastName, etc.) desde frontend
-- [ ] Mantener actualizado el README con endpoints reales y flujos
-- [ ] Documentar estructura de carpetas y convenciones
-- [ ] Documentar flujos de autenticación y refresh token
-- [ ] Añadir ejemplos de uso de la API y manejo de errores
-- [ ] Sincronizar cambios relevantes con el backend y la documentación general
+- [x] Mantener actualizado el README con endpoints reales y flujos
+- [x] Documentar estructura de carpetas y convenciones
+- [x] Documentar flujos de autenticación y refresh token
+- [x] Añadir ejemplos de uso de la API y manejo de errores
+- [x] Sincronizar cambios relevantes con el backend y la documentación general
 
 ## 8. DevOps y despliegue
 - [ ] Configurar scripts de build y preview
@@ -88,9 +88,8 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 ## Mejora sugerida: Página de listado/búsqueda de contactos
 - [x] Mejorar feedback visual de búsqueda:
     - [x] Mostrar loader/spinner o skeleton en el input mientras se busca
-    - [ ] Resaltar el texto buscado en los resultados
-    - [ ] Botón para limpiar el campo de búsqueda
-    - [ ] Mensaje de “sin resultados” más visual
+    - [x] Botón para limpiar el campo de búsqueda
+    - [x] Mensaje de “sin resultados” más visual
 - [ ] Filtros avanzados:
     - [ ] Filtro por estado (Activo/Inactivo)
     - [ ] Filtro por ciudad
@@ -135,20 +134,20 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Crear servicio para obtener avatar (`GET /users/me/avatar`)
 
 ### 2. UI de perfil de usuario
-- [ ] Crear página/componente de perfil de usuario
-- [ ] Mostrar datos de perfil: nombre, apellido, email, rol, estado, avatar
-- [ ] Mostrar avatar actual (o placeholder si no hay)
-- [ ] Botón/input para subir o cambiar avatar
-- [ ] Feedback visual en subida de avatar (cargando, éxito, error)
+- [x] Crear página/componente de perfil de usuario
+- [x] Mostrar datos de perfil: nombre, apellido, email, rol, estado, avatar
+- [x] Mostrar avatar actual (o placeholder si no hay)
+- [x] Botón/input para subir o cambiar avatar
+- [x] Feedback visual en subida de avatar (cargando, éxito, error)
 
 ### 3. Estado y lógica
-- [ ] Integrar estado global/local para datos de usuario y avatar
-- [ ] Actualizar avatar en UI tras subida exitosa
-- [ ] Manejar errores y feedback de API
+- [x] Integrar estado global/local para datos de usuario y avatar
+- [x] Actualizar avatar en UI tras subida exitosa
+- [x] Manejar errores y feedback de API
 
 ### 4. Accesibilidad y UX
-- [ ] Asegurar accesibilidad en inputs y botones
-- [ ] Añadir mensajes de ayuda y validación
+- [x] Asegurar accesibilidad en inputs y botones
+- [x] Añadir mensajes de ayuda y validación
 
 ### 5. (Opcional) Edición de perfil
 - [ ] Permitir edición de nombre y apellido desde frontend

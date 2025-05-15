@@ -1,4 +1,5 @@
 import type { Contact } from "../types/contact";
+import NoResults from "./NoResults";
 
 interface ContactsTableProps {
   contacts: Contact[];
@@ -19,8 +20,8 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
         <tbody>
           {contacts.length === 0 ? (
             <tr>
-              <td colSpan={4} className="text-center py-4 text-gray-500">
-                No hay contactos.
+              <td colSpan={4}>
+                <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." />
               </td>
             </tr>
           ) : (

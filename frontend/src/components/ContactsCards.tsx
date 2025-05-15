@@ -1,4 +1,5 @@
 import type { Contact } from "../types/contact";
+import NoResults from "./NoResults";
 
 interface ContactsCardsProps {
   contacts: Contact[];
@@ -13,7 +14,7 @@ export default function ContactsCards({ contacts, scrollable = false, maxHeight 
       style={scrollable && maxHeight ? { maxHeight } : undefined}
     >
       {contacts.length === 0 ? (
-        <div className="col-span-full text-center py-4 text-gray-500">No hay contactos.</div>
+        <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." className="col-span-full" />
       ) : (
         contacts.map((contact) => (
           <div key={contact.id} className="bg-white border border-gray-200 rounded shadow p-4 flex flex-col gap-2 min-w-0 w-full max-w-full box-border">
