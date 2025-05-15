@@ -4,6 +4,7 @@ using SearchServiceEngine.Models;
 using SearchServiceEngine.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using SearchServiceEngine.DTOs;
 
 namespace SearchServiceEngine.Controllers
 {
@@ -89,7 +90,20 @@ namespace SearchServiceEngine.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null)
                 return NotFound();
-            return Ok(new { user.Id, user.UserName, user.Role, user.Email });
+            var dto = new UserProfileDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Role = user.Role,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsActive = user.IsActive,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
+                AvatarFileName = user.AvatarFileName
+            };
+            return Ok(dto);
         }
 
         /// <summary>
@@ -107,7 +121,20 @@ namespace SearchServiceEngine.Controllers
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
                 return NotFound();
-            return Ok(new { user.Id, user.UserName, user.Role, user.Email });
+            var dto = new UserProfileDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Role = user.Role,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsActive = user.IsActive,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
+                AvatarFileName = user.AvatarFileName
+            };
+            return Ok(dto);
         }
 
         /// <summary>

@@ -42,6 +42,7 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Endpoints para subir y obtener avatar del usuario autenticado
 - [x] Documentar endpoints y ejemplos de uso en README
 - [x] Unificar documentación de endpoints y evitar duplicados
+- [x] Exponer datos de usuario mediante UserProfileDto en /users/me y /users/{id}
 
 ### 4. Seguridad
 - [x] Verificación de roles en endpoints

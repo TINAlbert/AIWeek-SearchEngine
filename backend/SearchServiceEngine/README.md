@@ -97,13 +97,31 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 ### Usuarios
 
-- `GET /users` — Lista todos los usuarios (requiere rol Admin)
-- `POST /users` — Crea un nuevo usuario (requiere rol Admin)
-- `PUT /users/{id}` — Actualiza un usuario existente (requiere rol Admin)
-- `GET /users/{id}` — Obtiene un usuario por su identificador (requiere rol Admin)
-- `GET /users/me` — Obtiene los datos del usuario autenticado (requiere autenticación)
-- `POST /users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (requiere autenticación, multipart/form-data)
-- `GET /users/me/avatar` — Descarga el avatar del usuario autenticado (requiere autenticación)
+- `GET /users` — Lista todos los usuarios (solo Admin, campos básicos)
+- `GET /users/{id}` — Obtiene un usuario por su identificador (solo Admin, retorna un objeto UserProfileDto)
+- `GET /users/me` — Obtiene los datos del usuario autenticado (retorna un objeto UserProfileDto)
+- `POST /users` — Crea usuario (solo Admin). Body: `{ userName, password, role }`
+- `POST /users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (multipart/form-data, campo `file`)
+- `GET /users/me/avatar` — Descarga el avatar del usuario autenticado
+
+#### UserProfileDto (respuesta de /users/me y /users/{id})
+
+```json
+{
+  "id": "string",
+  "userName": "string",
+  "email": "string",
+  "role": "string",
+  "firstName": "string",
+  "lastName": "string",
+  "isActive": true,
+  "createdAt": "2025-05-15T10:00:00Z",
+  "updatedAt": "2025-05-15T10:00:00Z",
+  "avatarFileName": "string|null"
+}
+```
+
+> Se utiliza un DTO para desacoplar la entidad User de la respuesta pública, facilitar la evolución de la API y documentar claramente los campos expuestos.
 
 ### Contactos
 
