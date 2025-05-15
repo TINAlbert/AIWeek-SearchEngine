@@ -1,12 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Home, BookUser, User } from "lucide-react";
+import { Home, BookUser, LogOut } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import avatarPlaceholder from '/avatar-placeholder.png';
+
+const AVATAR_PLACEHOLDER = avatarPlaceholder;
 
 const mainMenuItems = [
   { label: "Home", to: "/", icon: <Home className="w-5 h-5" /> },
   { label: "Contactos", to: "/contacts", icon: <BookUser className="w-5 h-5" /> },
 ];
-const profileMenuItem = { label: "Perfil", to: "/profile", icon: <User className="w-5 h-5" /> };
 
 interface SidebarProps {
   collapsed: boolean;
@@ -16,6 +19,19 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
   const [open, setOpen] = useState(false); // mobile
   const location = useLocation();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  let avatarUrl = AVATAR_PLACEHOLDER;
+  // Solo usar la URL del backend si hay avatarFileName
+  if (user && user.avatarFileName) {
+    avatarUrl = `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api"}/users/me/avatar?${user.updatedAt}`;
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <>
@@ -61,19 +77,53 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             );
           })}
         </nav>
-        <div className="mt-auto p-4 pb-6">
-          {(() => {
-            const isActive = location.pathname.startsWith(profileMenuItem.to);
-            return (
-              <Link
-                to={profileMenuItem.to}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
-              >
-                <span className="text-lg">{profileMenuItem.icon}</span>
-                <span className={`transition-all duration-200 ${collapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{profileMenuItem.label}</span>
-              </Link>
-            );
-          })()}
+        <div className="mt-auto p-4 pb-6 flex flex-col items-start gap-2">
+          {user && (
+            collapsed ? (
+              <div className="flex flex-col items-center w-full">
+                <Link to="/profile">
+                  <img
+                    src={avatarUrl}
+                    alt="Avatar"
+                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 mx-auto hover:ring-2 hover:ring-blue-400 transition"
+                  />
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="mt-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition self-center"
+                  title="Cerrar sesión"
+                  aria-label="Cerrar sesión"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center w-full gap-2">
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-3 flex-1 group min-w-0"
+                >
+                  <img
+                    src={avatarUrl}
+                    alt="Avatar"
+                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 group-hover:ring-2 group-hover:ring-blue-400 transition"
+                  />
+                  <div className="flex flex-col items-start min-w-0">
+                    <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px] group-hover:text-blue-700">{user.firstName} {user.lastName}</span>
+                    <span className="text-xs text-gray-500 truncate max-w-[120px]">{user.email}</span>
+                  </div>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="ml-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition"
+                  title="Cerrar sesión"
+                  aria-label="Cerrar sesión"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            )
+          )}
         </div>
       </aside>
       {/* Drawer (mobile) */}
@@ -107,20 +157,34 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             );
           })}
         </nav>
-        <div className="mt-auto p-4 pb-6">
-          {(() => {
-            const isActive = location.pathname.startsWith(profileMenuItem.to);
-            return (
+        <div className="mt-auto p-4 pb-6 flex flex-col items-start gap-2">
+          {user && (
+            <>
               <Link
-                to={profileMenuItem.to}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors font-medium text-gray-700 hover:bg-blue-100 ${isActive ? "bg-blue-100 text-blue-700" : ""}`}
+                to="/profile"
+                className="flex items-center gap-3 w-full group justify-start"
                 onClick={() => setOpen(false)}
               >
-                <span className="text-lg">{profileMenuItem.icon}</span>
-                {profileMenuItem.label}
+                <img
+                  src={avatarUrl}
+                  alt="Avatar"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-300 shadow bg-gray-100 group-hover:ring-2 group-hover:ring-blue-400 transition"
+                />
+                <div className="flex flex-col items-start min-w-0">
+                  <span className="text-sm font-semibold text-gray-800 truncate max-w-[120px] group-hover:text-blue-700">{user.firstName} {user.lastName}</span>
+                  <span className="text-xs text-gray-500 truncate max-w-[120px]">{user.email}</span>
+                </div>
               </Link>
-            );
-          })()}
+              <button
+                onClick={() => { setOpen(false); handleLogout(); }}
+                className="mt-2 p-2 rounded-full hover:bg-red-100 text-red-600 transition self-start"
+                title="Cerrar sesión"
+                aria-label="Cerrar sesión"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </>
+          )}
         </div>
       </aside>
       {/* Padding for content */}

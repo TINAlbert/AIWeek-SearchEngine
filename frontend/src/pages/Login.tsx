@@ -32,7 +32,7 @@ export default function Login() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const res = await loginService(data.username, data.password);
-      login(res); // Guardar tokens y usuario en contexto
+      await login(res); // Esperar a que el usuario esté en contexto
       navigate("/", { replace: true }); // Redirigir tras login
     } catch (err: any) {
       toast.error(err?.response?.data?.message || "Error de autenticación");

@@ -1,40 +1,25 @@
 import { useEffect, useState } from "react";
-import { getUserProfile, getUserAvatar, uploadUserAvatar } from "../services/user";
-import type { UserProfile } from "../types/user";
+import { getUserAvatar, uploadUserAvatar } from "../services/user";
 import { Camera } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import avatarPlaceholder from '/avatar-placeholder.png';
 
-const AVATAR_PLACEHOLDER = "/avatar-placeholder.png";
+const AVATAR_PLACEHOLDER = avatarPlaceholder;
 
 export default function ProfilePage() {
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const { user } = useAuth();
   const [avatarUrl, setAvatarUrl] = useState<string>(AVATAR_PLACEHOLDER);
-  const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchProfile() {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await getUserProfile();
-        setProfile(data);
-        // Intentar cargar avatar
-        try {
-          const blob = await getUserAvatar();
-          setAvatarUrl(URL.createObjectURL(blob));
-        } catch {
-          setAvatarUrl(AVATAR_PLACEHOLDER);
-        }
-      } catch {
-        setError("No se pudo cargar el perfil de usuario.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProfile();
-  }, []);
+    if (!user) return;
+    // Intentar cargar avatar
+    getUserAvatar()
+      .then((blob) => setAvatarUrl(URL.createObjectURL(blob)))
+      .catch(() => setAvatarUrl(AVATAR_PLACEHOLDER));
+  }, [user]);
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -54,9 +39,7 @@ export default function ProfilePage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center">Cargando perfil...</div>;
-  if (error) return <div className="p-8 text-red-600">{error}</div>;
-  if (!profile) return null;
+  if (!user) return <div className="p-8 text-center">Cargando perfil...</div>;
 
   return (
     <div className="max-w-2xl mx-auto px-2 pb-8">
@@ -85,12 +68,12 @@ export default function ProfilePage() {
           {error && <div className="text-xs text-red-600 mt-2">{error}</div>}
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          <ProfileField label="Nombre" value={profile.firstName} />
-          <ProfileField label="Apellido" value={profile.lastName} />
-          <ProfileField label="Email" value={profile.email} />
-          <ProfileField label="Rol" value={profile.role} />
-          <ProfileField label="Estado" value={profile.isActive ? "Activo" : "Inactivo"} />
-          <ProfileField label="Creado" value={new Date(profile.createdAt).toLocaleString()} />
+          <ProfileField label="Nombre" value={user.firstName} />
+          <ProfileField label="Apellido" value={user.lastName} />
+          <ProfileField label="Email" value={user.email} />
+          <ProfileField label="Rol" value={user.role} />
+          <ProfileField label="Estado" value={user.isActive ? "Activo" : "Inactivo"} />
+          <ProfileField label="Creado" value={new Date(user.createdAt).toLocaleString()} />
         </div>
       </div>
     </div>

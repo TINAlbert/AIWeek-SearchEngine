@@ -6,9 +6,21 @@ export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
 });
 
+// Guardar los IDs de los interceptores para poder eliminarlos
+let requestInterceptorId: number | null = null;
+let responseInterceptorId: number | null = null;
+
 // Interceptor para añadir el token de acceso a cada petición
 export function setupInterceptors(getAccessToken: () => string | null, onRefreshToken: () => Promise<void>) {
-  api.interceptors.request.use((config) => {
+  // Eliminar interceptores previos si existen
+  if (requestInterceptorId !== null) {
+    api.interceptors.request.eject(requestInterceptorId);
+  }
+  if (responseInterceptorId !== null) {
+    api.interceptors.response.eject(responseInterceptorId);
+  }
+
+  requestInterceptorId = api.interceptors.request.use((config) => {
     const token = getAccessToken();
     if (token) {
       config.headers = config.headers || {};
@@ -17,7 +29,7 @@ export function setupInterceptors(getAccessToken: () => string | null, onRefresh
     return config;
   });
 
-  api.interceptors.response.use(
+  responseInterceptorId = api.interceptors.response.use(
     (response) => response,
     async (error) => {
       // Si el error es 401, intenta refrescar el token
