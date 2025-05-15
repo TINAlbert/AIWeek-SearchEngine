@@ -1,95 +1,87 @@
-# Proyecto AIWeek
+# Proyecto AIWeek: Buscador de Contactos
 
-Este repositorio contiene el desarrollo y documentación del proyecto AIWeek.
+## Descripción General
 
-## Descripción
-
-Este proyecto explora y documenta el desarrollo colaborativo asistido por IA, implementando un backend robusto en .NET Core y un frontend moderno en React.
-
-## Estructura general
-
-- `.github/`: Instrucciones y configuraciones para la colaboración.
-- `README.md`: Documentación general del proyecto.
-- `backend/`: Web API en .NET Core (ver detalles abajo).
-- `frontend/`: Proyecto en React + Vite.
+Plataforma compuesta por un backend en .NET Core y un frontend en React para la gestión y búsqueda de contactos personales, con autenticación JWT, roles y gestión de usuarios y avatares.
 
 ---
 
-# Backend: SearchServiceEngine
+## Estructura del Proyecto
 
-El backend implementa una API REST robusta para la gestión de contactos y usuarios, siguiendo buenas prácticas de arquitectura (capas, DTOs, servicios, repositorios) y seguridad (JWT, roles, validación).
-
-## Características principales
-- Autenticación JWT y protección de endpoints con roles.
-- CRUD de contactos con filtros y paginación.
-- Validación de entrada con FluentValidation.
-- Mapeo de entidades y DTOs con AutoMapper.
-- Semilla de datos de ejemplo y migraciones automáticas.
-- Documentación automática de la API (Swagger/OpenAPI).
-- Gestión segura y eliminación de refresh tokens tras login.
-- Registro de usuarios solo por administradores.
-- Estructura modular y escalable.
-- El login devuelve tanto `token` como `refreshToken` (ya no `accessToken`).
-
-## Estado actual (13/05/2025)
-- Controladores y servicios principales refactorizados y robustos (Contacts, Users, Auth).
-- Tests unitarios completos y pasando para controladores y servicios principales.
-- Eliminadas advertencias de nulabilidad en los tests.
-- `TODO.md` actualizado con el progreso real.
-
-### Próximos pasos sugeridos
-- (Opcional) Añadir pruebas de integración.
-- Mantener documentación y ejemplos de uso actualizados.
-
-## Estructura del backend
-- `Controllers/`: Endpoints de la API (Contactos, Usuarios, Auth).
-- `DTOs/`: Modelos de transferencia de datos y validadores.
-- `Models/`: Entidades de base de datos.
-- `Services/`: Lógica de negocio.
-- `Repositories/`: Acceso a datos.
-- `Data/`: Contexto de base de datos y migraciones.
-
-## Ejecución local
-
-```powershell
-# Compilar y ejecutar el backend
-cd backend
- dotnet build SearchServiceEngine/SearchServiceEngine.csproj
- dotnet run --project SearchServiceEngine/SearchServiceEngine.csproj
-```
-
-## Pruebas unitarias
-
-El proyecto `SearchServiceEngine.Tests` utiliza xUnit y Moq. Las pruebas usan EF Core InMemory para simular la base de datos.
-
-```powershell
-dotnet test backend/SearchServiceEngine.Tests/SearchServiceEngine.Tests.csproj
-```
-
-Consulta el archivo `TODO.md` para ver el estado y prioridades del desarrollo.
+- `/backend/` — API REST en .NET Core 7, Entity Framework Core, Identity, JWT
+- `/frontend/` — Aplicación React 19+, Tailwind CSS, Axios, Zustand/Redux/Context
 
 ---
 
-# Frontend
+## Endpoints principales (referencia rápida)
 
-El frontend está desarrollado en React 19 + Vite. Estructura inicial:
+> Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`. Algunos requieren rol Admin.
 
-- **React 19** y **Vite** para desarrollo moderno y rápido.
-- **React Router** para navegación SPA.
-- Carpeta `src/` con páginas (`pages/`), rutas (`routes.tsx`) y assets.
-- Páginas base: Home, Login, Dashboard, NotFound.
-- Preparado para consumir la API y gestionar autenticación JWT.
+### Autenticación
+- `POST /api/auth/login` — Login de usuario. Body: `{ userName, password }`. Devuelve: `{ token, refreshToken }`.
+- `POST /api/auth/refresh` — Refresca el token de acceso. Body: `{ refreshToken }`.
+- `POST /api/auth/logout` — Cierra sesión y revoca refresh token.
 
-## Ejecución local
+### Usuarios
+- `GET /api/users` — Lista todos los usuarios (solo Admin)
+- `POST /api/users` — Crea usuario (solo Admin). Body: `{ userName, password, role }`
+- `GET /api/users/me` — Obtiene los datos del usuario autenticado
+- `POST /api/users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (multipart/form-data, campo `file`)
+- `GET /api/users/me/avatar` — Descarga el avatar del usuario autenticado
 
-```powershell
-cd frontend
-npm install
-npm run dev
+### Contactos
+- `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación
+- `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID
+- `PUT /api/contacts/{id}` — Editar contacto (según permisos)
+- `DELETE /api/contacts/{id}` — Eliminar contacto (según permisos)
+
+---
+
+## Gestión de avatar de usuario
+
+- El backend permite a cada usuario autenticado subir y obtener su avatar de perfil.
+- La ruta de almacenamiento de los archivos de avatar se define en `appsettings.json` con la clave `AvatarsPath` (por defecto `wwwroot/avatars`).
+
+**Ejemplo de subida de avatar (frontend):**
+```js
+const formData = new FormData();
+formData.append('file', archivoImagen);
+await axios.post(`${API_URL}/users/me/avatar`, formData, {
+  headers: { Authorization: `Bearer ${token}` }
+});
+```
+
+**Ejemplo de obtención de avatar:**
+```js
+const res = await axios.get(`${API_URL}/users/me/avatar`, {
+  headers: { Authorization: `Bearer ${token}` },
+  responseType: 'blob'
+});
+const url = URL.createObjectURL(res.data);
 ```
 
 ---
 
-Consulta el archivo `.github/.instructions.md` para conocer las reglas de trabajo y colaboración.
+## Flujo de integración
 
-Este archivo se irá actualizando conforme avance el proyecto y se definan nuevos objetivos o funcionalidades.
+1. Login en frontend → obtención de token y refreshToken
+2. Acceso a funcionalidades protegidas (búsqueda, edición, gestión de usuario/avatar)
+3. Uso de endpoints según permisos y roles
+
+---
+
+## Documentación detallada
+
+- Ver `/backend/README.md` para detalles de la API, migraciones y estructura de base de datos
+- Ver `/frontend/README.md` para detalles de integración, ejemplos de uso y configuración de entorno
+
+---
+
+## Cambios recientes
+
+- Modelo User extendido con campos de perfil y avatar
+- Endpoints de avatar implementados y documentados
+- Documentación de endpoints unificada y sin duplicados
+- Mejoras de accesibilidad y usabilidad en frontend
+- Refactor y modularización de componentes en frontend
+- Actualización de documentación y ejemplos en ambos proyectos

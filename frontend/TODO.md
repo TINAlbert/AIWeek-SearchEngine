@@ -68,6 +68,12 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [ ] (Opcional) Pruebas de integración/end-to-end (Cypress/Playwright)
 
 ## 7. Documentación y sincronía
+- [x] Documentar endpoints de usuario y avatar en README
+- [x] Ejemplos de integración para subida y obtención de avatar
+- [x] Unificar y limpiar documentación de endpoints
+- [ ] Implementar UI para gestión de avatar en perfil de usuario
+- [ ] Mejorar feedback visual en subida de avatar
+- [ ] (Opcional) Permitir edición de perfil (FirstName, LastName, etc.) desde frontend
 - [ ] Mantener actualizado el README con endpoints reales y flujos
 - [ ] Documentar estructura de carpetas y convenciones
 - [ ] Documentar flujos de autenticación y refresh token

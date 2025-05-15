@@ -58,22 +58,47 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 * **Formularios**: React Hook Form + Zod o Yup
 * Menú lateral (Sidebar) responsive: colapsable en escritorio, navbar superior en móvil, integrado en todas las páginas privadas.
 
-### 3.2 Backend (solo consumo)
+### 3.2 Backend (consumo desde frontend)
 
-* API REST con autenticación y autorización
-* Endpoints esperados (según backend real):
+* API REST con autenticación y autorización JWT
+* Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`
+* El login devuelve tanto `token` como `refreshToken` (no `accessToken`)
+* Endpoints principales:
+  - `POST /api/auth/login` — Login de usuario. Body: `{ userName, password }`. Devuelve: `{ token, refreshToken }`.
+  - `POST /api/auth/refresh` — Refresca el token de acceso. Body: `{ refreshToken }`.
+  - `POST /api/auth/logout` — Cierra sesión y revoca refresh token.
+  - `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación.
+  - `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID.
+  - `PUT /api/contacts/{id}` — Editar contacto (según permisos).
+  - `GET /api/users` — Listar usuarios (solo Admin).
+  - `POST /api/users` — Crear usuario (solo Admin). Body: `{ userName, password, role }`.
+  - `GET /api/users/me` — Obtiene los datos del usuario autenticado.
+  - `POST /api/users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (multipart/form-data, campo `file`).
+  - `GET /api/users/me/avatar` — Descarga el avatar del usuario autenticado.
 
-  * `POST /api/auth/login` — Login de usuario. Body: `{ "userName": string, "password": string }`. Devuelve: `{ token, refreshToken }`.
-  * `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación. Requiere header `Authorization: Bearer <token>`.
-  * `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID. Requiere header `Authorization`.
-  * `PUT /api/contacts/{id}` — Editar contacto (según permisos). Body: datos a actualizar. Requiere header `Authorization`.
-  * `GET /api/users` — Listar usuarios (solo Admin). Requiere header `Authorization`.
-  * `POST /api/users` — Crear usuario (solo Admin). Body: `{ userName, password, role }`. Requiere header `Authorization`.
+---
 
-* Notas:
-  * Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`.
-  * El login devuelve tanto `token` como `refreshToken` (ya no `accessToken`).
-  * El endpoint de refresh (`POST /api/auth/refresh`) y logout (`POST /api/auth/logout`) están disponibles para gestión de sesión avanzada.
+## 3.3 Ejemplos de uso de endpoints de usuario y avatar
+
+> Estos endpoints requieren autenticación (Bearer Token) y algunos requieren rol Admin.
+
+**Ejemplo de subida de avatar:**
+```js
+const formData = new FormData();
+formData.append('file', archivoImagen);
+await axios.post(`${API_URL}/users/me/avatar`, formData, {
+  headers: { Authorization: `Bearer ${token}` }
+});
+```
+
+**Ejemplo de obtención de avatar:**
+```js
+const res = await axios.get(`${API_URL}/users/me/avatar`, {
+  headers: { Authorization: `Bearer ${token}` },
+  responseType: 'blob'
+});
+const url = URL.createObjectURL(res.data);
+```
 
 ---
 
