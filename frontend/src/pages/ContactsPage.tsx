@@ -110,7 +110,7 @@ export default function ContactsPage() {
             {search && (
               <div className="px-4 pt-4 text-sm text-gray-500">Buscando: <b>{search}</b></div>
             )}
-            <div className="mt-2 px-2 sm:px-4 pb-2">
+            <div className="mt-2 px-2 sm:px-4 pb-1">
               {loading ? (
                 <div className="text-center py-16">Cargando...</div>
               ) : viewMode === 'table' ? (
