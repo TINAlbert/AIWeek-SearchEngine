@@ -127,11 +127,39 @@ export default function ContactsPage() {
                 <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} size="sm" />
                 <button
                   type="button"
-                  className="flex items-center justify-center w-9 h-9 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors border border-blue-100 shadow-sm"
+                  className="flex items-center justify-center w-9 h-9 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors border border-blue-100 shadow-sm relative"
                   title="Exportar contactos"
-                  onClick={() => {/* lógica de exportar aquí */}}
+                  onClick={async () => {
+                    try {
+                      setLoading(true); // Feedback visual: spinner
+                      const payload = { Search: search, AdvancedFilter: advancedFilter };
+                      const { blob, filename } = await contactsService.exportContacts(payload);
+                      const url = window.URL.createObjectURL(new Blob([blob]));
+                      const link = document.createElement('a');
+                      link.href = url;
+                      link.setAttribute('download', filename);
+                      document.body.appendChild(link);
+                      link.click();
+                      link.parentNode?.removeChild(link);
+                      window.URL.revokeObjectURL(url);
+                      // Feedback visual: toast (usando librería de notificaciones si existe)
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      if (typeof window !== 'undefined' && (window as any).showToast) {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        (window as any).showToast('Exportación completada', { type: 'success' });
+                      }
+                    } catch {
+                      alert('Error al exportar contactos');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
                 >
-                  <Download size={18} />
+                  {loading ? (
+                    <svg className="animate-spin h-5 w-5 text-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                  ) : (
+                    <Download size={18} />
+                  )}
                 </button>
               </div>
             </div>

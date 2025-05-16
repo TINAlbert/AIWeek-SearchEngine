@@ -83,7 +83,7 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
 
   const handleClear = () => {
     setLocalFilter({});
-    onChange({});
+    onChange({ profileIds: [] }); // Asegura que el campo perfil se limpia correctamente
     onClear();
   };
 

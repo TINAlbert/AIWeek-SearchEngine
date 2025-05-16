@@ -43,4 +43,19 @@ export const contactsService = {
     const mapped = mapApiContactListResponseToContactListResponse(res.data);
     return { ...res, data: mapped };
   },
+
+  // Exportar contactos (simple o avanzado)
+  exportContacts: async (payload: { Search?: string; AdvancedFilter?: any }) => {
+    const res = await api.post("/contacts/export", payload, {
+      responseType: "blob",
+    });
+    // Obtener nombre sugerido del header si existe
+    let filename = "contactos_exportados.csv";
+    const disposition = res.headers["content-disposition"];
+    if (disposition) {
+      const match = /filename="?([^";]+)"?/i.exec(disposition);
+      if (match) filename = match[1];
+    }
+    return { blob: res.data, filename };
+  },
 };
