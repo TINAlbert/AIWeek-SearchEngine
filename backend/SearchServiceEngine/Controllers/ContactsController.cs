@@ -157,5 +157,20 @@ namespace SearchServiceEngine.Controllers
             if (!updated) return NotFound("Perfil no encontrado o no asociado.");
             return NoContent();
         }
+
+        /// <summary>
+        /// Búsqueda avanzada de contactos con múltiples filtros opcionales.
+        /// </summary>
+        /// <param name="filterDto">Objeto de filtro avanzado.</param>
+        /// <returns>Lista paginada de contactos que cumplen los criterios.</returns>
+        [HttpPost("search-advanced")]
+        [ProducesResponseType(typeof(PagedResultDto<ContactDto>), 200)]
+        public async Task<IActionResult> SearchAdvanced([FromBody] ContactAdvancedFilterDto filterDto)
+        {
+            if (filterDto == null)
+                return BadRequest();
+            var result = await _contactService.SearchAdvancedAsync(filterDto);
+            return Ok(result);
+        }
     }
 }

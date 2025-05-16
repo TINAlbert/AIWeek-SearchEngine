@@ -14,5 +14,6 @@ namespace SearchServiceEngine.Services
         Task<int> CountAsync(string? filter);
         Task<bool> AddProfileAsync(int contactId, int profileId);
         Task<bool> RemoveProfileAsync(int contactId, int profileId);
+        Task<PagedResultDto<ContactDto>> SearchAdvancedAsync(ContactAdvancedFilterDto filterDto);
     }
 }
