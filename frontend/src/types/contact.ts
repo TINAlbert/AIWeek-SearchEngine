@@ -53,3 +53,16 @@ export interface ContactUpdateDto {
   companyId?: number;
   profileIds?: number[];
 }
+
+export interface ContactAdvancedFilter {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  companyId?: number;
+  companyName?: string;
+  profileIds?: number[];
+  page?: number;
+  pageSize?: number;
+}

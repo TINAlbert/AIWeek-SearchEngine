@@ -3,6 +3,7 @@ import type {
   Contact,
   ContactCreateDto,
   ContactUpdateDto,
+  ContactAdvancedFilter,
 } from "../types/contact";
 import type { ApiContact, ApiContactListResponse } from "../types/contact.api";
 import { mapApiContactToContact, mapApiContactListResponseToContactListResponse } from "../types/contact.mapper";
@@ -35,4 +36,11 @@ export const contactsService = {
 
   // Eliminar un contacto
   remove: (id: number) => api.delete<void>(`/contacts/${id}`),
+
+  // Búsqueda avanzada de contactos
+  searchAdvanced: async (filter: ContactAdvancedFilter) => {
+    const res = await api.post<ApiContactListResponse>("/contacts/search-advanced", filter);
+    const mapped = mapApiContactListResponseToContactListResponse(res.data);
+    return { ...res, data: mapped };
+  },
 };
