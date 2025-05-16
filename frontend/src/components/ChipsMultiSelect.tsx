@@ -43,11 +43,11 @@ export default function ChipsMultiSelect({ options, value, onChange, label }: Ch
         ))}
         <button
           type="button"
-          className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 ml-1"
+          className="flex items-center justify-center w-9 h-9 rounded-md bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 ml-1"
           onClick={() => setModalOpen(true)}
           title="Añadir perfiles"
         >
-          <Plus size={16} />
+          <Plus size={18} />
         </button>
       </div>
       {modalOpen && (

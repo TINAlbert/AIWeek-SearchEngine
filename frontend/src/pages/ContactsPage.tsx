@@ -97,12 +97,6 @@ export default function ContactsPage() {
       }>
         <h1 className="text-2xl font-bold text-gray-800 mb-1 sm:mb-6 flex items-center gap-4">
           Contactos
-          <button
-            className={`ml-2 px-3 py-1 rounded text-xs font-semibold border transition-colors ${advancedMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
-            onClick={() => { setAdvancedMode((v) => !v); setPage(1); }}
-          >
-            {advancedMode ? 'Búsqueda simple' : 'Búsqueda avanzada'}
-          </button>
         </h1>
         <div className="flex flex-col gap-2 sm:gap-4 mb-2 sm:mb-6 sticky top-0 z-10 bg-gray-50 pb-2">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 w-full p-0">
@@ -122,6 +116,13 @@ export default function ContactsPage() {
                 )}
               </div>
               <div className="flex flex-row items-start gap-2 sm:gap-3 ml-2 mt-0">
+                <button
+                  className={`px-3 h-9 py-1 rounded text-xs font-semibold border transition-colors flex items-center ${advancedMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
+                  onClick={() => { setAdvancedMode((v) => !v); setPage(1); }}
+                  style={{ minHeight: '2.25rem' }}
+                >
+                  {advancedMode ? 'Búsqueda simple' : 'Búsqueda avanzada'}
+                </button>
                 <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} size="sm" />
                 <button
                   type="button"
