@@ -27,9 +27,9 @@ export default function ChipsMultiSelect({ options, value, onChange, label }: Ch
   return (
     <div>
       {label && <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>}
-      <div className="flex flex-wrap gap-2 items-center">
+      <div className="flex flex-wrap gap-2 items-center min-h-[40px]">
         {selectedProfiles.map((profile) => (
-          <span key={profile.id} className="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-medium">
+          <span key={profile.id} className="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-medium h-10 min-h-[40px]">
             {profile.name}
             <button
               type="button"
@@ -43,7 +43,7 @@ export default function ChipsMultiSelect({ options, value, onChange, label }: Ch
         ))}
         <button
           type="button"
-          className="flex items-center justify-center w-9 h-9 rounded-md bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 ml-1"
+          className="flex items-center justify-center w-9 h-9 rounded-md bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 ml-1 min-h-[40px]"
           onClick={() => setModalOpen(true)}
           title="Añadir perfiles"
         >

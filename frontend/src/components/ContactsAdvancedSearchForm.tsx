@@ -96,56 +96,83 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
       >
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">Nombre</label>
-          <input
-            type="text"
-            placeholder="Nombre"
-            className="pl-3 pr-2 h-10 border border-gray-200 rounded-lg bg-gray-50 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition"
-            value={localFilter.name || ''}
-            onChange={e => handleFieldChange('name', e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 pointer-events-none">
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 20v-6m0 0V4m0 10H6m6 0h6"/></svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Introduce un nombre..."
+              className="pl-10 pr-3 h-10 border border-gray-200 rounded-xl bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition-all duration-200 hover:shadow-md placeholder-gray-400"
+              value={localFilter.name || ''}
+              onChange={e => handleFieldChange('name', e.target.value)}
+            />
+          </div>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">Email</label>
-          <input
-            type="text"
-            placeholder="Email"
-            className="pl-3 pr-2 h-10 border border-gray-200 rounded-lg bg-gray-50 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition"
-            value={localFilter.email || ''}
-            onChange={e => handleFieldChange('email', e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 pointer-events-none">
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Introduce un email..."
+              className="pl-10 pr-3 h-10 border border-gray-200 rounded-xl bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition-all duration-200 hover:shadow-md placeholder-gray-400"
+              value={localFilter.email || ''}
+              onChange={e => handleFieldChange('email', e.target.value)}
+            />
+          </div>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">Teléfono</label>
-          <input
-            type="text"
-            placeholder="Teléfono"
-            className="pl-3 pr-2 h-10 border border-gray-200 rounded-lg bg-gray-50 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition"
-            value={localFilter.phone || ''}
-            onChange={e => handleFieldChange('phone', e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 pointer-events-none">
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92V21a2 2 0 01-2.18 2A19.72 19.72 0 013 5.18 2 2 0 015 3h4.09a2 2 0 012 1.72c.13.81.36 1.6.68 2.34a2 2 0 01-.45 2.11l-1.27 1.27a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0121 14.91V19a2 2 0 01-2 2h-.08"/></svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Introduce un teléfono..."
+              className="pl-10 pr-3 h-10 border border-gray-200 rounded-xl bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition-all duration-200 hover:shadow-md placeholder-gray-400"
+              value={localFilter.phone || ''}
+              onChange={e => handleFieldChange('phone', e.target.value)}
+            />
+          </div>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">Ciudad</label>
-          <input
-            type="text"
-            placeholder="Ciudad"
-            className="pl-3 pr-2 h-10 border border-gray-200 rounded-lg bg-gray-50 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition"
-            value={localFilter.city || ''}
-            onChange={e => handleFieldChange('city', e.target.value)}
-          />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 pointer-events-none">
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 018 8c0 7-8 12-8 12S4 17 4 10a8 8 0 018-8z"/></svg>
+            </span>
+            <input
+              type="text"
+              placeholder="Introduce una ciudad..."
+              className="pl-10 pr-3 h-10 border border-gray-200 rounded-xl bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition-all duration-200 hover:shadow-md placeholder-gray-400"
+              value={localFilter.city || ''}
+              onChange={e => handleFieldChange('city', e.target.value)}
+            />
+          </div>
         </div>
         <div>
           <label className="block text-xs font-semibold text-gray-700 mb-1">Empresa</label>
-          <select
-            className="h-10 border border-gray-200 rounded-lg bg-gray-50 w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition"
-            value={localFilter.companyId || ''}
-            onChange={e => handleFieldChange('companyId', e.target.value ? Number(e.target.value) : undefined)}
-          >
-            <option value="">Todas</option>
-            {companies.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400 pointer-events-none">
+              {/* Icono de empresa (Building) Lucide SVG inline */}
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 3v4M8 3v4M3 13h18"/></svg>
+            </span>
+            <select
+              className="h-10 pl-10 pr-3 border border-gray-200 rounded-xl bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-200 text-gray-800 text-base shadow-sm transition-all duration-200 hover:shadow-md placeholder-gray-400"
+              value={localFilter.companyId || ''}
+              onChange={e => handleFieldChange('companyId', e.target.value ? Number(e.target.value) : undefined)}
+            >
+              <option value="" disabled hidden>Selecciona una empresa...</option>
+              <option value="">Todas</option>
+              {companies.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div>
           <ChipsMultiSelect
