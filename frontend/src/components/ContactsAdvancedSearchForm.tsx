@@ -32,6 +32,19 @@ function clearHistory() {
   localStorage.removeItem(HISTORY_KEY);
 }
 
+// Hook para detectar móvil
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < breakpoint);
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < breakpoint);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 export default function ContactsAdvancedSearchForm({ value, onChange, onClear, companies }: Props) {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   useEffect(() => {
@@ -44,6 +57,7 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
   const [history, setHistory] = useState<ContactAdvancedFilter[]>(getHistory());
   const [showHistory, setShowHistory] = useState(false);
   const historyDropdownRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   // Cerrar dropdown al hacer click fuera
   useEffect(() => {
     if (!showHistory) return;
@@ -168,35 +182,75 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 8l7-7 7 7M5 16l7 7 7-7" /></svg>
               Historial
             </button>
+            {/* Drawer para móvil, popup para desktop */}
             {showHistory && (
-              <div ref={historyDropdownRef} className="absolute left-0 mt-2 w-[340px] sm:w-[380px] md:w-[420px] bg-white border border-blue-200 rounded-xl shadow-lg z-20 p-3" style={{minWidth:220}}>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-semibold text-blue-700">Últimas búsquedas avanzadas</span>
-                  <button
-                    type="button"
-                    className="text-xs text-blue-500 hover:underline"
-                    onClick={() => { clearHistory(); setHistory([]); }}
-                  >Limpiar historial</button>
+              isMobile ? (
+                <div className="fixed inset-0 z-40 flex items-end justify-center">
+                  <div className="fixed inset-0 bg-black/40 transition-opacity z-30" onClick={() => setShowHistory(false)} />
+                  <div className="w-full max-w-md bg-white border-t border-blue-200 rounded-t-2xl shadow-2xl z-40 p-4 animate-slideUp" style={{minHeight: 220, maxHeight: '70vh', overflowY: 'auto'}}>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs font-semibold text-blue-700">Últimas búsquedas avanzadas</span>
+                      <button
+                        type="button"
+                        className="text-xs text-blue-500 hover:underline"
+                        onClick={() => { clearHistory(); setHistory([]); }}
+                      >Limpiar historial</button>
+                    </div>
+                    {history.length === 0 ? (
+                      <div className="text-gray-400 text-xs">No hay búsquedas guardadas.</div>
+                    ) : (
+                      <ul className="divide-y divide-blue-50">
+                        {history.map((f, i) => (
+                          <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => { setLocalFilter(f); setShowHistory(false); }}>
+                            <div className="flex flex-wrap gap-2 text-xs text-gray-700">
+                              {f.name && <span><b>Nombre:</b> {f.name}</span>}
+                              {f.email && <span><b>Email:</b> {f.email}</span>}
+                              {f.phone && <span><b>Tel:</b> {f.phone}</span>}
+                              {f.city && <span><b>Ciudad:</b> {f.city}</span>}
+                              {f.companyId && <span><b>Empresa:</b> {companies.find(c => c.id === f.companyId)?.name || f.companyId}</span>}
+                              {f.profileIds && f.profileIds.length > 0 && <span><b>Perfiles:</b> {f.profileIds.length}</span>}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <button
+                      type="button"
+                      className="mt-4 w-full py-2 rounded bg-blue-600 text-white font-semibold text-sm shadow hover:bg-blue-700 transition"
+                      onClick={() => setShowHistory(false)}
+                    >Cerrar</button>
+                  </div>
                 </div>
-                {history.length === 0 ? (
-                  <div className="text-gray-400 text-xs">No hay búsquedas guardadas.</div>
-                ) : (
-                  <ul className="max-h-60 overflow-y-auto divide-y divide-blue-50">
-                    {history.map((f, i) => (
-                      <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => { setLocalFilter(f); setShowHistory(false); }}>
-                        <div className="flex flex-wrap gap-2 text-xs text-gray-700">
-                          {f.name && <span><b>Nombre:</b> {f.name}</span>}
-                          {f.email && <span><b>Email:</b> {f.email}</span>}
-                          {f.phone && <span><b>Tel:</b> {f.phone}</span>}
-                          {f.city && <span><b>Ciudad:</b> {f.city}</span>}
-                          {f.companyId && <span><b>Empresa:</b> {companies.find(c => c.id === f.companyId)?.name || f.companyId}</span>}
-                          {f.profileIds && f.profileIds.length > 0 && <span><b>Perfiles:</b> {f.profileIds.length}</span>}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              ) : (
+                <div ref={historyDropdownRef} className="absolute left-0 mt-2 w-[340px] sm:w-[380px] md:w-[420px] bg-white border border-blue-200 rounded-xl shadow-lg z-20 p-3" style={{minWidth:220}}>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs font-semibold text-blue-700">Últimas búsquedas avanzadas</span>
+                    <button
+                      type="button"
+                      className="text-xs text-blue-500 hover:underline"
+                      onClick={() => { clearHistory(); setHistory([]); }}
+                    >Limpiar historial</button>
+                  </div>
+                  {history.length === 0 ? (
+                    <div className="text-gray-400 text-xs">No hay búsquedas guardadas.</div>
+                  ) : (
+                    <ul className="max-h-60 overflow-y-auto divide-y divide-blue-50">
+                      {history.map((f, i) => (
+                        <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => { setLocalFilter(f); setShowHistory(false); }}>
+                          <div className="flex flex-wrap gap-2 text-xs text-gray-700">
+                            {f.name && <span><b>Nombre:</b> {f.name}</span>}
+                            {f.email && <span><b>Email:</b> {f.email}</span>}
+                            {f.phone && <span><b>Tel:</b> {f.phone}</span>}
+                            {f.city && <span><b>Ciudad:</b> {f.city}</span>}
+                            {f.companyId && <span><b>Empresa:</b> {companies.find(c => c.id === f.companyId)?.name || f.companyId}</span>}
+                            {f.profileIds && f.profileIds.length > 0 && <span><b>Perfiles:</b> {f.profileIds.length}</span>}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )
             )}
           </div>
         </div>
@@ -204,3 +258,7 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
     </div>
   );
 }
+
+// Animación para el drawer (puedes añadir en tu CSS global)
+// .animate-slideUp { animation: slideUp 0.25s cubic-bezier(.4,0,.2,1); }
+// @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
