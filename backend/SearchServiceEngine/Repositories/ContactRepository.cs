@@ -17,7 +17,13 @@ namespace SearchServiceEngine.Repositories
             var query = _context.Contacts.Include(c => c.Profiles).Include(c => c.Company).AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
-                query = query.Where(c => c.FirstName.Contains(filter) || c.LastName.Contains(filter) || c.Document.Contains(filter));
+                query = query.Where(c =>
+                    c.FirstName.Contains(filter) ||
+                    c.LastName.Contains(filter) ||
+                    c.Document.Contains(filter) ||
+                    c.Email.Contains(filter) ||
+                    c.City.Contains(filter)
+                );
             }
             return await query
                 .OrderBy(c => c.FirstName + " " + c.LastName)
