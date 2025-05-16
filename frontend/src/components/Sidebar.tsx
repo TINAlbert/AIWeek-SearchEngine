@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Home, BookUser, LogOut, Settings } from "lucide-react";
+import { Home, BookUser, LogOut, Settings, Sparkles } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import avatarPlaceholder from '/avatar-placeholder.png';
 
@@ -9,6 +9,9 @@ const AVATAR_PLACEHOLDER = avatarPlaceholder;
 const mainMenuItems = [
   { label: "Dashboard", to: "/", icon: <Home className="w-5 h-5" /> },
   { label: "Contactos", to: "/contacts", icon: <BookUser className="w-5 h-5" /> },
+  { label: (
+      <span className="flex items-center gap-1">Búsqueda IA <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded bg-yellow-200 text-yellow-800 font-semibold">Beta</span></span>
+    ), to: "/ia-search", icon: <Sparkles className="w-5 h-5 text-yellow-500" /> },
 ];
 
 const secondaryMenuItems = [
