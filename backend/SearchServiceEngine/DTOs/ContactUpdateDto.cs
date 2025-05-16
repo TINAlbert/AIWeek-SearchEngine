@@ -29,6 +29,10 @@ namespace SearchServiceEngine.DTOs
         /// </summary>
         public string Address { get; set; } = string.Empty;
         /// <summary>
+        /// Ciudad del contacto.
+        /// </summary>
+        public string City { get; set; } = string.Empty;
+        /// <summary>
         /// Estado del contacto.
         /// </summary>
         public ContactStatus Status { get; set; } = ContactStatus.Activo;

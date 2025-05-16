@@ -32,6 +32,9 @@ namespace SearchServiceEngine.Models
         [MaxLength(200)]
         public string Address { get; set; } = string.Empty;
 
+        [MaxLength(100)]
+        public string City { get; set; } = string.Empty;
+
         [Required]
         public ContactStatus Status { get; set; } = ContactStatus.Activo;
 

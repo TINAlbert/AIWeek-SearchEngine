@@ -14,7 +14,7 @@ namespace SearchServiceEngine.Repositories
 
         public async Task<IEnumerable<Contact>> GetAllAsync(string? filter, int page, int pageSize)
         {
-            var query = _context.Contacts.Include(c => c.Profiles).AsQueryable();
+            var query = _context.Contacts.Include(c => c.Profiles).Include(c => c.Company).AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
                 query = query.Where(c => c.FirstName.Contains(filter) || c.LastName.Contains(filter) || c.Document.Contains(filter));
@@ -38,7 +38,7 @@ namespace SearchServiceEngine.Repositories
 
         public async Task<Contact?> GetByIdAsync(int id)
         {
-            return await _context.Contacts.Include(c => c.Profiles).FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Contacts.Include(c => c.Profiles).Include(c => c.Company).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Contact> CreateAsync(Contact contact)

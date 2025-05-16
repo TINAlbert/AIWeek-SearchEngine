@@ -10,7 +10,8 @@ namespace SearchServiceEngine.DTOs
         {
             CreateMap<Contact, ContactDto>()
                 .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Company != null ? src.Company.Name : null))
-                .ForMember(dest => dest.Profiles, opt => opt.MapFrom(src => src.Profiles));
+                .ForMember(dest => dest.Profiles, opt => opt.MapFrom(src => src.Profiles))
+                .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City));
             CreateMap<ContactDto, Contact>();
             CreateMap<Contact, ContactCreateDto>().ReverseMap();
             CreateMap<Contact, ContactUpdateDto>().ReverseMap();
