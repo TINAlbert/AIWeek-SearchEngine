@@ -9,7 +9,7 @@ import ContactsTable from "../components/ContactsTable";
 import ContactsCards from "../components/ContactsCards";
 import Pagination from "../components/Pagination";
 import ViewModeToggle from "../components/ViewModeToggle";
-import { X, Download } from "lucide-react";
+import { X, Download, Search, SlidersHorizontal } from "lucide-react";
 import ContactsSearchBar from "../components/ContactsSearchBar";
 import ContactsAdvancedSearchForm from "../components/ContactsAdvancedSearchForm";
 
@@ -117,11 +117,12 @@ export default function ContactsPage() {
               </div>
               <div className="flex flex-row items-start gap-2 sm:gap-3 ml-2 mt-0">
                 <button
-                  className={`px-3 h-9 py-1 rounded text-xs font-semibold border transition-colors flex items-center ${advancedMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
+                  className={`flex items-center justify-center w-9 h-9 rounded-md border transition-colors ${advancedMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
                   onClick={() => { setAdvancedMode((v) => !v); setPage(1); }}
-                  style={{ minHeight: '2.25rem' }}
+                  title={advancedMode ? 'Modo búsqueda avanzada (clic para búsqueda simple)' : 'Modo búsqueda simple (clic para búsqueda avanzada)'}
+                  type="button"
                 >
-                  {advancedMode ? 'Búsqueda simple' : 'Búsqueda avanzada'}
+                  <SlidersHorizontal size={18} />
                 </button>
                 <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} size="sm" />
                 <button
