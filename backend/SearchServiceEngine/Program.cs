@@ -112,4 +112,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seed inicial condicional
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var config = services.GetRequiredService<IConfiguration>();
+    var seedEnabled = config.GetValue<bool>("SeedInitialData");
+    if (seedEnabled)
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        context.Database.Migrate();
+        await AppDbContextSeed.SeedAsync(context, userManager);
+    }
+}
+
 app.Run();

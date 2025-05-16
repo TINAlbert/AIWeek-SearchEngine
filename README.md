@@ -124,6 +124,22 @@ Plataforma fullstack para la gestión y búsqueda de contactos personales, compu
 
 ---
 
+## Seed de Datos Iniciales (Backend)
+
+El backend puede poblar automáticamente la base de datos con datos de prueba realistas tras las migraciones, ideal para pruebas y desarrollo rápido.
+
+- Controlado por el parámetro `SeedInitialData` en `backend/SearchServiceEngine/appsettings.json`.
+- Si está en `true`, al arrancar el backend se insertan:
+  - 2 usuarios (Admin y User)
+  - 6 perfiles (Cliente, Proveedor, Socio, Empleado, Prospecto, VIP)
+  - 4 empresas (InovaTech Solutions, AgroGlobal S.A., BlueWave Consulting, Logística Express SL)
+  - 1000 contactos con datos variados, perfiles y empresas asignados aleatoriamente
+- Para desactivar el seed, pon `SeedInitialData` en `false`.
+
+Consulta el README del backend para más detalles y ejemplos de configuración.
+
+---
+
 ## Seguridad
 
 - Autenticación JWT (Bearer Token)

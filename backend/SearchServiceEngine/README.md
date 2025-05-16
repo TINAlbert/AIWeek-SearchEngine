@@ -82,6 +82,41 @@ Desarrollar una API REST segura y robusta utilizando **.NET Core**, que permita 
 
 ---
 
+## 4. Seed de Datos Iniciales (Datos de Prueba Automáticos)
+
+El backend soporta la generación automática de datos de prueba (usuarios, perfiles, empresas y 1000 contactos aleatorios) tras aplicar las migraciones, útil para pruebas y desarrollo.
+
+- **Activación:** Controlado por el parámetro `SeedInitialData` en `appsettings.json` o `appsettings.Development.json`.
+- **Ubicación:** Lógica en `Data/AppDbContextSeed.cs`.
+- **Ejecución:** Si `SeedInitialData` es `true`, tras migraciones se insertan los datos iniciales automáticamente al arrancar el backend.
+
+### ¿Qué datos se generan?
+- **Usuarios:**
+  - Admin (usuario: Admin, contraseña: Admin123!)
+  - User (usuario: User, contraseña: User123!)
+- **Perfiles:** Cliente, Proveedor, Socio, Empleado, Prospecto, VIP
+- **Empresas:** InovaTech Solutions, AgroGlobal S.A., BlueWave Consulting, Logística Express SL
+- **Contactos:** 1000 contactos con nombres, apellidos, emails, perfiles y empresas asignados aleatoriamente (algunos sin empresa o sin perfiles)
+
+### Configuración de ejemplo
+```json
+{
+  ...
+  "SeedInitialData": true
+}
+```
+
+### Desactivar el seed
+Para evitar la inserción automática de datos de prueba, pon el valor en `false`:
+```json
+{
+  ...
+  "SeedInitialData": false
+}
+```
+
+---
+
 ## 5. Endpoints Principales
 
 ### Autenticación
@@ -330,7 +365,8 @@ La ruta de almacenamiento de los archivos de avatar se define en `appsettings.js
   "ConnectionStrings": {
     "DefaultConnection": "Data Source=aiweek.db"
   },
-  "AvatarsPath": "wwwroot/avatars"
+  "AvatarsPath": "wwwroot/avatars",
+  "SeedInitialData": true
 }
 ```
 
@@ -338,6 +374,7 @@ La ruta de almacenamiento de los archivos de avatar se define en `appsettings.js
 - **Issuer/Audience:** Identificadores del emisor y audiencia del JWT.
 - **DefaultConnection:** Usa SQLite por defecto (`aiweek.db`).
 - **AvatarsPath:** Carpeta donde se almacenan los avatares de usuario.
+- **SeedInitialData:** Controla la generación automática de datos de prueba.
 
 ---
 
