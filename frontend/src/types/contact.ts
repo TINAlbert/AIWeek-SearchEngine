@@ -9,6 +9,7 @@ export interface Contact {
   phone: string;
   address: string;
   status: string;
+  city: string;
   companyId?: number;
   companyName?: string;
   profiles: import("./profile").Profile[];
@@ -35,6 +36,7 @@ export interface ContactCreateDto {
   phone: string;
   address: string;
   status: string;
+  city: string;
   companyId?: number;
   profileIds: number[];
 }
@@ -47,6 +49,7 @@ export interface ContactUpdateDto {
   phone?: string;
   address?: string;
   status?: string;
+  city?: string;
   companyId?: number;
   profileIds?: number[];
 }

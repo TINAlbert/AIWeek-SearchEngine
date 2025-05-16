@@ -15,13 +15,15 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
             <th className="px-4 py-3 text-left font-semibold">Email</th>
             <th className="px-4 py-3 text-left font-semibold">Teléfono</th>
             <th className="px-4 py-3 text-left font-semibold">Dirección</th>
+            <th className="px-4 py-3 text-left font-semibold">Empresa</th>
             <th className="px-4 py-3 text-left font-semibold">Perfiles</th>
+            {/* <th className="px-4 py-3 text-left font-semibold">Ciudad</th> */}
           </tr>
         </thead>
         <tbody>
           {contacts.length === 0 ? (
             <tr>
-              <td colSpan={5} className="p-0">
+              <td colSpan={7} className="p-0">
                 <NoResults message="No se encontraron contactos" suggestion="Prueba con otros criterios de búsqueda." className="py-12" />
               </td>
             </tr>
@@ -40,6 +42,7 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
                 <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.email}</td>
                 <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{contact.phone}</td>
                 <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{contact.address || "-"}</td>
+                <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{contact.companyName || "-"}</td>
                 <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
                   {contact.profiles && contact.profiles.length > 0 ? (
                     <div className="flex flex-wrap gap-1">
@@ -61,6 +64,7 @@ export default function ContactsTable({ contacts }: ContactsTableProps) {
                     <span className="text-xs text-gray-300">-</span>
                   )}
                 </td>
+                {/* <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{contact.city || "-"}</td> */}
               </tr>
             ))
           )}

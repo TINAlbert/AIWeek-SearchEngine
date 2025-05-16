@@ -11,6 +11,7 @@ export function mapApiContactToContact(apiContact: ApiContact): Contact {
     email: apiContact.email,
     phone: apiContact.phone,
     address: apiContact.address,
+    city: apiContact.city,
     status: apiContact.status,
     companyId: apiContact.companyId,
     companyName: apiContact.companyName,

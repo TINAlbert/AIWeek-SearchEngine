@@ -15,6 +15,7 @@ export type ApiContact = {
   profiles: Profile[];
   createdAt: string;
   updatedAt: string;
+  city: string;
 };
 
 export type ApiContactListResponse = {

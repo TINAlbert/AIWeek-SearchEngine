@@ -1,5 +1,6 @@
 import type { Contact } from "../types/contact";
 import NoResults from "./NoResults";
+import { Phone, MapPin, Building2 } from "lucide-react";
 
 interface ContactsCardsProps {
   contacts: Contact[];
@@ -37,12 +38,16 @@ export default function ContactsCards({ contacts, scrollable = false, maxHeight 
             </div>
             <div className="flex flex-wrap gap-2 text-sm text-gray-600">
               <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 rounded px-2 py-0.5">
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3 5.18 2 2 0 0 1 5 3h2.09a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11l-.27.27a16 16 0 0 0 6.29 6.29l.27-.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72A2 2 0 0 1 22 16.92z"/></svg>
+                <Phone className="w-4 h-4" />
                 {contact.phone || '-'}
               </span>
               <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 rounded px-2 py-0.5">
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 10V6a5 5 0 0 0-10 0v4"/><rect width="20" height="12" x="2" y="10" rx="2"/><path d="M7 22h10"/></svg>
+                <Building2 className="w-4 h-4" />
                 {contact.address || '-'}
+              </span>
+              <span className="inline-flex items-center gap-1 bg-gray-50 border border-gray-200 rounded px-2 py-0.5">
+                <MapPin className="w-4 h-4" />
+                {contact.city || '-'}
               </span>
             </div>
             {contact.profiles && contact.profiles.length > 0 && (
