@@ -228,7 +228,12 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
                     ) : (
                       <ul className="divide-y divide-blue-50">
                         {history.map((f, i) => (
-                          <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => { setLocalFilter(f); setShowHistory(false); }}>
+                          <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => {
+                            setLocalFilter(f);
+                            setShowHistory(false);
+                            onChange(f); // Lanzar búsqueda automáticamente
+                            saveToHistory(f); // Opcional: guardar como última búsqueda
+                          }}>
                             <div className="flex flex-wrap gap-2 text-xs text-gray-700">
                               {f.name && <span><b>Nombre:</b> {f.name}</span>}
                               {f.email && <span><b>Email:</b> {f.email}</span>}
@@ -263,7 +268,12 @@ export default function ContactsAdvancedSearchForm({ value, onChange, onClear, c
                   ) : (
                     <ul className="max-h-60 overflow-y-auto divide-y divide-blue-50">
                       {history.map((f, i) => (
-                        <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => { setLocalFilter(f); setShowHistory(false); }}>
+                        <li key={i} className="py-2 cursor-pointer hover:bg-blue-50 rounded px-2" onClick={() => {
+                          setLocalFilter(f);
+                          setShowHistory(false);
+                          onChange(f); // Lanzar búsqueda automáticamente
+                          saveToHistory(f); // Opcional: guardar como última búsqueda
+                        }}>
                           <div className="flex flex-wrap gap-2 text-xs text-gray-700">
                             {f.name && <span><b>Nombre:</b> {f.name}</span>}
                             {f.email && <span><b>Email:</b> {f.email}</span>}
