@@ -8,3 +8,9 @@
 - Se reorganizó la documentación para evitar duplicados y mejorar la referencia rápida
 - Se actualizaron los TODO.md de backend y frontend para reflejar el estado actual
 - Se verificó la compilación y funcionamiento correcto de los cambios
+- Se implementó búsqueda avanzada y exportación CSV robusta en frontend y backend
+- Se añadió historial reutilizable de filtros avanzados y UI moderna
+- Se corrigió la limpieza de filtros (perfiles) en búsqueda avanzada
+- Se mejoró la accesibilidad y feedback visual en todos los campos y controles
+- Se actualizaron los README y TODO para reflejar las nuevas funcionalidades y robustez
+- Última actualización: 16 mayo 2025

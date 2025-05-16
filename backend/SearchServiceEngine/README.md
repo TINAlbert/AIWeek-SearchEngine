@@ -2,7 +2,7 @@
 
 ## 1. Objetivo del Proyecto
 
-Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestión y consulta de contactos/fichas personales, con acceso autenticado mediante JWT y Refresh Tokens. Se utilizará **Entity Framework Core** para la persistencia de datos y **Microsoft Identity** para la autenticación y autorización.
+Desarrollar una API REST segura y robusta utilizando **.NET Core**, que permita la gestión y consulta de contactos personales, con autenticación JWT y refresh tokens. Incluye gestión de usuarios, perfiles, empresas, paginación, filtros avanzados y exportación de datos.
 
 > La URL base por defecto de la API es `http://localhost:5252/api` (ver `Properties/launchSettings.json`).
 
@@ -12,25 +12,26 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 ### 2.1 Autenticación y Autorización
 
-* Registro de usuarios (opcional)
+* Registro de usuarios (opcional, solo Admin)
 * Inicio de sesión con emisión de **Access Token (JWT)** y **Refresh Token**
-* Refresco de tokens válidos mediante un endpoint
+* Refresco de tokens válidos mediante endpoint
 * Roles y claims gestionados con Microsoft Identity
 
 ### 2.2 Gestión de Contactos
 
 * CRUD de contactos (según rol del usuario):
-
-  * `GET /contacts` con soporte para filtros y búsquedas
+  * `GET /contacts` con soporte para filtros y paginación
   * `GET /contacts/{id}`
   * `POST /contacts`
   * `PUT /contacts/{id}`
   * `DELETE /contacts/{id}` (si aplica)
+* Búsqueda avanzada de contactos (`POST /contacts/search-advanced`) con múltiples campos y perfiles
+* Exportación de contactos filtrados (`POST /contacts/export`) como CSV (soporta filtros simples y avanzados)
 
 ### 2.3 Paginación y Filtros
 
 * Paginación en consultas masivas con `page`, `pageSize`
-* Filtros por nombre, documento, estado, etc.
+* Filtros por nombre, documento, estado, empresa, perfiles, ciudad, etc.
 
 ### 2.4 Seguridad
 
@@ -44,22 +45,24 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 ### 3.1 Tecnologías y Frameworks
 
-* **.NET Core** (7.0 o superior)
-* **Entity Framework Core** para ORM y migraciones
-* **Microsoft Identity Framework** para autenticación y autorización
-* **JWT** para tokens de acceso
-* **AutoMapper** para mapeo DTOs
-* **FluentValidation** para validaciones de entrada (opcional)
-* **Scalar** para documentación de la API
+* **.NET Core 9** — Framework principal para la API REST
+* **Entity Framework Core** — ORM y migraciones automáticas/controladas
+* **Microsoft Identity Framework** — Autenticación y autorización basada en roles y claims
+* **JWT (Json Web Token)** — Tokens de acceso y refresh para autenticación segura
+* **AutoMapper** — Mapeo entre entidades y DTOs
+* **FluentValidation** — Validación robusta de entrada de datos y DTOs
+* **Scalar (OpenAPI)** — Documentación interactiva de la API
+* **xUnit** y **Moq** — Testing unitario y de integración
+* **Serilog** — (Opcional) Logging estructurado
 
 ### 3.2 Estructura de Capas
 
-* `Controllers` (Web API)
-* `Services` (lógica de negocio)
-* `Repositories` (acceso a datos via EF Core)
-* `DTOs` (Data Transfer Objects)
-* `Models` (entidades de EF)
-* `Authentication` (generación y validación de JWT)
+* `Controllers` — Web API y endpoints
+* `Services` — Lógica de negocio y reglas de aplicación
+* `Repositories` — Acceso a datos y consultas complejas
+* `DTOs` — Data Transfer Objects para entrada/salida
+* `Models` — Entidades de EF Core
+* `Authentication` — Generación y validación de JWT, gestión de tokens
 
 ---
 
@@ -69,69 +72,154 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 * **User** (IdentityUser extendido)
 * **Contact**
-
-  * Id
-  * Nombre
-  * Apellido
-  * Documento
-  * Email
-  * Teléfono
-  * Dirección
-  * Estado
-  * Fecha de creación / actualización
+  * Id, Nombre, Apellido, Documento, Email, Teléfono, Dirección, Estado, Empresa, Perfiles (muchos a muchos), Ciudad, Fecha de creación/actualización
+* **Company**
+  * Id, Nombre, Dirección, etc.
+* **Profile**
+  * Id, Nombre, Descripción
 * **RefreshToken**
-
-  * Id
-  * UsuarioId
-  * Token
-  * Fecha expiración
-  * Revocado
+  * Id, UsuarioId, Token, Fecha expiración, Revocado
 
 ---
 
 ## 5. Endpoints Principales
 
 ### Autenticación
-
-- `POST /auth/login` — Inicia sesión y retorna JWT + Refresh Token (requiere credenciales válidas)
-- `POST /auth/refresh` — Renueva tokens de acceso y refresh (requiere refresh token válido)
-- `POST /auth/logout` — Revoca el refresh token actual (requiere autenticación)
+- `POST /api/auth/login` — Inicia sesión y retorna JWT + Refresh Token
+- `POST /api/auth/refresh` — Renueva tokens de acceso y refresh
+- `POST /api/auth/logout` — Revoca el refresh token actual
 
 ### Usuarios
-
-- `GET /users` — Lista todos los usuarios (solo Admin, campos básicos)
-- `GET /users/{id}` — Obtiene un usuario por su identificador (solo Admin, retorna un objeto UserProfileDto)
-- `GET /users/me` — Obtiene los datos del usuario autenticado (retorna un objeto UserProfileDto)
-- `POST /users` — Crea usuario (solo Admin). Body: `{ userName, password, role }`
-- `POST /users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (multipart/form-data, campo `file`)
-- `GET /users/me/avatar` — Descarga el avatar del usuario autenticado
-
-#### UserProfileDto (respuesta de /users/me y /users/{id})
-
-```json
-{
-  "id": "string",
-  "userName": "string",
-  "email": "string",
-  "role": "string",
-  "firstName": "string",
-  "lastName": "string",
-  "isActive": true,
-  "createdAt": "2025-05-15T10:00:00Z",
-  "updatedAt": "2025-05-15T10:00:00Z",
-  "avatarFileName": "string|null"
-}
-```
-
-> Se utiliza un DTO para desacoplar la entidad User de la respuesta pública, facilitar la evolución de la API y documentar claramente los campos expuestos.
+- `GET /api/users` — Lista todos los usuarios (solo Admin)
+- `GET /api/users/{id}` — Obtiene un usuario por su identificador (solo Admin)
+- `GET /api/users/me` — Obtiene los datos del usuario autenticado
+- `POST /api/users` — Crea usuario (solo Admin)
+- `POST /api/users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado
+- `GET /api/users/me/avatar` — Descarga el avatar del usuario autenticado
 
 ### Contactos
 
-- `GET /contacts?query=&page=&pageSize=` — Lista contactos con filtros y paginación (requiere autenticación)
-- `GET /contacts/{id}` — Obtiene un contacto por su identificador (requiere autenticación)
-- `POST /contacts` — Crea un nuevo contacto (requiere permisos según rol)
-- `PUT /contacts/{id}` — Actualiza un contacto existente (requiere permisos según rol)
-- `DELETE /contacts/{id}` — Elimina un contacto (requiere permisos según rol)
+- `GET /api/contacts?filter=...&page=1&pageSize=10` — Lista contactos con filtros simples (nombre, documento, email, etc.) y paginación. Devuelve un objeto paginado con los contactos y metadatos (`data`, `total`, `page`, `pageSize`, `totalPages`, `hasNextPage`, `hasPreviousPage`).
+
+- `POST /api/contacts/search-advanced` — Búsqueda avanzada de contactos. Permite filtrar por múltiples campos (nombre, email, teléfono, ciudad, empresa, perfiles, etc.) enviando un objeto JSON en el body. Soporta paginación y devuelve un objeto paginado igual que el endpoint simple.
+
+#### Ejemplo: Búsqueda avanzada de contactos
+
+**Request:**
+
+POST /api/contacts/search-advanced
+
+```json
+{
+  "name": "Juan",
+  "email": "",
+  "phone": "",
+  "city": "Madrid",
+  "companyId": 2,
+  "profileIds": [1, 3],
+  "page": 1,
+  "pageSize": 10
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": 12,
+      "firstName": "Juan",
+      "lastName": "Pérez",
+      "email": "juan.perez@example.com",
+      "phone": "+34123456789",
+      "address": "Calle Falsa 123, Madrid",
+      "city": "Madrid",
+      "company": {
+        "id": 2,
+        "name": "Empresa Ejemplo"
+      },
+      "profiles": [
+        { "id": 1, "name": "Cliente" },
+        { "id": 3, "name": "VIP" }
+      ],
+      "status": 0,
+      "createdAt": "2025-05-10T12:00:00Z",
+      "updatedAt": "2025-05-15T09:00:00Z"
+    }
+    // ...más contactos...
+  ],
+  "total": 1,
+  "page": 1,
+  "pageSize": 10,
+  "totalPages": 1,
+  "hasNextPage": false,
+  "hasPreviousPage": false
+}
+```
+
+- `POST /api/contacts/export` — Exporta a CSV todos los contactos que cumplen los filtros activos (tanto simples como avanzados). El body debe incluir los filtros simples y/o avanzados. Devuelve un archivo CSV descargable.
+
+#### Ejemplo: Exportación de contactos a CSV
+
+**Request:**
+
+POST /api/contacts/export
+
+```json
+{
+  "Search": "",
+  "AdvancedFilter": {
+    "companyId": 2,
+    "profileIds": [1, 3]
+  }
+}
+```
+
+**Response:**
+
+- Descarga de archivo CSV con los contactos filtrados.
+
+- `GET /api/contacts/{id}` — Obtiene el detalle completo de un contacto por su identificador único.
+
+- `PUT /api/contacts/{id}` — Actualiza los datos de un contacto existente. Requiere permisos adecuados. El body debe contener los campos a modificar.
+
+- `DELETE /api/contacts/{id}` — Elimina un contacto por su identificador. Requiere permisos de administrador o editor.
+
+- `POST /api/contacts/{id}/profiles/{profileId}` — Añade un perfil (rol/categoría) a un contacto. Útil para asociar varios perfiles a un mismo contacto.
+
+#### Ejemplo: Añadir perfil a un contacto
+
+**Request:**
+
+POST /api/contacts/12/profiles/3
+
+- No requiere body. Añade el perfil con ID 3 al contacto con ID 12.
+
+**Response:**
+
+- 204 No Content si la operación es exitosa.
+- 404 si el contacto o perfil no existe.
+
+- `DELETE /api/contacts/{id}/profiles/{profileId}` — Quita un perfil previamente asociado a un contacto.
+
+#### Ejemplo: Quitar perfil de un contacto
+
+**Request:**
+
+DELETE /api/contacts/12/profiles/3
+
+- Quita el perfil con ID 3 del contacto con ID 12.
+
+**Response:**
+
+- 204 No Content si la operación es exitosa.
+- 404 si el contacto o perfil no existe o no está asociado.
+
+### Empresas y Perfiles
+- `GET /api/companies` — Listar empresas
+- `GET /api/profiles` — Listar perfiles
+- (Opcional) CRUD de empresas y perfiles para Admin
 
 ---
 
@@ -149,8 +237,9 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 * Uso de `appsettings.json` para configuraciones sensibles (secret key, expiración tokens, cadena de conexión)
 * Inyección de dependencias (DI) para servicios y repositorios
-* Unit Testing con xUnit o NUnit
+* Unit Testing con xUnit y Moq
 * Migraciones automáticas o controladas con EF Core
+* Documentación OpenAPI generada con Scalar
 
 ---
 
@@ -159,7 +248,7 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 * Registro y verificación de email de usuarios
 * Logs con Serilog
 * Políticas de CORS seguras para frontend
-* Documentación interactiva con Swagger UI
+* Documentación interactiva con Swagger/Scalar UI
 
 ---
 
@@ -167,25 +256,22 @@ Desarrollar una API REST segura utilizando **.NET Core**, que permita la gestió
 
 * Proyecto .NET Core con estructura limpia y modular
 * Base de datos generada por migraciones de EF Core
-* API documentada con Scalar
+* API documentada con Scalar (OpenAPI)
 * Tests unitarios básicos
 * Seguridad completa implementada (login, JWT, refresh tokens)
 
 ---
 
-## Cambios recientes
+## Cambios recientes y mejoras
 
-- El endpoint `GET /contacts` ahora devuelve un objeto paginado enriquecido (`PagedResultDto<ContactDto>`) con los campos: `data`, `total`, `page`, `pageSize`, `totalPages`, `hasNextPage`, `hasPreviousPage`.
-
-- Adaptados los tests y servicios para soportar esta nueva estructura.
-
-- Flujo de autenticación y perfil robusto y coherente con frontend.
-- Avatar y datos de usuario integrados y protegidos.
-- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
-- Placeholder de avatar y favicon personalizados con identidad "AI".
-- Sincronización total de tokens y usuario en frontend/backend.
-- Mejoras de UX y feedback visual en login/logout/perfil.
-- Documentación y endpoints alineados con la implementación final.
+- Búsqueda avanzada y exportación CSV robusta en backend
+- Historial de filtros avanzados reutilizable y UI moderna en frontend
+- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
+- Flujo de autenticación y perfil robusto y coherente con frontend
+- Avatar y datos de usuario integrados y protegidos
+- Sincronización total de tokens y usuario en frontend/backend
+- Mejoras de UX y feedback visual en login/logout/perfil
+- Documentación y endpoints alineados con la implementación final
 
 ---
 
@@ -252,3 +338,7 @@ La ruta de almacenamiento de los archivos de avatar se define en `appsettings.js
 - **Issuer/Audience:** Identificadores del emisor y audiencia del JWT.
 - **DefaultConnection:** Usa SQLite por defecto (`aiweek.db`).
 - **AvatarsPath:** Carpeta donde se almacenan los avatares de usuario.
+
+---
+
+Última actualización: 16 mayo 2025

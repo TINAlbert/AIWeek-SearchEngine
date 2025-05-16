@@ -4,82 +4,46 @@ Este archivo resume las operaciones realizadas mediante el chat y el agente de I
 
 ---
 
-## 2025-05-12
+## 2025-05-16
 
-- Creación del archivo `.instructions.md` con reglas básicas de trabajo.
-- Inicialización del repositorio git y creación del archivo `.gitignore` adaptado para proyectos React y .NET Core.
-- Estructuración de carpetas `frontend` y `backend`.
-- Inicialización del backend como Web API en .NET Core y verificación de funcionamiento.
-- Actualización del `README.md` para reflejar la estructura y características del backend.
-- Creación de archivos `TODO.md` para backend y frontend con listas de tareas iniciales.
-- Limpieza y reinicio de la estructura del frontend para iniciar con Vite y React.
-- Inicialización del frontend con Vite (React + TypeScript + SWC) y verificación de funcionamiento.
-- Actualización de las instrucciones para especificar el entorno Windows y la necesidad de mantener actualizado este archivo `Chat.md`.
-
-### (continuación)
-
-- Se implementó un endpoint `/login` en el backend que valida usuario y contraseña y devuelve un JWT si las credenciales son correctas.
-- Se configuró correctamente la clave JWT para cumplir con los requisitos de seguridad del algoritmo HS256.
-- Se realizó una prueba automática del endpoint `/login` mediante PowerShell y HTTP, obteniendo un token JWT válido al enviar las credenciales:
-  - username: `admin`
-  - password: `admin123`
-- Se refactorizó el backend para organizar los endpoints en controladores (`UsersController` y `AuthController`).
-- El endpoint `POST /api/auth/login` permite autenticación y devuelve un JWT válido.
-- El endpoint `GET /api/users`, protegido por rol Admin, responde correctamente cuando se usa el token obtenido en el login.
-- Se realizaron pruebas automáticas exitosas de ambos endpoints usando PowerShell.
-
-- Se renombró y reorganizó el proyecto backend a SearchServiceEngine.
-- Se actualizaron todos los namespaces y referencias internas a SearchServiceEngine.
-- Se restauraron e instalaron los paquetes NuGet necesarios (Entity Framework Core, Sqlite, JWT).
-- Se verificó la compilación y ejecución correcta del backend tras la migración.
-
-- Se refactorizó el endpoint de login en `AuthController` para que reciba un DTO `LoginRequest` (solo usuario y contraseña) en vez del modelo completo de usuario.
-- Se creó la clase `LoginRequest` en `Models`.
-- Se actualizaron los tests unitarios de login para usar el nuevo DTO.
-- Se verificó que los tests unitarios pasan correctamente tras el cambio.
+- Implementada búsqueda avanzada y exportación CSV robusta en frontend y backend
+- Añadido historial reutilizable de filtros avanzados y UI moderna
+- Corregida la limpieza de filtros (perfiles) en búsqueda avanzada
+- Mejoras visuales y de accesibilidad en todos los campos y controles
+- Actualizados los README y TODO para reflejar las nuevas funcionalidades y robustez
+- Sincronización total de tokens y usuario en frontend/backend
+- Mejoras de UX y feedback visual en login/logout/perfil
+- Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes
+- Limpieza de código y documentación alineada con la implementación final
 
 ---
 
-## 2025-05-13
+## 2025-05-15
 
-- Se reorganizó el backend siguiendo buenas prácticas: separación en capas Controllers, Services, Repositories, Models y DTOs.
-- Se implementó la entidad Contact y sus DTOs, así como la capa de servicios y repositorios para contactos.
-- Se integró AutoMapper para el mapeo entre entidades y DTOs.
-- Se integró FluentValidation para la validación automática de los DTOs de contacto.
-- Se crearon los endpoints CRUD completos para contactos, con soporte de filtros y paginación.
-- Se añadieron datos de ejemplo (seed) para la entidad Contact y se aplicaron las migraciones correspondientes.
-- Se verificó la correcta compilación y funcionamiento de la API tras los cambios estructurales.
+- Refactorizada la pantalla Home: ahora muestra una grid de indicadores alineados arriba, sin fondo degradado, con diseño moderno y limpio.
+- Corregida la accesibilidad en ContactsPage: el selector de vista (ViewModeToggle) está fuera del h1.
+- Restaurada la lógica para que en móvil solo se muestre la vista de tarjetas en ContactsPage.
+- Integrado el componente ViewModeToggle en ContactsPage.
+- Mejoras visuales y de layout en la paginación y responsividad de la página de contactos.
 
-- Se documentaron todos los endpoints del ContactsController con comentarios XML para mejorar la generación de documentación automática (Swagger/OpenAPI).
-- Se documentaron los DTOs de contacto (ContactDto, ContactCreateDto, ContactUpdateDto) con comentarios XML en sus clases y propiedades.
-- Se explicó el uso y funcionamiento de ContactUpdateDtoValidator: se utiliza automáticamente en el endpoint PUT /contacts/{id} para validar los datos de actualización de contactos mediante FluentValidation.
+---
 
-- Implementada la gestión completa de refresh tokens: creación, almacenamiento seguro, expiración, revocación y eliminación tras login.
-- Añadidos endpoints POST /auth/refresh y POST /auth/logout.
-- Ahora, tras un login correcto, se eliminan todos los refresh tokens activos previos del usuario.
-- Documentados los endpoints de autenticación y su flujo en AuthController.
-- Actualizada la documentación de endpoints y DTOs de contactos.
+## 2025-05-15
 
-- Implementado endpoint POST /api/users para registro de usuarios (solo Admin), con validación avanzada y DTO documentado.
-- Añadida documentación XML a endpoints, DTOs y validadores de usuario.
-- Corregidos los warnings de posibles valores nulos en claims y configuración JWT.
-- El backend compila correctamente y está listo para pruebas.
-
-- Integrada la autenticación Bearer JWT en la documentación interactiva Scalar UI del backend.
-- Se aclara que Scalar UI no muestra botón "Authorize"; el token debe añadirse manualmente en los headers al probar endpoints protegidos.
-- El backend compila y funciona correctamente con la configuración actual de seguridad y documentación.
-- Listo para commit final de la configuración de Scalar/OpenAPI y autenticación JWT.
-
-- Refactor y robustecimiento de controladores y servicios principales (Contacts, Users, Auth) en el backend.
-- Corrección y ampliación de tests unitarios para todos los controladores y servicios principales.
-- Eliminación de advertencias de nulabilidad en los tests.
-- Todos los tests relevantes pasan correctamente.
-- Actualización de TODO.md para reflejar el estado real del proyecto tras el commit.
-
-Próximos pasos sugeridos:
-- Añadir pruebas de integración.
-- Configurar CI/CD, logs y CORS.
-- Mejorar documentación de uso en backend.http si es necesario.
+- Rediseño completo del Sidebar:
+  - El indicador visual del item activo ahora aparece en la derecha (borde azul), con la esquina derecha redondeada y sin redondeo en la izquierda.
+  - Se mantiene la coherencia visual con el resto de la app.
+- Home y Dashboard:
+  - Home y Dashboard usan ahora un layout tipo bento, con cards blancas, grid responsiva, iconos y tipografía moderna.
+  - El array de indicadores en Home permite definir el span de columnas y color, y se itera para renderizar las cards.
+  - El icono de cada indicador en Home se sitúa a la derecha del label.
+- ContactsPage y Cards:
+  - Cards y tabla integradas visualmente en una card principal.
+  - Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport.
+  - El campo de búsqueda y la botonera están agrupados y armonizados visualmente.
+- Sidebar:
+  - El borde azul del item activo está a la derecha y solo esa esquina es redondeada.
+  - Eliminado el redondeo en la izquierda del item activo.
 
 ---
 
@@ -141,35 +105,82 @@ Próximos pasos sugeridos:
 
 ---
 
-## 2025-05-15
-- Refactorizada la pantalla Home: ahora muestra una grid de indicadores alineados arriba, sin fondo degradado, con diseño moderno y limpio.
-- Corregida la accesibilidad en ContactsPage: el selector de vista (ViewModeToggle) está fuera del h1.
-- Restaurada la lógica para que en móvil solo se muestre la vista de tarjetas en ContactsPage.
-- Integrado el componente ViewModeToggle en ContactsPage.
-- Mejoras visuales y de layout en la paginación y responsividad de la página de contactos.
+## 2025-05-13
+
+- Se reorganizó el backend siguiendo buenas prácticas: separación en capas Controllers, Services, Repositories, Models y DTOs.
+- Se implementó la entidad Contact y sus DTOs, así como la capa de servicios y repositorios para contactos.
+- Se integró AutoMapper para el mapeo entre entidades y DTOs.
+- Se integró FluentValidation para la validación automática de los DTOs de contacto.
+- Se crearon los endpoints CRUD completos para contactos, con soporte de filtros y paginación.
+- Se añadieron datos de ejemplo (seed) para la entidad Contact y se aplicaron las migraciones correspondientes.
+- Se verificó la correcta compilación y funcionamiento de la API tras los cambios estructurales.
+
+- Se documentaron todos los endpoints del ContactsController con comentarios XML para mejorar la generación de documentación automática (Swagger/OpenAPI).
+- Se documentaron los DTOs de contacto (ContactDto, ContactCreateDto, ContactUpdateDto) con comentarios XML en sus clases y propiedades.
+- Se explicó el uso y funcionamiento de ContactUpdateDtoValidator: se utiliza automáticamente en el endpoint PUT /contacts/{id} para validar los datos de actualización de contactos mediante FluentValidation.
+
+- Implementada la gestión completa de refresh tokens: creación, almacenamiento seguro, expiración, revocación y eliminación tras login.
+- Añadidos endpoints POST /auth/refresh y POST /auth/logout.
+- Ahora, tras un login correcto, se eliminan todos los refresh tokens activos previos del usuario.
+- Documentados los endpoints de autenticación y su flujo en AuthController.
+- Actualizada la documentación de endpoints y DTOs de contactos.
+
+- Implementado endpoint POST /api/users para registro de usuarios (solo Admin), con validación avanzada y DTO documentado.
+- Añadida documentación XML a endpoints, DTOs y validadores de usuario.
+- Corregidos los warnings de posibles valores nulos en claims y configuración JWT.
+- El backend compila correctamente y está listo para pruebas.
+
+- Integrada la autenticación Bearer JWT en la documentación interactiva Scalar UI del backend.
+- Se aclara que Scalar UI no muestra botón "Authorize"; el token debe añadirse manualmente en los headers al probar endpoints protegidos.
+- El backend compila y funciona correctamente con la configuración actual de seguridad y documentación.
+- Listo para commit final de la configuración de Scalar/OpenAPI y autenticación JWT.
+
+- Refactor y robustecimiento de controladores y servicios principales (Contacts, Users, Auth) en el backend.
+- Corrección y ampliación de tests unitarios para todos los controladores y servicios principales.
+- Eliminación de advertencias de nulabilidad en los tests.
+- Todos los tests relevantes pasan correctamente.
+- Actualización de TODO.md para reflejar el estado real del proyecto tras el commit.
+
+Próximos pasos sugeridos:
+- Añadir pruebas de integración.
+- Configurar CI/CD, logs y CORS.
+- Mejorar documentación de uso en backend.http si es necesario.
 
 ---
 
-## 2025-05-15
+## 2025-05-12
 
-- Rediseño completo del Sidebar:
-  - El indicador visual del item activo ahora aparece en la derecha (borde azul), con la esquina derecha redondeada y sin redondeo en la izquierda.
-  - Se mantiene la coherencia visual con el resto de la app.
-- Home y Dashboard:
-  - Home y Dashboard usan ahora un layout tipo bento, con cards blancas, grid responsiva, iconos y tipografía moderna.
-  - El array de indicadores en Home permite definir el span de columnas y color, y se itera para renderizar las cards.
-  - El icono de cada indicador en Home se sitúa a la derecha del label.
-- ContactsPage y Cards:
-  - Cards y tabla integradas visualmente en una card principal.
-  - Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport.
-  - El campo de búsqueda y la botonera están agrupados y armonizados visualmente.
-- Sidebar:
-  - El borde azul del item activo está a la derecha y solo esa esquina es redondeada.
-  - Eliminado el redondeo en la izquierda del item activo.
+- Creación del archivo `.instructions.md` con reglas básicas de trabajo.
+- Inicialización del repositorio git y creación del archivo `.gitignore` adaptado para proyectos React y .NET Core.
+- Estructuración de carpetas `frontend` y `backend`.
+- Inicialización del backend como Web API en .NET Core y verificación de funcionamiento.
+- Actualización del `README.md` para reflejar la estructura y características del backend.
+- Creación de archivos `TODO.md` para backend y frontend con listas de tareas iniciales.
+- Limpieza y reinicio de la estructura del frontend para iniciar con Vite y React.
+- Inicialización del frontend con Vite (React + TypeScript + SWC) y verificación de funcionamiento.
+- Actualización de las instrucciones para especificar el entorno Windows y la necesidad de mantener actualizado este archivo `Chat.md`.
 
----
+### (continuación)
 
-Todos los cambios mantienen la coherencia visual y funcional con el diseño de referencia y mejoran la experiencia de usuario en móvil y escritorio.
+- Se implementó un endpoint `/login` en el backend que valida usuario y contraseña y devuelve un JWT si las credenciales son correctas.
+- Se configuró correctamente la clave JWT para cumplir con los requisitos de seguridad del algoritmo HS256.
+- Se realizó una prueba automática del endpoint `/login` mediante PowerShell y HTTP, obteniendo un token JWT válido al enviar las credenciales:
+  - username: `admin`
+  - password: `admin123`
+- Se refactorizó el backend para organizar los endpoints en controladores (`UsersController` y `AuthController`).
+- El endpoint `POST /api/auth/login` permite autenticación y devuelve un JWT válido.
+- El endpoint `GET /api/users`, protegido por rol Admin, responde correctamente cuando se usa el token obtenido en el login.
+- Se realizaron pruebas automáticas exitosas de ambos endpoints usando PowerShell.
+
+- Se renombró y reorganizó el proyecto backend a SearchServiceEngine.
+- Se actualizaron todos los namespaces y referencias internas a SearchServiceEngine.
+- Se restauraron e instalaron los paquetes NuGet necesarios (Entity Framework Core, Sqlite, JWT).
+- Se verificó la compilación y ejecución correcta del backend tras la migración.
+
+- Se refactorizó el endpoint de login en `AuthController` para que reciba un DTO `LoginRequest` (solo usuario y contraseña) en vez del modelo completo de usuario.
+- Se creó la clase `LoginRequest` en `Models`.
+- Se actualizaron los tests unitarios de login para usar el nuevo DTO.
+- Se verificó que los tests unitarios pasan correctamente tras el cambio.
 
 ---
 

@@ -27,10 +27,13 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
   - [x] POST /contacts
   - [x] PUT /contacts/{id}
   - [x] DELETE /contacts/{id}
-- [x] Añadir filtros por nombre, documento, estado, etc.
+- [x] Añadir filtros por nombre, documento, estado, empresa, perfiles, ciudad, etc.
 - [x] Añadir paginación (page, pageSize)
 - [x] Refactor de paginación enriquecida en /contacts y adaptación de tests y servicios.
 - [x] Añadir datos de ejemplo (seed) y migraciones
+- [x] Búsqueda avanzada de contactos (`POST /contacts/search-advanced`) con múltiples campos y perfiles
+- [x] Exportación de contactos filtrados (`POST /contacts/export`) como CSV (soporta filtros simples y avanzados)
+- [x] Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
 
 ### 3. Gestión de Usuarios (Admin)
 - [x] Endpoint GET /users
@@ -48,7 +51,6 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Verificación de roles en endpoints
 - [x] Almacenamiento seguro y eliminación de refresh tokens
 - [x] Configurar expiración de access token y refresh token
-- [x] Añadir claims personalizados y validación si aplica
 
 ### 5. Estructura y buenas prácticas
 - [x] Crear capa de servicios (Services)
@@ -91,9 +93,13 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 ---
 
 **Actualización:**
-- Flujo de autenticación y perfil robusto y coherente con frontend.
-- Avatar y datos de usuario integrados y protegidos.
-- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc).
-- Placeholder de avatar y favicon personalizados con identidad "AI".
-- Sincronización total de tokens y usuario en frontend/backend.
-- Mejoras de UX y feedback visual en login/logout/perfil.
+- Búsqueda avanzada y exportación CSV robusta en backend
+- Historial de filtros avanzados reutilizable y UI moderna en frontend
+- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
+- Flujo de autenticación y perfil robusto y coherente con frontend
+- Avatar y datos de usuario integrados y protegidos
+- Sincronización total de tokens y usuario en frontend/backend
+- Mejoras de UX y feedback visual en login/logout/perfil
+- Documentación y endpoints alineados con la implementación final
+
+Última actualización: 16 mayo 2025

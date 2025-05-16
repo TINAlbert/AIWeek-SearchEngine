@@ -2,7 +2,7 @@
 
 ## 1. Objetivo del Proyecto
 
-Diseñar e implementar una aplicación web en React para búsqueda, visualización y consulta de contactos o fichas personales, accediendo a través de una API REST segura que requiere autenticación y autorización.
+Diseñar e implementar una aplicación web en React para búsqueda, visualización y consulta de contactos personales, accediendo a través de una API REST segura que requiere autenticación y autorización.
 
 ---
 
@@ -10,14 +10,27 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 
 ### 2.1 Búsqueda de Contactos
 
-* Campo de búsqueda por:
+El sistema de búsqueda de contactos ofrece dos modos:
 
-  * Nombre
-  * Apellido
-  * ID o documento
-  * Email (opcional)
-* Resultados listados con paginación o scroll infinito
-* Filtros opcionales: estado, rol, categoría, etc.
+- **Búsqueda simple:**
+  - Campo único para buscar por nombre, apellido, documento o email.
+  - Resultados listados con paginación.
+  - Interfaz rápida, con debounce automático y feedback visual.
+
+- **Búsqueda avanzada:**
+  - Formulario con múltiples campos: nombre, email, teléfono, ciudad, empresa, perfiles, etc.
+  - Selector múltiple de perfiles con chips y modal.
+  - Filtros combinables y UI moderna.
+  - Historial reutilizable de filtros avanzados, accesible como dropdown (desktop) o drawer (móvil).
+  - Ejecución automática al seleccionar un filtro del historial.
+
+- **Exportación:**
+  - Botón para exportar los contactos filtrados (tanto en búsqueda simple como avanzada) a CSV.
+  - El CSV respeta los filtros activos y es robusto ante filtros vacíos.
+
+- **Accesibilidad y experiencia:**
+  - Todos los controles y formularios son accesibles y responsivos.
+  - Feedback visual claro en búsquedas, errores y exportación.
 
 ### 2.2 Vista de Ficha de Contacto
 
@@ -49,13 +62,20 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
 
 ### 3.1 Frontend
 
-* **Framework**: React (v19+)
-* **Estado global**: Zustand, Redux Toolkit o React Context
-* **Ruteo**: React Router DOM
-* **Autenticación**: JWT con interceptores en Axios
-* **UI/Estilos**: Tailwind CSS
-* **Manejo API**: Axios con manejo de errores
-* **Formularios**: React Hook Form + Zod o Yup
+* **Framework:** React (v19+)
+* **Gestión de estado global:** React Context (o Zustand/Redux Toolkit opcional)
+* **Ruteo:** React Router DOM
+* **Autenticación:** JWT con interceptores en Axios (manejo de token y refresh token)
+* **UI/Estilos:** Tailwind CSS
+* **Consumo de API:** Axios con manejo global de errores y feedback visual
+* **Formularios:** React Hook Form + Yup (o Zod)
+* **Validación:** Yup (o Zod) para formularios y filtros
+* **Componentes reutilizables:** Chips, modales, tablas, cards, paginación, selectores, etc.
+* **Accesibilidad:** Enfoque a11y en todos los controles y formularios
+* **Responsive:** Layout y componentes adaptados a móvil y escritorio
+* **Experiencia de usuario:** Debounce en búsqueda, historial de filtros, feedback visual, loaders/spinners, toasts
+* **Testing:** (Pendiente) React Testing Library y Jest
+
 * Menú lateral (Sidebar) responsive: colapsable en escritorio, navbar superior en móvil, integrado en todas las páginas privadas.
 
 ### 3.2 Backend (consumo desde frontend)
@@ -68,6 +88,8 @@ Diseñar e implementar una aplicación web en React para búsqueda, visualizaci�
   - `POST /api/auth/refresh` — Refresca el token de acceso. Body: `{ refreshToken }`.
   - `POST /api/auth/logout` — Cierra sesión y revoca refresh token.
   - `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación.
+  - `POST /api/contacts/search-advanced` — Búsqueda avanzada de contactos (múltiples campos y perfiles)
+  - `POST /api/contacts/export` — Exporta contactos filtrados (simple o avanzado) como CSV
   - `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID.
   - `PUT /api/contacts/{id}` — Editar contacto (según permisos).
   - `GET /api/users` — Listar usuarios (solo Admin).
@@ -138,9 +160,10 @@ Esto debe coincidir con la URL base expuesta por el backend.
 
 1. Login → validación de credenciales → almacenamiento seguro de token
 2. Acceso a la pantalla principal con buscador
-3. Ingreso de criterio de búsqueda → llamada a `GET /contacts?query=`
+3. Ingreso de criterio de búsqueda → llamada a `/contacts` o búsqueda avanzada
 4. Mostrar resultados → clic en resultado → navegar a `/contacts/:id`
 5. Vista de ficha, con opción de edición si tiene permisos
+6. Exportar contactos filtrados a CSV
 
 ---
 
@@ -172,19 +195,14 @@ Esto debe coincidir con la URL base expuesta por el backend.
 
 ---
 
-## Cambios recientes y mejoras visuales (2025-05-15)
+## Cambios recientes y mejoras visuales (2025-05-16)
 
-- Sidebar:
-  - El indicador visual del item activo (borde azul) ahora aparece en la derecha, con la esquina derecha redondeada y sin redondeo en la izquierda.
-  - Se mantiene la coherencia visual con el resto de la app.
-- Home y Dashboard:
-  - Layout tipo bento, cards blancas, grid responsiva, iconos y tipografía moderna.
-  - El array de indicadores en Home permite definir el span de columnas y color, y se itera para renderizar las cards.
-  - El icono de cada indicador en Home se sitúa a la derecha del label.
-- ContactsPage y Cards:
-  - Cards y tabla integradas visualmente en una card principal.
-  - Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport.
-  - El campo de búsqueda y la botonera están agrupados y armonizados visualmente.
+- Búsqueda avanzada y exportación CSV robusta en frontend
+- Historial de filtros avanzados reutilizable y UI moderna
+- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
+- Mejoras visuales y de accesibilidad en todos los campos y controles
+- Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes
+- Limpieza de código y documentación alineada con la implementación final
 
 ## Estilos y experiencia de usuario
 
@@ -196,35 +214,6 @@ Esto debe coincidir con la URL base expuesta por el backend.
 
 Para más detalles, ver el registro de actividad en `Chat.md`.
 
-# AIWeek Frontend
-
-## Cambios visuales y de layout (mayo 2025)
-
-### Sidebar
-- Indicador azul del item activo a la derecha, solo la esquina derecha redondeada (`rounded-r-lg`), sin redondeo en la izquierda (`rounded-l-none`).
-- Refactor visual y estructural para mayor claridad y coherencia.
-
-### ContactsPage
-- Barra de búsqueda y botones agrupados en una barra moderna, con mayor claridad y separación.
-- Botones de vista y exportar más pequeños y alineados a la derecha.
-- Cards y tabla integradas visualmente en una card principal.
-- Cards rediseñadas: avatar, chips, hover, máximo 3 por fila, altura máxima adaptada al viewport, sin scroll vertical innecesario.
-- Tabla sin cuadro envolvente, integrada en la card principal.
-- Paginación móvil y desktop correctamente alineadas y visibles.
-
-### Dashboard y Home
-- Layout tipo bento, cards blancas, grid responsiva, iconos y tipografía moderna.
-- Fondo, márgenes y espaciado armonizados con ContactsPage.
-- En Home, el array de indicadores permite definir el span de columnas y color, y se itera para renderizar las cards. El icono de cada indicador se sitúa a la derecha del label.
-
-### Coherencia visual
-- Se mantiene la coherencia visual y funcional en toda la app, tanto en móvil como en escritorio.
-
-### Pendiente
-- Personalizar más widgets o indicadores en Home y Dashboard si se requiere.
-- Añadir nuevas funcionalidades o widgets según feedback.
-- Ajustar detalles visuales adicionales según pruebas finales o nuevas necesidades.
-
 ---
 
-Última actualización: 15 mayo 2025
+Última actualización: 16 mayo 2025

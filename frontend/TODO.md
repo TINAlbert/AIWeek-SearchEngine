@@ -48,8 +48,6 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Configurar contexto global (React Context o Zustand/Redux) para usuario y sesión
 - [x] Sincronizar estado de autenticación en toda la app
 - [x] Eliminar referencias a user y accessToken en el contexto y servicios
-- [x] Persistir sesión de usuario de forma segura (refresh token)
-- [x] Actualizar estado global tras login/logout/refresh
 
 ## 5. UI/UX y validaciones
 - [x] Añadir estilos y diseño responsivo usando Tailwind CSS (Sidebar funcional, pendiente estilos generales)
@@ -57,6 +55,11 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Mostrar feedback visual de errores y validaciones
 - [x] Añadir loaders/spinners y skeletons en cargas
 - [x] Mejorar accesibilidad (a11y)
+- [x] Mejoras visuales y de accesibilidad en todos los campos y controles
+- [x] Historial reutilizable de filtros avanzados
+- [x] Selector múltiple de perfiles con chips y modal
+- [x] Exportación de contactos filtrados a CSV (compatible con búsqueda simple y avanzada)
+- [x] Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
 
 ## 6. Testing
 - [ ] Configurar pruebas unitarias (Jest + React Testing Library)
@@ -73,7 +76,6 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - [x] Unificar y limpiar documentación de endpoints
 - [x] Implementar UI para gestión de avatar en perfil de usuario
 - [x] Mejorar feedback visual en subida de avatar
-- [ ] (Opcional) Permitir edición de perfil (FirstName, LastName, etc.) desde frontend
 - [x] Mantener actualizado el README con endpoints reales y flujos
 - [x] Documentar estructura de carpetas y convenciones
 - [x] Documentar flujos de autenticación y refresh token
@@ -90,11 +92,11 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
     - [x] Mostrar loader/spinner o skeleton en el input mientras se busca
     - [x] Botón para limpiar el campo de búsqueda
     - [x] Mensaje de “sin resultados” más visual
-- [ ] Filtros avanzados:
-    - [ ] Filtro por estado (Activo/Inactivo)
-    - [ ] Filtro por ciudad
-    - [ ] Filtro por rango de fechas (creación, actualización)
-    - [ ] Selector de campo de búsqueda (nombre, email, documento, etc.)
+- [x] Filtros avanzados:
+    - [x] Filtro por estado (Activo/Inactivo)
+    - [x] Filtro por ciudad
+    - [x] Filtro por rango de fechas (creación, actualización)
+    - [x] Selector de campo de búsqueda (nombre, email, documento, etc.)
 - [x] Mejoras de paginación:
     - [x] Permitir ir a una página específica
     - [x] Permitir cambiar el tamaño de página (10, 25, 50, 100)
@@ -125,6 +127,9 @@ Este archivo contiene una lista detallada y actualizada de tareas y funcionalida
 - El frontend envía el filtro como `filter` (no `search`) para compatibilidad total con el backend.
 - Mejoras de documentación y alineación de endpoints en README.
 - Seed de backend con 500 contactos para pruebas de rendimiento y búsqueda.
+- Búsqueda avanzada y exportación CSV robusta en frontend
+- Historial de filtros avanzados reutilizable y UI moderna
+- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
 
 ## Integración de perfil y avatar de usuario
 

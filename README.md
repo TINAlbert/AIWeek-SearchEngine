@@ -1,6 +1,6 @@
 # Proyecto AIWeek: Buscador de Contactos
 
-Plataforma fullstack para la gestión y búsqueda de contactos personales, compuesta por un backend en .NET Core y un frontend en React. Incluye autenticación JWT, gestión de usuarios y avatares, roles, paginación, filtros y una experiencia de usuario moderna y robusta.
+Plataforma fullstack para la gestión y búsqueda de contactos personales, compuesta por un backend en .NET Core y un frontend en React. Incluye autenticación JWT, gestión de usuarios y avatares, roles, paginación, filtros avanzados, exportación CSV y una experiencia de usuario moderna y robusta.
 
 ---
 
@@ -71,34 +71,23 @@ Plataforma fullstack para la gestión y búsqueda de contactos personales, compu
 
 ### Contactos
 - `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación
+- `POST /api/contacts/search-advanced` — Búsqueda avanzada de contactos (múltiples campos y perfiles)
+- `POST /api/contacts/export` — Exporta contactos filtrados (simple o avanzado) como CSV
 - `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID
 - `PUT /api/contacts/{id}` — Editar contacto (según permisos)
 - `DELETE /api/contacts/{id}` — Eliminar contacto (según permisos)
 
 ---
 
-## Gestión de avatar de usuario
+## Funcionalidades destacadas
 
-- El backend permite a cada usuario autenticado subir y obtener su avatar de perfil.
-- La ruta de almacenamiento de los archivos de avatar se define en `appsettings.json` con la clave `AvatarsPath` (por defecto `wwwroot/avatars`).
-
-**Ejemplo de subida de avatar (frontend):**
-```js
-const formData = new FormData();
-formData.append('file', archivoImagen);
-await axios.post(`${API_URL}/users/me/avatar`, formData, {
-  headers: { Authorization: `Bearer ${token}` }
-});
-```
-
-**Ejemplo de obtención de avatar:**
-```js
-const res = await axios.get(`${API_URL}/users/me/avatar`, {
-  headers: { Authorization: `Bearer ${token}` },
-  responseType: 'blob'
-});
-const url = URL.createObjectURL(res.data);
-```
+- Búsqueda simple y avanzada de contactos (por nombre, email, empresa, perfiles, etc.)
+- Filtros avanzados y selector múltiple de perfiles
+- Exportación de contactos a CSV (compatible con ambos modos de búsqueda)
+- Historial reutilizable de filtros avanzados
+- UI moderna, responsiva y accesible
+- Gestión de avatar de usuario
+- Roles y permisos
 
 ---
 
@@ -156,9 +145,11 @@ const url = URL.createObjectURL(res.data);
 
 ## Cambios recientes y mejoras
 
+- Búsqueda avanzada y exportación CSV robusta en frontend y backend
+- Historial de filtros avanzados reutilizable y UI moderna
+- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
 - Flujo de autenticación y perfil robusto y sincronizado
 - Avatar y datos de usuario integrados y protegidos, con placeholder y favicon personalizados "AI"
-- Eliminadas referencias y recursos obsoletos (vite.svg, logs de debug, etc)
 - Sincronización total de tokens y usuario en frontend/backend
 - Mejoras de UX y feedback visual en login/logout/perfil
 - Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes
