@@ -35,3 +35,6 @@ coverage/
 
 # Exclude sensitive files
 secrets.json
+
+# Ignore delivery folder
+/delivery/
