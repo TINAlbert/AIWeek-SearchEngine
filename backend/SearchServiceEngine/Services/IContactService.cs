@@ -15,5 +15,9 @@ namespace SearchServiceEngine.Services
         Task<bool> AddProfileAsync(int contactId, int profileId);
         Task<bool> RemoveProfileAsync(int contactId, int profileId);
         Task<PagedResultDto<ContactDto>> SearchAdvancedAsync(ContactAdvancedFilterDto filterDto);
+        // Para exportación: obtener todos los contactos según filtro simple (sin paginación)
+        Task<IEnumerable<ContactDto>> GetAllSimpleAsync(string? filter);
+        // Para exportación: obtener todos los contactos según filtro avanzado (sin paginación)
+        Task<IEnumerable<ContactDto>> GetAllAdvancedAsync(ContactAdvancedFilterDto filterDto);
     }
 }

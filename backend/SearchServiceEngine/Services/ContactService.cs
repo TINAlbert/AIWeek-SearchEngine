@@ -161,5 +161,41 @@ namespace SearchServiceEngine.Services
             };
             return result;
         }
+
+        // Para exportación: obtener todos los contactos según filtro simple (sin paginación)
+        public async Task<IEnumerable<ContactDto>> GetAllSimpleAsync(string? filter)
+        {
+            var contacts = await _repository.GetAllAsync(filter, 1, int.MaxValue); // Sin paginación
+            return _mapper.Map<IEnumerable<ContactDto>>(contacts);
+        }
+
+        // Para exportación: obtener todos los contactos según filtro avanzado (sin paginación)
+        public async Task<IEnumerable<ContactDto>> GetAllAdvancedAsync(ContactAdvancedFilterDto filterDto)
+        {
+            var query = _db.Contacts
+                .Include(c => c.Company)
+                .Include(c => c.Profiles)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filterDto.Name))
+                query = query.Where(c => c.FirstName.Contains(filterDto.Name) || c.LastName.Contains(filterDto.Name));
+            if (!string.IsNullOrWhiteSpace(filterDto.Email))
+                query = query.Where(c => c.Email.Contains(filterDto.Email));
+            if (!string.IsNullOrWhiteSpace(filterDto.Phone))
+                query = query.Where(c => c.Phone.Contains(filterDto.Phone));
+            if (!string.IsNullOrWhiteSpace(filterDto.Address))
+                query = query.Where(c => c.Address.Contains(filterDto.Address));
+            if (!string.IsNullOrWhiteSpace(filterDto.City))
+                query = query.Where(c => c.City.Contains(filterDto.City));
+            if (filterDto.CompanyId.HasValue)
+                query = query.Where(c => c.CompanyId == filterDto.CompanyId);
+            if (!string.IsNullOrWhiteSpace(filterDto.CompanyName))
+                query = query.Where(c => c.Company != null && c.Company.Name.Contains(filterDto.CompanyName));
+            if (filterDto.ProfileIds != null && filterDto.ProfileIds.Count > 0)
+                query = query.Where(c => c.Profiles.Any(p => filterDto.ProfileIds.Contains(p.Id)));
+
+            var data = await query.OrderByDescending(c => c.UpdatedAt).ToListAsync();
+            return _mapper.Map<IEnumerable<ContactDto>>(data);
+        }
     }
 }

@@ -172,5 +172,38 @@ namespace SearchServiceEngine.Controllers
             var result = await _contactService.SearchAdvancedAsync(filterDto);
             return Ok(result);
         }
+
+        /// <summary>
+        /// Exporta contactos filtrados (simple o avanzado) como CSV.
+        /// </summary>
+        [HttpPost("export")]
+        [Produces("text/csv")]
+        public async Task<IActionResult> ExportContacts([FromBody] ContactExportRequestDto filter)
+        {
+            // Obtener todos los contactos según el filtro (sin paginación)
+            IEnumerable<ContactDto> contacts;
+            // Asegura que ambos objetos pueden venir null o vacíos
+            if (filter.AdvancedFilter != null && filter.AdvancedFilter.GetType().GetProperties().Any(p => p.GetValue(filter.AdvancedFilter) != null))
+            {
+                contacts = await _contactService.GetAllAdvancedAsync(filter.AdvancedFilter);
+            }
+            else
+            {
+                contacts = await _contactService.GetAllSimpleAsync(filter.Search ?? "");
+            }
+
+            // Generar CSV
+            var csv = new System.Text.StringBuilder();
+            csv.AppendLine("Id,Nombre,Apellidos,Email,Teléfono,Ciudad,Empresa,Perfiles");
+            foreach (var c in contacts)
+            {
+                var perfiles = c.Profiles != null ? string.Join(" | ", c.Profiles.Select(p => p.Name)) : "";
+                var empresa = c.CompanyName ?? "";
+                csv.AppendLine($"{c.Id},\"{c.FirstName}\",\"{c.LastName}\",\"{c.Email}\",\"{c.Phone}\",\"{c.City}\",\"{empresa}\",\"{perfiles}\"");
+            }
+            var bytes = System.Text.Encoding.UTF8.GetBytes(csv.ToString());
+            var fileName = $"contactos_exportados_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+            return File(bytes, "text/csv", fileName);
+        }
     }
 }
