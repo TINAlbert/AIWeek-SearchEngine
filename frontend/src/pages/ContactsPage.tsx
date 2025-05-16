@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { contactsService } from "../services/contacts";
+import { companyService } from "../services/company";
 import type { Contact } from "../types/contact";
 import type { ContactListResponse } from "../types/contact";
+import type { ContactAdvancedFilter } from "../types/contact";
+import type { Company } from "../types/company";
 import ContactsTable from "../components/ContactsTable";
 import ContactsCards from "../components/ContactsCards";
 import Pagination from "../components/Pagination";
 import ViewModeToggle from "../components/ViewModeToggle";
 import { X, Download } from "lucide-react";
+import ContactsSearchBar from "../components/ContactsSearchBar";
+import ContactsAdvancedSearchForm from "../components/ContactsAdvancedSearchForm";
 
 const PAGE_SIZE = 10;
 
@@ -22,6 +27,9 @@ export default function ContactsPage() {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
+  const [advancedMode, setAdvancedMode] = useState(false);
+  const [advancedFilter, setAdvancedFilter] = useState<ContactAdvancedFilter>({});
+  const [companies, setCompanies] = useState<Company[]>([]);
 
   // Detectar si es móvil (tailwind: <640px)
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
@@ -40,18 +48,32 @@ export default function ContactsPage() {
 
   useEffect(() => {
     setLoading(true);
-    contactsService
-      .list({ page, pageSize, search })
-      .then((res) => {
-        const paged: ContactListResponse = res.data;
-        setContacts(paged.data);
-        setTotal(paged.total);
-        setTotalPages(paged.totalPages);
-        setHasNextPage(paged.hasNextPage);
-        setHasPreviousPage(paged.hasPreviousPage);
-      })
-      .finally(() => setLoading(false));
-  }, [page, pageSize, search]);
+    if (advancedMode) {
+      contactsService
+        .searchAdvanced({ ...advancedFilter, page, pageSize })
+        .then((res) => {
+          const paged: ContactListResponse = res.data;
+          setContacts(paged.data);
+          setTotal(paged.total);
+          setTotalPages(paged.totalPages);
+          setHasNextPage(paged.hasNextPage);
+          setHasPreviousPage(paged.hasPreviousPage);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      contactsService
+        .list({ page, pageSize, search })
+        .then((res) => {
+          const paged: ContactListResponse = res.data;
+          setContacts(paged.data);
+          setTotal(paged.total);
+          setTotalPages(paged.totalPages);
+          setHasNextPage(paged.hasNextPage);
+          setHasPreviousPage(paged.hasPreviousPage);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [page, pageSize, search, advancedMode, advancedFilter]);
 
   // Efecto para aplicar debounce a la búsqueda
   useEffect(() => {
@@ -62,39 +84,44 @@ export default function ContactsPage() {
     return () => clearTimeout(handler);
   }, [searchInput]);
 
+  useEffect(() => {
+    if (advancedMode) {
+      companyService.list().then(setCompanies);
+    }
+  }, [advancedMode]);
+
   return (
     <div className="bg-gray-50 min-h-screen w-full flex flex-col items-center">
       <div className={
         `w-full px-2 sm:px-4 md:px-8 mt-2 sm:mt-14${isMobile && totalPages > 1 ? ' pb-20' : ''}`
       }>
-        <h1 className="text-2xl font-bold text-gray-800 mb-1 sm:mb-6">Contactos</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-1 sm:mb-6 flex items-center gap-4">
+          Contactos
+          <button
+            className={`ml-2 px-3 py-1 rounded text-xs font-semibold border transition-colors ${advancedMode ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-blue-700 border-blue-200 hover:bg-blue-50'}`}
+            onClick={() => { setAdvancedMode((v) => !v); setPage(1); }}
+          >
+            {advancedMode ? 'Búsqueda simple' : 'Búsqueda avanzada'}
+          </button>
+        </h1>
         <div className="flex flex-col gap-2 sm:gap-4 mb-2 sm:mb-6 sticky top-0 z-10 bg-gray-50 pb-2">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 w-full p-0">
             {/* Barra de búsqueda y botones */}
-            <div className="w-full flex items-center justify-between border-b border-gray-100 px-3 sm:px-6 h-16 gap-3 sm:gap-6">
-              <div className="flex items-center flex-1 min-w-0 relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Buscar por nombre, email, etc."
-                  className="pl-10 pr-8 h-10 border border-gray-200 rounded-lg bg-white w-full focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-800 text-base shadow-sm transition"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                />
-                {searchInput && (
-                  <button
-                    type="button"
-                    aria-label="Limpiar búsqueda"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring"
-                    onClick={() => setSearchInput("")}
-                  >
-                    <X size={16} className="text-gray-400" />
-                  </button>
+            <div className="w-full flex items-start justify-between border-b border-gray-100 px-3 sm:px-6 gap-3 sm:gap-6 min-h-[4rem] pt-3 sm:pt-5 pb-4">
+              <div className="flex-1 min-w-0">
+                {!advancedMode ? (
+                  <ContactsSearchBar value={searchInput} onChange={setSearchInput} />
+                ) : (
+                  <ContactsAdvancedSearchForm
+                    value={advancedFilter}
+                    onChange={setAdvancedFilter}
+                    onSubmit={() => { setPage(1); setAdvancedFilter({ ...advancedFilter }); }}
+                    onClear={() => { setAdvancedFilter({}); setPage(1); }}
+                    companies={companies}
+                  />
                 )}
               </div>
-              <div className="flex items-center gap-2 sm:gap-3 ml-2">
+              <div className="flex flex-row items-start gap-2 sm:gap-3 ml-2 mt-0">
                 <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} isMobile={isMobile} size="sm" />
                 <button
                   type="button"
@@ -107,8 +134,11 @@ export default function ContactsPage() {
               </div>
             </div>
             {/* Contenido tabla/tarjetas */}
-            {search && (
+            {(!advancedMode && search) && (
               <div className="px-4 pt-4 text-sm text-gray-500">Buscando: <b>{search}</b></div>
+            )}
+            {(advancedMode && Object.values(advancedFilter).some(v => v)) && (
+              <div className="px-4 pt-4 text-sm text-gray-500">Filtros avanzados activos</div>
             )}
             <div className="mt-2 px-2 sm:px-4 pb-1">
               {loading ? (
