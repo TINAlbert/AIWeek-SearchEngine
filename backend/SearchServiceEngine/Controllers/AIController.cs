@@ -4,12 +4,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SearchServiceEngine.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Tags("AI")]
+    [Authorize]
     public class AIController : ControllerBase
     {
         [HttpPost("generate-sql")]
@@ -92,6 +94,32 @@ Relaciones:
                 }
             }
             return Ok(new { sql, data = resultData });
+        }
+
+        [HttpGet("ping")]
+        public async Task<IActionResult> Ping()
+        {
+            var httpClient = new HttpClient();
+            var ollamaUrl = "http://localhost:11434/api/generate";
+            var body = new
+            {
+                model = "llama3",
+                prompt = "SELECT 1"
+            };
+            var json = JsonSerializer.Serialize(body);
+            try
+            {
+                var response = await httpClient.PostAsync(ollamaUrl, new StringContent(json, Encoding.UTF8, "application/json"));
+                if (!response.IsSuccessStatusCode)
+                {
+                    return StatusCode(503, new { status = "error", message = "No se pudo conectar con el servicio de IA (Ollama)." });
+                }
+                return Ok(new { status = "ok", message = "Conectado con el servicio de IA (Ollama)." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(503, new { status = "error", message = $"No se pudo conectar con el servicio de IA (Ollama): {ex.Message}" });
+            }
         }
     }
 

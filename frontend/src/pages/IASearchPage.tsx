@@ -1,12 +1,31 @@
 import { Sparkles } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { IASearchResult, IASearchError } from "../types/ai";
+import { useAuth } from "../context/AuthContext";
 
 export default function IASearchPage() {
   const [prompt, setPrompt] = useState("");
   const [result, setResult] = useState<IASearchResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [iaActive, setIaActive] = useState<boolean | null>(null);
+  const { accessToken } = useAuth();
+
+  useEffect(() => {
+    // Comprobar si el servicio IA está activo
+    const checkPing = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5252/api"}/ai/ping`, {
+          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+        });
+        if (!res.ok) throw new Error();
+        setIaActive(true);
+      } catch {
+        setIaActive(false);
+      }
+    };
+    checkPing();
+  }, [accessToken]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +35,10 @@ export default function IASearchPage() {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5252/api"}/ai/generate-sql`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        },
         body: JSON.stringify({ prompt }),
       });
       const data: IASearchResult | IASearchError = await res.json();
@@ -39,16 +61,21 @@ export default function IASearchPage() {
         </h1>
         <div className="flex flex-col gap-2 sm:gap-4 mb-2 sm:mb-6 sticky top-0 z-10 bg-gray-50 pb-2">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 w-full p-0">
-            <form onSubmit={handleSubmit} className="w-full flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 border-b border-gray-100 px-3 sm:px-6 min-h-[4rem] pt-3 sm:pt-5 pb-4">
+            {!iaActive && iaActive !== null && (
+              <div className="px-6 py-4 text-red-700 bg-red-50 border-b border-red-200 rounded-t-2xl text-center font-semibold">
+                El servicio de IA no está disponible actualmente. Por favor, contacta con el administrador o inténtalo más tarde.
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="w-full flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 border-b border-gray-100 px-3 sm:px-6 min-h-[4rem] pt-3 sm:pt-5 pb-4" style={{ opacity: iaActive === false ? 0.5 : 1, pointerEvents: iaActive === false ? 'none' : 'auto' }}>
               <input
                 className="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
                 placeholder="Describe en lenguaje natural la consulta de contactos..."
                 value={prompt}
                 onChange={e => setPrompt(e.target.value)}
-                disabled={loading}
+                disabled={loading || iaActive === false}
                 autoFocus
               />
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 min-w-[120px]" disabled={loading || !prompt.trim()}>
+              <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 min-w-[120px]" disabled={loading || !prompt.trim() || iaActive === false}>
                 {loading ? (
                   <span className="flex items-center gap-2"><svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>Consultando...</span>
                 ) : "Buscar"}
