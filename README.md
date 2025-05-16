@@ -4,6 +4,57 @@ Plataforma fullstack para la gestión y búsqueda de contactos personales, compu
 
 ---
 
+## Novedad: Búsqueda IA (SQL por lenguaje natural)
+
+El sistema permite realizar búsquedas avanzadas de contactos usando lenguaje natural, gracias a la integración con un modelo LLM local (Ollama). El usuario puede describir la consulta deseada y la IA genera y ejecuta la SQL automáticamente.
+
+- Acceso desde el menú lateral: **Búsqueda IA** (icono "Sparkles")
+- Página dedicada con formulario, feedback de carga, SQL generada y resultados en tabla moderna
+- Seguridad: solo usuarios autenticados pueden acceder
+- El backend valida y ejecuta únicamente consultas SELECT generadas por la IA
+
+### Configuración y uso de Ollama (modelo LLM local)
+
+Para que la funcionalidad de Búsqueda IA funcione, es necesario tener instalado y corriendo Ollama en el servidor backend.
+
+#### 1. Instalar Ollama
+
+Sigue las instrucciones oficiales según tu sistema operativo: https://ollama.com/download
+
+#### 2. Descargar el modelo LLM adecuado
+
+Se recomienda usar `llama3` o `sqlcoder` para generación de SQL. Ejemplo:
+
+```sh
+ollama pull llama3
+# o
+ollama pull sqlcoder
+```
+
+#### 3. Iniciar el servicio Ollama
+
+Por defecto, el backend espera que Ollama escuche en `http://localhost:11434`.
+
+```sh
+ollama serve
+```
+
+#### 4. Probar conectividad
+
+El backend expone un endpoint `/api/ai/ping` para comprobar la conexión con Ollama. El frontend puede mostrar un mensaje si el servicio no está disponible.
+
+#### 5. Seguridad y timeout
+
+- Solo usuarios autenticados pueden acceder a los endpoints de IA.
+- El backend solo ejecuta SQL generada que sea un SELECT.
+- El timeout para peticiones de IA es largo (hasta 5 minutos) para soportar respuestas complejas.
+
+#### 6. Esquema de base de datos enviado a la IA
+
+El backend envía el esquema real de la base de datos en formato SQL (CREATE TABLE) para que la IA genere consultas correctas y seguras.
+
+---
+
 ## Estructura del Proyecto
 
 - `/backend/` — API REST en .NET Core 7, Entity Framework Core, Identity, JWT

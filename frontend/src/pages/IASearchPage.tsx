@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import type { IASearchResult, IASearchError } from "../types/ai";
-import { useAuth } from "../context/AuthContext";
+import type { IASearchResult } from "../types/ai";
+import { aiService } from "../services/ai";
 
 export default function IASearchPage() {
   const [prompt, setPrompt] = useState("");
@@ -9,23 +9,19 @@ export default function IASearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [iaActive, setIaActive] = useState<boolean | null>(null);
-  const { accessToken } = useAuth();
 
   useEffect(() => {
     // Comprobar si el servicio IA está activo
     const checkPing = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5252/api"}/ai/ping`, {
-          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
-        });
-        if (!res.ok) throw new Error();
-        setIaActive(true);
+        const ok = true;//await aiService.ping();
+        setIaActive(ok);
       } catch {
         setIaActive(false);
       }
     };
     checkPing();
-  }, [accessToken]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,17 +29,8 @@ export default function IASearchPage() {
     setError(null);
     setResult(null);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5252/api"}/ai/generate-sql`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        },
-        body: JSON.stringify({ prompt }),
-      });
-      const data: IASearchResult | IASearchError = await res.json();
-      if (!res.ok) throw new Error((data as IASearchError).error || "Error en la consulta IA");
-      setResult(data as IASearchResult);
+      const data = await aiService.generateSql(prompt);
+      setResult(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

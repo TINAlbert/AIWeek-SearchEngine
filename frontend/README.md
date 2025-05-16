@@ -212,6 +212,23 @@ Esto debe coincidir con la URL base expuesta por el backend.
 
 ---
 
+## Búsqueda IA (Lenguaje natural → SQL)
+
+La aplicación permite realizar búsquedas avanzadas de contactos usando lenguaje natural, gracias a la integración con un modelo LLM local (Ollama).
+
+- Acceso desde el menú lateral: **Búsqueda IA** (icono "Sparkles")
+- Página dedicada con formulario, feedback de carga, SQL generada y resultados en tabla moderna
+- Seguridad: solo usuarios autenticados pueden acceder
+- El backend valida y ejecuta únicamente consultas SELECT generadas por la IA
+
+### Requisitos para la búsqueda IA
+
+- El backend debe tener Ollama instalado y corriendo (ver README raíz y backend)
+- El modelo recomendado es `llama3` o `sqlcoder`
+- El frontend no requiere configuración especial, solo que el backend tenga la IA disponible
+
+---
+
 Para más detalles, ver el registro de actividad en `Chat.md`.
 
 ---

@@ -258,6 +258,93 @@ DELETE /api/contacts/12/profiles/3
 
 ---
 
+## Búsqueda IA y uso de Ollama
+
+El backend permite realizar búsquedas SQL avanzadas mediante lenguaje natural usando un modelo LLM local (Ollama).
+
+- **Endpoint:** `POST /api/ai/generate-sql`
+  - Recibe: `{ prompt: string }` (petición en lenguaje natural)
+  - Adjunta el esquema de la base de datos en formato SQL (CREATE TABLE) al prompt
+  - Consulta a Ollama (`llama3` o `sqlcoder`)
+  - Reconstruye la SQL a partir de la respuesta (soporta streaming/multilínea)
+  - Solo ejecuta la SQL si es un SELECT
+  - Devuelve: `{ sql, data }` (SQL generada y resultados)
+  - Logs de debug para cada línea de respuesta y errores
+
+- **Endpoint de salud:** `GET /api/ai/ping`
+  - Comprueba la conectividad con Ollama
+  - Devuelve 200 OK si está disponible, 503 si no
+
+- **Seguridad:**
+  - Todos los endpoints de IA requieren autenticación JWT
+  - El backend valida que solo se ejecuten SELECT
+  - El timeout de las peticiones a Ollama es largo (120s+)
+
+### Esquema de base de datos enviado a la IA
+
+El prompt enviado a Ollama incluye el esquema real de la base de datos en formato SQL, por ejemplo:
+
+```sql
+CREATE TABLE Companies (
+    Id INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Address TEXT,
+    City TEXT,
+    Country TEXT,
+    Phone TEXT
+);
+
+CREATE TABLE Contacts (
+    Id INTEGER PRIMARY KEY,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Document TEXT,
+    Email TEXT,
+    Phone TEXT,
+    Address TEXT,
+    City TEXT,
+    Status TEXT,
+    CreatedAt DATETIME,
+    UpdatedAt DATETIME,
+    CompanyId INTEGER,
+    FOREIGN KEY (CompanyId) REFERENCES Companies(Id)
+);
+
+CREATE TABLE Profiles (
+    Id INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE ContactProfiles (
+    ContactsId INTEGER,
+    ProfilesId INTEGER,
+    PRIMARY KEY (ContactsId, ProfilesId),
+    FOREIGN KEY (ContactsId) REFERENCES Contacts(Id),
+    FOREIGN KEY (ProfilesId) REFERENCES Profiles(Id)
+);
+```
+
+Esto permite a la IA generar consultas SQL correctas y seguras.
+
+### Configuración y uso de Ollama
+
+1. **Instala Ollama** siguiendo la documentación oficial: https://ollama.com/download
+2. **Descarga el modelo** adecuado (ejemplo: `llama3` o `sqlcoder`):
+   ```sh
+   ollama pull llama3
+   # o
+   ollama pull sqlcoder
+   ```
+3. **Inicia el servicio**:
+   ```sh
+   ollama serve
+   ```
+   El backend espera Ollama en `http://localhost:11434`.
+4. **Comprueba la conectividad** con `GET /api/ai/ping`.
+
+---
+
 ## 6. Seguridad
 
 * JWT con firma HMAC-SHA256

@@ -19,17 +19,47 @@ namespace SearchServiceEngine.Controllers
         {
             var httpClient = new HttpClient();
             var ollamaUrl = "http://localhost:11434/api/generate";
-            // Estructura del modelo de datos
-            var schema = @"Tablas:
-- Contacts: Id, FirstName, LastName, Document, Email, Phone, Address, City, Status, CreatedAt, UpdatedAt, CompanyId
-- Companies: Id, Name, Address, City, Country, Phone
-- Profiles: Id, Name, Description
-- ContactProfiles: ContactsId, ProfilesId (relación muchos a muchos entre Contacts y Profiles)
-Relaciones:
-- Cada Contact tiene un CompanyId (puede ser nulo) que referencia a Companies.Id (relación muchos contactos a una compañía)
-- Cada Contact puede tener varios Profiles (muchos a muchos)
+            // Estructura del modelo de datos en formato SQL
+            var schema = @"CREATE TABLE Companies (
+    Id INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Address TEXT,
+    City TEXT,
+    Country TEXT,
+    Phone TEXT
+);
+
+CREATE TABLE Contacts (
+    Id INTEGER PRIMARY KEY,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Document TEXT,
+    Email TEXT,
+    Phone TEXT,
+    Address TEXT,
+    City TEXT,
+    Status TEXT,
+    CreatedAt DATETIME,
+    UpdatedAt DATETIME,
+    CompanyId INTEGER,
+    FOREIGN KEY (CompanyId) REFERENCES Companies(Id)
+);
+
+CREATE TABLE Profiles (
+    Id INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE ContactProfiles (
+    ContactsId INTEGER,
+    ProfilesId INTEGER,
+    PRIMARY KEY (ContactsId, ProfilesId),
+    FOREIGN KEY (ContactsId) REFERENCES Contacts(Id),
+    FOREIGN KEY (ProfilesId) REFERENCES Profiles(Id)
+);
 ";
-            var prompt = $"Genera solo una consulta SQL para la siguiente petición de usuario, sin explicaciones ni comentarios.\nPetición: {request.Prompt}\n\nEstructura de la base de datos:\n{schema}";
+            var prompt = $"Genera solo una consulta SQL para la siguiente petición de usuario, sin explicaciones ni comentarios.\nPetición: {request.Prompt}\n\nEstructura de la base de datos (formato SQL):\n{schema}";
             Console.WriteLine($"[AIController] Prompt generado:\n{prompt}");
             var body = new
             {
@@ -65,6 +95,7 @@ Relaciones:
             // Normalizar saltos de línea dobles y espacios finales
             sql = sql.Replace("\\n", "\n").Replace("\r\n", "\n");
             // Ejecutar la SQL generada si es un SELECT
+            Console.WriteLine($"[AIController] SQL generada:\n{sql}");
             object? resultData = null;
             if (!string.IsNullOrWhiteSpace(sql) && sql.TrimStart().StartsWith("SELECT", System.StringComparison.OrdinalIgnoreCase))
             {
@@ -104,7 +135,7 @@ Relaciones:
             var body = new
             {
                 model = "llama3",
-                prompt = "SELECT 1"
+                prompt = "PING PARA VER ESTADO DEL SERVICIO"
             };
             var json = JsonSerializer.Serialize(body);
             try
