@@ -1,447 +1,147 @@
-# Especificación del Proyecto Backend: API REST para Buscador de Contactos
+<!--
+README Multilingüe: English below / Español más abajo
 
-## 1. Objetivo del Proyecto
+- [English version](#english-version)
+- [Versión en castellano](#versi%C3%B3n-en-castellano)
+-->
 
-Desarrollar una API REST segura y robusta utilizando **.NET Core**, que permita la gestión y consulta de contactos personales, con autenticación JWT y refresh tokens. Incluye gestión de usuarios, perfiles, empresas, paginación, filtros avanzados y exportación de datos.
+# English version
 
-> La URL base por defecto de la API es `http://localhost:5252/api` (ver `Properties/launchSettings.json`).
+## AIWeek Backend (SearchServiceEngine)
 
----
-
-## 2. Requisitos Funcionales
-
-### 2.1 Autenticación y Autorización
-
-* Registro de usuarios (opcional, solo Admin)
-* Inicio de sesión con emisión de **Access Token (JWT)** y **Refresh Token**
-* Refresco de tokens válidos mediante endpoint
-* Roles y claims gestionados con Microsoft Identity
-
-### 2.2 Gestión de Contactos
-
-* CRUD de contactos (según rol del usuario):
-  * `GET /contacts` con soporte para filtros y paginación
-  * `GET /contacts/{id}`
-  * `POST /contacts`
-  * `PUT /contacts/{id}`
-  * `DELETE /contacts/{id}` (si aplica)
-* Búsqueda avanzada de contactos (`POST /contacts/search-advanced`) con múltiples campos y perfiles
-* Exportación de contactos filtrados (`POST /contacts/export`) como CSV (soporta filtros simples y avanzados)
-
-### 2.3 Paginación y Filtros
-
-* Paginación en consultas masivas con `page`, `pageSize`
-* Filtros por nombre, documento, estado, empresa, perfiles, ciudad, etc.
-
-### 2.4 Seguridad
-
-* Verificación de roles y claims en cada endpoint
-* Manejo de expiración y renovación de tokens
-* Almacenamiento seguro de refresh tokens en base de datos
+Secure and robust REST API built with .NET Core for contact management, user authentication (JWT + refresh tokens), advanced filtering, CSV export, and AI-powered natural language search via Ollama.
 
 ---
 
-## 3. Requisitos Técnicos
-
-### 3.1 Tecnologías y Frameworks
-
-* **.NET Core 9** — Framework principal para la API REST
-* **Entity Framework Core** — ORM y migraciones automáticas/controladas
-* **Microsoft Identity Framework** — Autenticación y autorización basada en roles y claims
-* **JWT (Json Web Token)** — Tokens de acceso y refresh para autenticación segura
-* **AutoMapper** — Mapeo entre entidades y DTOs
-* **FluentValidation** — Validación robusta de entrada de datos y DTOs
-* **Scalar (OpenAPI)** — Documentación interactiva de la API
-* **xUnit** y **Moq** — Testing unitario y de integración
-* **Serilog** — (Opcional) Logging estructurado
-
-### 3.2 Estructura de Capas
-
-* `Controllers` — Web API y endpoints
-* `Services` — Lógica de negocio y reglas de aplicación
-* `Repositories` — Acceso a datos y consultas complejas
-* `DTOs` — Data Transfer Objects para entrada/salida
-* `Models` — Entidades de EF Core
-* `Authentication` — Generación y validación de JWT, gestión de tokens
+### Table of Contents
+- [Features](#features)
+- [Architecture](#architecture)
+- [Requirements](#requirements)
+- [Installation & Usage](#installation--usage)
+- [Endpoints](#endpoints)
+- [AI Search (Ollama)](#ai-search-ollama)
+- [Database & Seeding](#database--seeding)
+- [Configuration](#configuration)
+- [Security](#security)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Credits](#credits)
 
 ---
 
-## 4. Esquema de Base de Datos (simplificado)
-
-### Entidades principales:
-
-* **User** (IdentityUser extendido)
-* **Contact**
-  * Id, Nombre, Apellido, Documento, Email, Teléfono, Dirección, Estado, Empresa, Perfiles (muchos a muchos), Ciudad, Fecha de creación/actualización
-* **Company**
-  * Id, Nombre, Dirección, etc.
-* **Profile**
-  * Id, Nombre, Descripción
-* **RefreshToken**
-  * Id, UsuarioId, Token, Fecha expiración, Revocado
+### Features
+- JWT authentication and refresh tokens
+- Role-based access (admin, editor, reader)
+- CRUD for contacts, users, companies, profiles
+- Simple and advanced contact search (filters, pagination)
+- **AI Search**: natural language queries, SQL generation and execution via local LLM (Ollama)
+- Export contacts to CSV
+- User avatar upload/download
+- Automatic test data seeding
+- OpenAPI docs (Scalar)
 
 ---
 
-## 4. Seed de Datos Iniciales (Datos de Prueba Automáticos)
+### Architecture
+- .NET Core 9+, Entity Framework Core, Microsoft Identity, JWT, AutoMapper, Scalar (OpenAPI), xUnit
+- Layered structure: Controllers, Services, Repositories, DTOs, Models
+- Connects to frontend ([see frontend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md))
 
-El backend soporta la generación automática de datos de prueba (usuarios, perfiles, empresas y 1000 contactos aleatorios) tras aplicar las migraciones, útil para pruebas y desarrollo.
+---
 
-- **Activación:** Controlado por el parámetro `SeedInitialData` en `appsettings.json` o `appsettings.Development.json`.
-- **Ubicación:** Lógica en `Data/AppDbContextSeed.cs`.
-- **Ejecución:** Si `SeedInitialData` es `true`, tras migraciones se insertan los datos iniciales automáticamente al arrancar el backend.
+### Requirements
+- .NET 9 SDK
+- SQLite (default, or configure another DB)
+- Ollama running locally for AI features
 
-### ¿Qué datos se generan?
-- **Usuarios:**
-  - Admin (usuario: Admin, contraseña: Admin123!)
-  - User (usuario: User, contraseña: User123!)
-- **Perfiles:** Cliente, Proveedor, Socio, Empleado, Prospecto, VIP
-- **Empresas:** InovaTech Solutions, AgroGlobal S.A., BlueWave Consulting, Logística Express SL
-- **Contactos:** 1000 contactos con nombres, apellidos, emails, perfiles y empresas asignados aleatoriamente (algunos sin empresa o sin perfiles)
+---
 
-### Configuración de ejemplo
-```json
-{
-  ...
-  "SeedInitialData": true
-}
+### Installation & Usage
+
+```sh
+cd backend/SearchServiceEngine
+dotnet restore
+dotnet ef database update
+dotnet run
 ```
-
-### Desactivar el seed
-Para evitar la inserción automática de datos de prueba, pon el valor en `false`:
-```json
-{
-  ...
-  "SeedInitialData": false
-}
-```
+Default API: `http://localhost:5252/api`
 
 ---
-
-## 5. Endpoints Principales
-
-### Autenticación
-- `POST /api/auth/login` — Inicia sesión y retorna JWT + Refresh Token
-- `POST /api/auth/refresh` — Renueva tokens de acceso y refresh
-- `POST /api/auth/logout` — Revoca el refresh token actual
-
-### Usuarios
-- `GET /api/users` — Lista todos los usuarios (solo Admin)
-- `GET /api/users/{id}` — Obtiene un usuario por su identificador (solo Admin)
-- `GET /api/users/me` — Obtiene los datos del usuario autenticado
-- `POST /api/users` — Crea usuario (solo Admin)
-- `POST /api/users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado
-- `GET /api/users/me/avatar` — Descarga el avatar del usuario autenticado
-
-### Contactos
-
-- `GET /api/contacts?filter=...&page=1&pageSize=10` — Lista contactos con filtros simples (nombre, documento, email, etc.) y paginación. Devuelve un objeto paginado con los contactos y metadatos (`data`, `total`, `page`, `pageSize`, `totalPages`, `hasNextPage`, `hasPreviousPage`).
-
-- `POST /api/contacts/search-advanced` — Búsqueda avanzada de contactos. Permite filtrar por múltiples campos (nombre, email, teléfono, ciudad, empresa, perfiles, etc.) enviando un objeto JSON en el body. Soporta paginación y devuelve un objeto paginado igual que el endpoint simple.
-
-#### Ejemplo: Búsqueda avanzada de contactos
-
-**Request:**
-
-POST /api/contacts/search-advanced
-
-```json
-{
-  "name": "Juan",
-  "email": "",
-  "phone": "",
-  "city": "Madrid",
-  "companyId": 2,
-  "profileIds": [1, 3],
-  "page": 1,
-  "pageSize": 10
-}
-```
-
-**Response:**
-
-```json
-{
-  "data": [
-    {
-      "id": 12,
-      "firstName": "Juan",
-      "lastName": "Pérez",
-      "email": "juan.perez@example.com",
-      "phone": "+34123456789",
-      "address": "Calle Falsa 123, Madrid",
-      "city": "Madrid",
-      "company": {
-        "id": 2,
-        "name": "Empresa Ejemplo"
-      },
-      "profiles": [
-        { "id": 1, "name": "Cliente" },
-        { "id": 3, "name": "VIP" }
-      ],
-      "status": 0,
-      "createdAt": "2025-05-10T12:00:00Z",
-      "updatedAt": "2025-05-15T09:00:00Z"
-    }
-    // ...más contactos...
-  ],
-  "total": 1,
-  "page": 1,
-  "pageSize": 10,
-  "totalPages": 1,
-  "hasNextPage": false,
-  "hasPreviousPage": false
-}
-```
-
-- `POST /api/contacts/export` — Exporta a CSV todos los contactos que cumplen los filtros activos (tanto simples como avanzados). El body debe incluir los filtros simples y/o avanzados. Devuelve un archivo CSV descargable.
-
-#### Ejemplo: Exportación de contactos a CSV
-
-**Request:**
-
-POST /api/contacts/export
-
-```json
-{
-  "Search": "",
-  "AdvancedFilter": {
-    "companyId": 2,
-    "profileIds": [1, 3]
-  }
-}
-```
-
-**Response:**
-
-- Descarga de archivo CSV con los contactos filtrados.
-
-- `GET /api/contacts/{id}` — Obtiene el detalle completo de un contacto por su identificador único.
-
-- `PUT /api/contacts/{id}` — Actualiza los datos de un contacto existente. Requiere permisos adecuados. El body debe contener los campos a modificar.
-
-- `DELETE /api/contacts/{id}` — Elimina un contacto por su identificador. Requiere permisos de administrador o editor.
-
-- `POST /api/contacts/{id}/profiles/{profileId}` — Añade un perfil (rol/categoría) a un contacto. Útil para asociar varios perfiles a un mismo contacto.
-
-#### Ejemplo: Añadir perfil a un contacto
-
-**Request:**
-
-POST /api/contacts/12/profiles/3
-
-- No requiere body. Añade el perfil con ID 3 al contacto con ID 12.
-
-**Response:**
-
-- 204 No Content si la operación es exitosa.
-- 404 si el contacto o perfil no existe.
-
-- `DELETE /api/contacts/{id}/profiles/{profileId}` — Quita un perfil previamente asociado a un contacto.
-
-#### Ejemplo: Quitar perfil de un contacto
-
-**Request:**
-
-DELETE /api/contacts/12/profiles/3
-
-- Quita el perfil con ID 3 del contacto con ID 12.
-
-**Response:**
-
-- 204 No Content si la operación es exitosa.
-- 404 si el contacto o perfil no existe o no está asociado.
-
-### Empresas y Perfiles
-- `GET /api/companies` — Listar empresas
-- `GET /api/profiles` — Listar perfiles
-- (Opcional) CRUD de empresas y perfiles para Admin
-
----
-
-## Búsqueda IA y uso de Ollama
-
-El backend permite realizar búsquedas SQL avanzadas mediante lenguaje natural usando un modelo LLM local (Ollama).
-
-- **Endpoint:** `POST /api/ai/generate-sql`
-  - Recibe: `{ prompt: string }` (petición en lenguaje natural)
-  - Adjunta el esquema de la base de datos en formato SQL (CREATE TABLE) al prompt
-  - Consulta a Ollama (`llama3` o `sqlcoder`)
-  - Reconstruye la SQL a partir de la respuesta (soporta streaming/multilínea)
-  - Solo ejecuta la SQL si es un SELECT
-  - Devuelve: `{ sql, data }` (SQL generada y resultados)
-  - Logs de debug para cada línea de respuesta y errores
-
-- **Endpoint de salud:** `GET /api/ai/ping`
-  - Comprueba la conectividad con Ollama
-  - Devuelve 200 OK si está disponible, 503 si no
-
-- **Seguridad:**
-  - Todos los endpoints de IA requieren autenticación JWT
-  - El backend valida que solo se ejecuten SELECT
-  - El timeout de las peticiones a Ollama es largo (120s+)
-
-### Esquema de base de datos enviado a la IA
-
-El prompt enviado a Ollama incluye el esquema real de la base de datos en formato SQL, por ejemplo:
-
-```sql
-CREATE TABLE Companies (
-    Id INTEGER PRIMARY KEY,
-    Name TEXT NOT NULL,
-    Address TEXT,
-    City TEXT,
-    Country TEXT,
-    Phone TEXT
-);
-
-CREATE TABLE Contacts (
-    Id INTEGER PRIMARY KEY,
-    FirstName TEXT NOT NULL,
-    LastName TEXT NOT NULL,
-    Document TEXT,
-    Email TEXT,
-    Phone TEXT,
-    Address TEXT,
-    City TEXT,
-    Status TEXT,
-    CreatedAt DATETIME,
-    UpdatedAt DATETIME,
-    CompanyId INTEGER,
-    FOREIGN KEY (CompanyId) REFERENCES Companies(Id)
-);
-
-CREATE TABLE Profiles (
-    Id INTEGER PRIMARY KEY,
-    Name TEXT NOT NULL,
-    Description TEXT
-);
-
-CREATE TABLE ContactProfiles (
-    ContactsId INTEGER,
-    ProfilesId INTEGER,
-    PRIMARY KEY (ContactsId, ProfilesId),
-    FOREIGN KEY (ContactsId) REFERENCES Contacts(Id),
-    FOREIGN KEY (ProfilesId) REFERENCES Profiles(Id)
-);
-```
-
-Esto permite a la IA generar consultas SQL correctas y seguras.
-
-### Configuración y uso de Ollama
-
-1. **Instala Ollama** siguiendo la documentación oficial: https://ollama.com/download
-2. **Descarga el modelo** adecuado (ejemplo: `llama3` o `sqlcoder`):
-   ```sh
-   ollama pull llama3
-   # o
-   ollama pull sqlcoder
-   ```
-3. **Inicia el servicio**:
-   ```sh
-   ollama serve
-   ```
-   El backend espera Ollama en `http://localhost:11434`.
-4. **Comprueba la conectividad** con `GET /api/ai/ping`.
-
----
-
-## 6. Seguridad
-
-* JWT con firma HMAC-SHA256
-* Expiración del access token (ej: 15 minutos)
-* Refresh token válido por varios días (ej: 7 días)
-* Middleware de autorización con roles
-* Almacenamiento cifrado de refresh tokens
-
----
-
-## 7. Consideraciones de Desarrollo
-
-* Uso de `appsettings.json` para configuraciones sensibles (secret key, expiración tokens, cadena de conexión)
-* Inyección de dependencias (DI) para servicios y repositorios
-* Unit Testing con xUnit y Moq
-* Migraciones automáticas o controladas con EF Core
-* Documentación OpenAPI generada con Scalar
-
----
-
-## 8. Extras Opcionales
-
-* Registro y verificación de email de usuarios
-* Logs con Serilog
-* Políticas de CORS seguras para frontend
-* Documentación interactiva con Swagger/Scalar UI
-
----
-
-## 9. Entregables Esperados
-
-* Proyecto .NET Core con estructura limpia y modular
-* Base de datos generada por migraciones de EF Core
-* API documentada con Scalar (OpenAPI)
-* Tests unitarios básicos
-* Seguridad completa implementada (login, JWT, refresh tokens)
-
----
-
-## Cambios recientes y mejoras
-
-- Búsqueda avanzada y exportación CSV robusta en backend
-- Historial de filtros avanzados reutilizable y UI moderna en frontend
-- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
-- Flujo de autenticación y perfil robusto y coherente con frontend
-- Avatar y datos de usuario integrados y protegidos
-- Sincronización total de tokens y usuario en frontend/backend
-- Mejoras de UX y feedback visual en login/logout/perfil
-- Documentación y endpoints alineados con la implementación final
-
----
-
-## Gestión de avatar de usuario
-
-El backend permite a cada usuario autenticado subir y obtener su avatar de perfil.
-
-### Configuración
-
-La ruta de almacenamiento de los archivos de avatar se define en `appsettings.json` con la clave `AvatarsPath`. Por defecto es `wwwroot/avatars`.
-
-```json
-{
-  "AvatarsPath": "wwwroot/avatars"
-}
-```
 
 ### Endpoints
-
-- **Subir/Reemplazar avatar**
-  - `POST /api/users/me/avatar`
-  - Autenticación requerida
-  - Content-Type: `multipart/form-data`
-  - Campo: `file` (imagen .jpg, .jpeg, .png, .gif)
-  - Respuesta: `{ message, fileName }`
-
-  **Ejemplo con curl:**
-  ```sh
-  curl -X POST https://localhost:5001/api/users/me/avatar \
-    -H "Authorization: Bearer <token>" \
-    -F "file=@ruta/a/mi_avatar.png"
-  ```
-
-- **Obtener avatar**
-  - `GET /api/users/me/avatar`
-  - Autenticación requerida
-  - Devuelve el archivo de imagen si existe
-
-  **Ejemplo con curl:**
-  ```sh
-  curl -X GET https://localhost:5001/api/users/me/avatar \
-    -H "Authorization: Bearer <token>" --output avatar.png
-  ```
+- `POST /api/auth/login` — Login, returns JWT + refresh token
+- `POST /api/auth/refresh` — Refresh tokens
+- `POST /api/auth/logout` — Revoke refresh token
+- `GET /api/contacts` — List/search contacts (filters, pagination)
+- `POST /api/contacts/search-advanced` — Advanced search
+- `POST /api/contacts/export` — Export filtered contacts to CSV
+- `GET /api/contacts/{id}` — Get contact details
+- `PUT /api/contacts/{id}` — Edit contact
+- `DELETE /api/contacts/{id}` — Delete contact
+- `GET /api/users` — List users (admin)
+- `POST /api/users` — Create user (admin)
+- `GET /api/users/me` — Get current user
+- `POST /api/users/me/avatar` — Upload avatar
+- `GET /api/users/me/avatar` — Download avatar
+- `GET /api/companies` — List companies
+- `GET /api/profiles` — List profiles
 
 ---
 
-## Configuración por defecto (`appsettings.json`)
+### AI Search (Ollama)
 
+The backend enables advanced contact search using natural language, powered by a local LLM (Ollama). This feature lets users describe queries in plain English or Spanish (e.g., "Contacts in Madrid with VIP profile"), and the system will generate and execute the corresponding SQL automatically.
+
+**How it works:**
+- The frontend sends a natural language prompt to the backend
+- The backend attaches the real database schema (in SQL CREATE TABLE format) to the prompt
+- Ollama (with a model like `llama3` or `sqlcoder`) generates a safe SQL SELECT query
+- The backend validates and executes only SELECT queries, returning results and the generated SQL
+- Results and the generated SQL are returned to the frontend for display
+- Only authenticated users can access this feature
+- Extended timeout for AI requests (up to 5 minutes)
+
+**Ollama setup:**
+1. Download and install Ollama: https://ollama.com/download
+2. Download a suitable model (recommended: `llama3` or `sqlcoder`):
+   ```sh
+   ollama pull llama3
+   # or
+   ollama pull sqlcoder
+   ```
+3. Start the Ollama service:
+   ```sh
+   ollama serve
+   # (optional) ollama run llama3
+   ```
+   The backend expects Ollama at `http://localhost:11434`.
+4. Check backend connectivity with the `/api/ai/ping` endpoint (returns 200 OK if available).
+
+**Security:**
+- Only authenticated users can access AI endpoints
+- The backend strictly validates that only SELECT queries are executed
+- The database schema is sent to the LLM to ensure accurate and safe SQL generation
+
+**Example database schema sent to Ollama:**
+```sql
+CREATE TABLE Companies (...);
+CREATE TABLE Contacts (...);
+CREATE TABLE Profiles (...);
+CREATE TABLE ContactProfiles (...);
+```
+
+For more details, see the [frontend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md).
+
+---
+
+### Database & Seeding
+- Automatic test data seeding (users, companies, profiles, 1000 random contacts)
+- Controlled by `SeedInitialData` in `appsettings.json`
+
+---
+
+### Configuration
+Default `appsettings.json`:
 ```json
 {
   "Jwt": {
@@ -457,12 +157,206 @@ La ruta de almacenamiento de los archivos de avatar se define en `appsettings.js
 }
 ```
 
-- **Key:** Cambia este valor en producción por una clave segura y privada.
-- **Issuer/Audience:** Identificadores del emisor y audiencia del JWT.
-- **DefaultConnection:** Usa SQLite por defecto (`aiweek.db`).
-- **AvatarsPath:** Carpeta donde se almacenan los avatares de usuario.
-- **SeedInitialData:** Controla la generación automática de datos de prueba.
+---
+
+### Security
+- JWT authentication (Bearer Token)
+- Refresh token (revocable)
+- Role-based authorization
+- Secure storage of refresh tokens
+- Only authenticated users can access AI endpoints
 
 ---
 
-Última actualización: 16 mayo 2025
+### Testing
+- Unit tests with xUnit and Moq
+
+---
+
+### Documentation
+- [Backend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md)
+- [Frontend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md)
+
+---
+
+### Credits
+Developed by Albert G.M. ([GitHub: TINAlbert](https://github.com/TINAlbert))
+
+---
+
+# Versión en castellano
+
+## AIWeek Backend (SearchServiceEngine)
+
+API REST segura y robusta desarrollada en .NET Core para la gestión de contactos, autenticación de usuarios (JWT + refresh tokens), filtrado avanzado, exportación CSV y búsqueda avanzada con IA (Ollama).
+
+---
+
+### Índice
+- [Características](#características)
+- [Arquitectura](#arquitectura)
+- [Requisitos](#requisitos)
+- [Instalación y uso](#instalación-y-uso)
+- [Endpoints](#endpoints)
+- [Búsqueda IA (Ollama)](#búsqueda-ia-ollama)
+- [Base de datos y seed](#base-de-datos-y-seed)
+- [Configuración](#configuración)
+- [Seguridad](#seguridad)
+- [Testing](#testing)
+- [Documentación](#documentación)
+- [Créditos](#créditos)
+
+---
+
+### Características
+- Autenticación JWT y refresh tokens
+- Control de acceso por roles (admin, editor, lector)
+- CRUD de contactos, usuarios, empresas y perfiles
+- Búsqueda simple y avanzada de contactos (filtros, paginación)
+- **Búsqueda IA**: consulta en lenguaje natural, generación y ejecución de SQL vía LLM local (Ollama)
+- Exportación de contactos a CSV
+- Subida/descarga de avatar de usuario
+- Seed automático de datos de prueba
+- Documentación OpenAPI (Scalar)
+
+---
+
+### Arquitectura
+- .NET Core 9+, Entity Framework Core, Microsoft Identity, JWT, AutoMapper, Scalar (OpenAPI), xUnit
+- Estructura por capas: Controllers, Services, Repositories, DTOs, Models
+- Conexión con frontend ([ver README frontend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md))
+
+---
+
+### Requisitos
+- .NET 9 SDK
+- SQLite (por defecto, o configurar otra BD)
+- Ollama corriendo localmente para funciones de IA
+
+---
+
+### Instalación y uso
+
+```sh
+cd backend/SearchServiceEngine
+ dotnet restore
+ dotnet ef database update
+ dotnet run
+```
+Por defecto, la API estará en `http://localhost:5252/api`.
+
+---
+
+### Endpoints
+- `POST /api/auth/login` — Login, retorna JWT + refresh token
+- `POST /api/auth/refresh` — Refresca tokens
+- `POST /api/auth/logout` — Revoca refresh token
+- `GET /api/contacts` — Listar/buscar contactos (filtros, paginación)
+- `POST /api/contacts/search-advanced` — Búsqueda avanzada
+- `POST /api/contacts/export` — Exporta contactos filtrados a CSV
+- `GET /api/contacts/{id}` — Detalle de contacto
+- `PUT /api/contacts/{id}` — Editar contacto
+- `DELETE /api/contacts/{id}` — Eliminar contacto
+- `GET /api/users` — Listar usuarios (admin)
+- `POST /api/users` — Crear usuario (admin)
+- `GET /api/users/me` — Obtener usuario actual
+- `POST /api/users/me/avatar` — Subir avatar
+- `GET /api/users/me/avatar` — Descargar avatar
+- `GET /api/companies` — Listar empresas
+- `GET /api/profiles` — Listar perfiles
+
+---
+
+### Búsqueda IA (Ollama)
+
+El backend permite realizar búsquedas avanzadas de contactos usando lenguaje natural, gracias a la integración con un modelo LLM local (Ollama). Esta función permite describir consultas en español o inglés (ej: "Contactos en Madrid con perfil VIP") y el sistema generará y ejecutará automáticamente la SQL correspondiente.
+
+**¿Cómo funciona?**
+- El frontend envía un prompt en lenguaje natural al backend
+- El backend adjunta el esquema real de la base de datos (en formato SQL CREATE TABLE) al prompt
+- Ollama (con un modelo como `llama3` o `sqlcoder`) genera una consulta SQL SELECT segura
+- El backend valida y ejecuta solo consultas SELECT, devolviendo resultados y la SQL generada
+- Los resultados y la SQL generada se devuelven al frontend para su visualización
+- Solo usuarios autenticados pueden acceder a esta función
+- Timeout extendido para peticiones de IA (hasta 5 minutos)
+
+**Configuración de Ollama:**
+1. Descarga e instala Ollama: https://ollama.com/download
+2. Descarga un modelo adecuado (recomendado: `llama3` o `sqlcoder`):
+   ```sh
+   ollama pull llama3
+   # o
+   ollama pull sqlcoder
+   ```
+3. Inicia el servicio Ollama:
+   ```sh
+   ollama serve
+   # (opcional) ollama run llama3
+   ```
+   El backend espera Ollama en `http://localhost:11434`.
+4. Comprueba la conectividad desde el backend con el endpoint `/api/ai/ping` (devuelve 200 OK si está disponible).
+
+**Seguridad:**
+- Solo usuarios autenticados pueden acceder a los endpoints de IA
+- El backend valida estrictamente que solo se ejecuten consultas SELECT
+- El esquema de la base de datos se envía al LLM para asegurar una generación de SQL precisa y segura
+
+**Ejemplo de esquema de base de datos enviado a Ollama:**
+```sql
+CREATE TABLE Companies (...);
+CREATE TABLE Contacts (...);
+CREATE TABLE Profiles (...);
+CREATE TABLE ContactProfiles (...);
+```
+
+Para más detalles, ver el [README del frontend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md).
+
+---
+
+### Base de datos y seed
+- Seed automático de datos de prueba (usuarios, empresas, perfiles, 1000 contactos aleatorios)
+- Controlado por `SeedInitialData` en `appsettings.json`
+
+---
+
+### Configuración
+`appsettings.json` por defecto:
+```json
+{
+  "Jwt": {
+    "Key": "SuperSecretKey12345678901234567890123456789012",
+    "Issuer": "AIWeekIssuer",
+    "Audience": "AIWeekAudience"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=aiweek.db"
+  },
+  "AvatarsPath": "wwwroot/avatars",
+  "SeedInitialData": true
+}
+```
+
+---
+
+### Seguridad
+- Autenticación JWT (Bearer Token)
+- Refresh token (revocable)
+- Autorización por roles
+- Almacenamiento seguro de refresh tokens
+- Solo usuarios autenticados pueden acceder a la IA
+
+---
+
+### Testing
+- Pruebas unitarias con xUnit y Moq
+
+---
+
+### Documentación
+- [README Backend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md)
+- [README Frontend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md)
+
+---
+
+### Créditos
+Desarrollado por Albert G.M. ([GitHub: TINAlbert](https://github.com/TINAlbert))

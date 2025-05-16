@@ -45,5 +45,5 @@ Content-Type: application/json
 
 ### Prueba automática del endpoint /api/users (requiere token de admin)
 GET {{backend_HostAddress}}/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NzA0OTg4OSwiaXNzIjoiQUlXZWVrSXNzdWVyIiwiYXVkIjoiQUlXZWVrQXVkaWVuY2UifQ.NWRn2TnDHOUFGSVG8BVq1K3XhC8XzSseuXkbxiwulmw
+Authorization: 
 Accept: application/json

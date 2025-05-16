@@ -1,236 +1,282 @@
-# Especificación del Proyecto Web: Buscador de Contactos
+<!--
+README Multilingüe: English below / Español más abajo
 
-## 1. Objetivo del Proyecto
+- [English version](#english-version)
+- [Versión en castellano](#versi%C3%B3n-en-castellano)
+-->
 
-Diseñar e implementar una aplicación web en React para búsqueda, visualización y consulta de contactos personales, accediendo a través de una API REST segura que requiere autenticación y autorización.
+# English version
 
----
+## AIWeek Frontend
 
-## 2. Requisitos Funcionales
-
-### 2.1 Búsqueda de Contactos
-
-El sistema de búsqueda de contactos ofrece dos modos:
-
-- **Búsqueda simple:**
-  - Campo único para buscar por nombre, apellido, documento o email.
-  - Resultados listados con paginación.
-  - Interfaz rápida, con debounce automático y feedback visual.
-
-- **Búsqueda avanzada:**
-  - Formulario con múltiples campos: nombre, email, teléfono, ciudad, empresa, perfiles, etc.
-  - Selector múltiple de perfiles con chips y modal.
-  - Filtros combinables y UI moderna.
-  - Historial reutilizable de filtros avanzados, accesible como dropdown (desktop) o drawer (móvil).
-  - Ejecución automática al seleccionar un filtro del historial.
-
-- **Exportación:**
-  - Botón para exportar los contactos filtrados (tanto en búsqueda simple como avanzada) a CSV.
-  - El CSV respeta los filtros activos y es robusto ante filtros vacíos.
-
-- **Accesibilidad y experiencia:**
-  - Todos los controles y formularios son accesibles y responsivos.
-  - Feedback visual claro en búsquedas, errores y exportación.
-
-### 2.2 Vista de Ficha de Contacto
-
-* Datos personales: nombre, documento, dirección, etc.
-* Historial de actividad o notas (si aplica)
-* Contactos asociados
-* Botón de edición (según permisos)
-
-### 2.3 Autenticación
-
-* Login con usuario y contraseña (JWT)
-* Tokens almacenados en memoria o almacenamiento seguro
-* Comprobación de sesión activa y expiración automática
-* Utilización de refresh token si es necesario
-
-### 2.4 Autorización
-
-* Control de acceso basado en roles (admin, lector, editor)
-* Renderizado condicional de componentes y acciones
-
-### 2.5 Administración Básica (opcional)
-
-* Crear o editar fichas según permisos
-* Formularios con validaciones de campos
+Modern React application for advanced contact search and management, featuring AI-powered natural language queries. Connects to a secure REST API backend with JWT authentication and role-based access.
 
 ---
 
-## 3. Requisitos Técnicos
-
-### 3.1 Frontend
-
-* **Framework:** React (v19+)
-* **Gestión de estado global:** React Context (o Zustand/Redux Toolkit opcional)
-* **Ruteo:** React Router DOM
-* **Autenticación:** JWT con interceptores en Axios (manejo de token y refresh token)
-* **UI/Estilos:** Tailwind CSS
-* **Consumo de API:** Axios con manejo global de errores y feedback visual
-* **Formularios:** React Hook Form + Yup (o Zod)
-* **Validación:** Yup (o Zod) para formularios y filtros
-* **Componentes reutilizables:** Chips, modales, tablas, cards, paginación, selectores, etc.
-* **Accesibilidad:** Enfoque a11y en todos los controles y formularios
-* **Responsive:** Layout y componentes adaptados a móvil y escritorio
-* **Experiencia de usuario:** Debounce en búsqueda, historial de filtros, feedback visual, loaders/spinners, toasts
-* **Testing:** (Pendiente) React Testing Library y Jest
-
-* Menú lateral (Sidebar) responsive: colapsable en escritorio, navbar superior en móvil, integrado en todas las páginas privadas.
-
-### 3.2 Backend (consumo desde frontend)
-
-* API REST con autenticación y autorización JWT
-* Todos los endpoints protegidos requieren el token JWT en el header `Authorization: Bearer <token>`
-* El login devuelve tanto `token` como `refreshToken` (no `accessToken`)
-* Endpoints principales:
-  - `POST /api/auth/login` — Login de usuario. Body: `{ userName, password }`. Devuelve: `{ token, refreshToken }`.
-  - `POST /api/auth/refresh` — Refresca el token de acceso. Body: `{ refreshToken }`.
-  - `POST /api/auth/logout` — Cierra sesión y revoca refresh token.
-  - `GET /api/contacts?filter=...&page=1&pageSize=10` — Buscar contactos con filtros y paginación.
-  - `POST /api/contacts/search-advanced` — Búsqueda avanzada de contactos (múltiples campos y perfiles)
-  - `POST /api/contacts/export` — Exporta contactos filtrados (simple o avanzado) como CSV
-  - `GET /api/contacts/{id}` — Obtener detalles de un contacto por ID.
-  - `PUT /api/contacts/{id}` — Editar contacto (según permisos).
-  - `GET /api/users` — Listar usuarios (solo Admin).
-  - `POST /api/users` — Crear usuario (solo Admin). Body: `{ userName, password, role }`.
-  - `GET /api/users/me` — Obtiene los datos del usuario autenticado.
-  - `POST /api/users/me/avatar` — Sube o reemplaza el avatar del usuario autenticado (multipart/form-data, campo `file`).
-  - `GET /api/users/me/avatar` — Descarga el avatar del usuario autenticado.
+### Table of Contents
+- [Features](#features)
+- [Architecture](#architecture)
+- [Requirements](#requirements)
+- [Installation & Usage](#installation--usage)
+- [AI Search (Ollama)](#ai-search-ollama)
+- [Environment Variables](#environment-variables)
+- [Security](#security)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Credits](#credits)
 
 ---
 
-## 3.3 Ejemplos de uso de endpoints de usuario y avatar
+### Features
+- Simple and advanced contact search (name, email, company, profiles, etc.)
+- **AI Search**: natural language queries, SQL generation and execution via local LLM (Ollama)
+- Export contacts to CSV
+- User, role, and avatar management
+- Modern, responsive, accessible UI
+- JWT security and refresh token
+- Reusable advanced filter history
 
-> Estos endpoints requieren autenticación (Bearer Token) y algunos requieren rol Admin.
+---
 
-**Ejemplo de subida de avatar:**
-```js
-const formData = new FormData();
-formData.append('file', archivoImagen);
-await axios.post(`${API_URL}/users/me/avatar`, formData, {
-  headers: { Authorization: `Bearer ${token}` }
-});
+### Architecture
+- React 19+, Vite, Tailwind CSS, Axios, React Context, React Router DOM
+- Connects to backend REST API ([see backend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md))
+
+---
+
+### Requirements
+- Node.js 18+
+- npm 9+
+- Backend API running (see backend setup)
+
+---
+
+### Installation & Usage
+
+```sh
+cd frontend
+npm install
+# Set API URL in .env
+# VITE_API_BASE_URL=http://localhost:5252/api
+npm run dev
 ```
-
-**Ejemplo de obtención de avatar:**
-```js
-const res = await axios.get(`${API_URL}/users/me/avatar`, {
-  headers: { Authorization: `Bearer ${token}` },
-  responseType: 'blob'
-});
-const url = URL.createObjectURL(res.data);
-```
+Default app: `http://localhost:5173`
 
 ---
 
-## Configuración esperada del backend
+### AI Search (Ollama)
 
-El backend debe estar configurado (en `appsettings.json`) con los siguientes valores por defecto:
+The app allows advanced contact search using natural language, powered by a local LLM (Ollama). This feature lets users describe queries in plain English or Spanish (e.g., "Contacts in Madrid with VIP profile"), and the system will generate and execute the corresponding SQL automatically.
 
-```json
-{
-  "Jwt": {
-    "Key": "SuperSecretKey12345678901234567890123456789012",
-    "Issuer": "AIWeekIssuer",
-    "Audience": "AIWeekAudience"
-  },
-  "ConnectionStrings": {
-    "DefaultConnection": "Data Source=aiweek.db"
-  },
-  "AvatarsPath": "wwwroot/avatars"
-}
-```
+**How it works:**
+- Access from the sidebar: **AI Search** ("Sparkles" icon)
+- Enter your query in natural language
+- The backend sends the prompt and the real database schema to Ollama
+- Ollama (with a model like `llama3` or `sqlcoder`) generates a safe SQL SELECT query
+- The backend validates and executes only SELECT queries, returning results and the generated SQL
+- Results and the generated SQL are shown in a modern, responsive table
+- Only authenticated users can access this feature
+- Extended timeout for AI requests (up to 5 minutes)
+
+**Ollama setup:**
+1. Download and install Ollama: https://ollama.com/download
+2. Download a suitable model (recommended: `llama3` or `sqlcoder`):
+   ```sh
+   ollama pull llama3
+   # or
+   ollama pull sqlcoder
+   ```
+3. Start the Ollama service:
+   ```sh
+   ollama serve
+   # (optional) ollama run llama3
+   ```
+   The backend expects Ollama at `http://localhost:11434`.
+4. Check backend connectivity with `/api/ai/ping` endpoint.
+
+**Security:**
+- Only authenticated users can access AI endpoints
+- The backend strictly validates that only SELECT queries are executed
+- The database schema is sent to the LLM to ensure accurate and safe SQL generation
+
+For more details, see the [backend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md).
 
 ---
 
-## Variables de entorno (frontend)
-
-Crea un archivo `.env` en la raíz del frontend con:
-
+### Environment Variables
+Create a `.env` file in the frontend root:
 ```
 VITE_API_BASE_URL=http://localhost:5252/api
 ```
-
-Esto debe coincidir con la URL base expuesta por el backend.
-
----
-
-## 4. Flujo de Usuario
-
-1. Login → validación de credenciales → almacenamiento seguro de token
-2. Acceso a la pantalla principal con buscador
-3. Ingreso de criterio de búsqueda → llamada a `/contacts` o búsqueda avanzada
-4. Mostrar resultados → clic en resultado → navegar a `/contacts/:id`
-5. Vista de ficha, con opción de edición si tiene permisos
-6. Exportar contactos filtrados a CSV
+This must match the backend API URL.
 
 ---
 
-## 5. Seguridad
-
-* Autenticación mediante JWT (Bearer Token)
-* Refresh token si es necesario (según diseño de API)
-* Protección de rutas privadas en React
-* Validación de roles en la UI y en llamadas API
-
----
-
-## 6. Entregables Esperados
-
-* Aplicación React funcional
-* Configurable con `.env` para URL de API
-* UI adaptable (responsive)
-* Feedback visual y manejo de errores
-* Código modular y documentado
+### Security
+- JWT authentication (Bearer Token)
+- Refresh token support
+- Role-based UI and API access
+- Private route protection
 
 ---
 
-## 7. Extras Opcionales
-
-* Debounce en buscador para reducir llamadas API
-* Cacheo local de fichas consultadas
-* Testing con React Testing Library
-* Login persistente con expiración segura
+### Testing
+- Ready for React Testing Library and Jest
 
 ---
 
-## Cambios recientes y mejoras visuales (2025-05-16)
-
-- Búsqueda avanzada y exportación CSV robusta en frontend
-- Historial de filtros avanzados reutilizable y UI moderna
-- Corrección de limpieza de filtros (perfiles) en búsqueda avanzada
-- Mejoras visuales y de accesibilidad en todos los campos y controles
-- Sidebar y página de perfil modernizados, con avatar y datos de usuario consistentes
-- Limpieza de código y documentación alineada con la implementación final
-
-## Estilos y experiencia de usuario
-
-- Todos los componentes principales usan fondo gris claro (`bg-gray-50`), cards blancas con sombra y bordes suaves.
-- El diseño es responsivo y moderno, con especial atención a la experiencia móvil.
-- Se prioriza la coherencia visual y la reutilización de componentes visuales.
+### Documentation
+- [Backend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md)
+- [Frontend README](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md)
 
 ---
 
-## Búsqueda IA (Lenguaje natural → SQL)
-
-La aplicación permite realizar búsquedas avanzadas de contactos usando lenguaje natural, gracias a la integración con un modelo LLM local (Ollama).
-
-- Acceso desde el menú lateral: **Búsqueda IA** (icono "Sparkles")
-- Página dedicada con formulario, feedback de carga, SQL generada y resultados en tabla moderna
-- Seguridad: solo usuarios autenticados pueden acceder
-- El backend valida y ejecuta únicamente consultas SELECT generadas por la IA
-
-### Requisitos para la búsqueda IA
-
-- El backend debe tener Ollama instalado y corriendo (ver README raíz y backend)
-- El modelo recomendado es `llama3` o `sqlcoder`
-- El frontend no requiere configuración especial, solo que el backend tenga la IA disponible
+### Credits
+Developed by Albert G.M. ([GitHub: TINAlbert](https://github.com/TINAlbert))
 
 ---
 
-Para más detalles, ver el registro de actividad en `Chat.md`.
+# Versión en castellano
+
+## AIWeek Frontend
+
+Aplicación moderna en React para la gestión y búsqueda avanzada de contactos, con integración de IA para consultas en lenguaje natural. Se conecta a una API REST segura con autenticación JWT y control de acceso por roles.
 
 ---
 
-Última actualización: 16 mayo 2025
+### Índice
+1. [English version](#english-version)
+   1. [AIWeek Frontend](#aiweek-frontend)
+      1. [Table of Contents](#table-of-contents)
+      2. [Features](#features)
+      3. [Architecture](#architecture)
+      4. [Requirements](#requirements)
+      5. [Installation \& Usage](#installation--usage)
+      6. [AI Search (Ollama)](#ai-search-ollama)
+      7. [Environment Variables](#environment-variables)
+      8. [Security](#security)
+      9. [Testing](#testing)
+      10. [Documentation](#documentation)
+      11. [Credits](#credits)
+2. [Versión en castellano](#versión-en-castellano)
+   1. [AIWeek Frontend](#aiweek-frontend-1)
+      1. [Índice](#índice)
+      2. [Características](#características)
+      3. [Arquitectura](#arquitectura)
+      4. [Requisitos](#requisitos)
+      5. [Instalación y uso](#instalación-y-uso)
+      6. [Búsqueda IA (Ollama)](#búsqueda-ia-ollama)
+      7. [Variables de entorno](#variables-de-entorno)
+      8. [Seguridad](#seguridad)
+      9. [Testing](#testing-1)
+      10. [Documentación](#documentación)
+      11. [Créditos](#créditos)
+
+---
+
+### Características
+- Búsqueda simple y avanzada de contactos (nombre, email, empresa, perfiles, etc.)
+- **Búsqueda IA**: consulta en lenguaje natural, generación y ejecución de SQL vía LLM local (Ollama)
+- Exportación de contactos a CSV
+- Gestión de usuarios, roles y avatares
+- UI moderna, responsiva y accesible
+- Seguridad JWT y refresh token
+- Historial reutilizable de filtros avanzados
+
+---
+
+### Arquitectura
+- React 19+, Vite, Tailwind CSS, Axios, React Context, React Router DOM
+- Conexión a backend REST API ([ver README backend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md))
+
+---
+
+### Requisitos
+- Node.js 18+
+- npm 9+
+- Backend API en funcionamiento (ver instrucciones backend)
+
+---
+
+### Instalación y uso
+
+```sh
+cd frontend
+npm install
+# Configura la URL de la API en .env
+# VITE_API_BASE_URL=http://localhost:5252/api
+npm run dev
+```
+La app estará en `http://localhost:5173`.
+
+---
+
+### Búsqueda IA (Ollama)
+
+La aplicación permite realizar búsquedas avanzadas de contactos usando lenguaje natural, gracias a la integración con un modelo LLM local (Ollama). Esta función permite describir consultas en español o inglés (ej: "Contactos en Madrid con perfil VIP") y el sistema generará y ejecutará automáticamente la SQL correspondiente.
+
+**¿Cómo funciona?**
+- Accede desde el menú lateral: **Búsqueda IA** (icono "Sparkles")
+- Escribe la consulta en lenguaje natural
+- El backend envía el prompt y el esquema real de la base de datos a Ollama
+- Ollama (con un modelo como `llama3` o `sqlcoder`) genera una consulta SQL SELECT segura
+- El backend valida y ejecuta solo consultas SELECT, devolviendo resultados y la SQL generada
+- Los resultados y la SQL generada se muestran en una tabla moderna y responsiva
+- Solo usuarios autenticados pueden acceder a esta función
+- Timeout extendido para peticiones de IA (hasta 5 minutos)
+
+**Configuración de Ollama:**
+1. Descarga e instala Ollama: https://ollama.com/download
+2. Descarga un modelo adecuado (recomendado: `llama3` o `sqlcoder`):
+   ```sh
+   ollama pull llama3
+   # o
+   ollama pull sqlcoder
+   ```
+3. Inicia el servicio Ollama:
+   ```sh
+   ollama serve
+   # (opcional) ollama run llama3
+   ```
+   El backend espera Ollama en `http://localhost:11434`.
+4. Comprueba la conectividad desde el backend con el endpoint `/api/ai/ping`.
+
+**Seguridad:**
+- Solo usuarios autenticados pueden acceder a los endpoints de IA
+- El backend valida estrictamente que solo se ejecuten consultas SELECT
+- El esquema de la base de datos se envía al LLM para asegurar una generación de SQL precisa y segura
+
+Para más detalles, ver el [README del backend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md).
+
+---
+
+### Variables de entorno
+Crea un archivo `.env` en la raíz del frontend:
+```
+VITE_API_BASE_URL=http://localhost:5252/api
+```
+Debe coincidir con la URL expuesta por el backend.
+
+---
+
+### Seguridad
+- Autenticación JWT (Bearer Token)
+- Soporte de refresh token
+- Control de acceso por roles en la UI y API
+- Protección de rutas privadas
+
+---
+
+### Testing
+- Preparado para React Testing Library y Jest
+
+---
+
+### Documentación
+- [README Backend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/backend/SearchServiceEngine/README.md)
+- [README Frontend](https://github.com/TINAlbert/AIWeek-SearchEngine/blob/main/frontend/README.md)
+
+---
+
+### Créditos
+Desarrollado por Albert G.M. ([GitHub: TINAlbert](https://github.com/TINAlbert))
